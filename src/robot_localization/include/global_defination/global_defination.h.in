@@ -1,0 +1,16 @@
+/*
+ * @Description:
+ * @Author:
+ * @Date: 2020-02-05 02:27:30
+ */
+#ifndef ROBOT_LOCALIZATION_GLOBAL_DEFINATION_H_IN_
+#define ROBOT_LOCALIZATION_GLOBAL_DEFINATION_H_IN_
+
+#include <string>
+
+namespace robot_localization
+{
+    const std::string WORK_SPACE_PATH = "@WORK_SPACE_PATH@";
+}
+
+#endif
