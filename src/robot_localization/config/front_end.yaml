@@ -5,6 +5,15 @@ topic:
     imu_link: imu
     lidar_link: velodyne_base_link
 #$匹配
+
+
+
+
+
+
+
+
+
 registration_method: ICP # 选择点云匹配方法 目前支持ICP_SVD,ICP,NDT,NDT_CPU(编译没通过),SICP(已有接口，缺少实现)
 ## 匹配相关参数
 ICP:

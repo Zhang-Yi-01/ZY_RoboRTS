@@ -92,5 +92,34 @@ namespace robot_localization
 
         std::cout << fontColorCyanBold << str << fontColorReset << std::endl;
     }
-
+    void ColorTerminal::green(const std::string str,bool flag)
+    {   
+        if(flag)
+        std::cout << fontColorGreenBold << str << fontColorReset << std::endl;
+    }
+    void ColorTerminal::red(const std::string str,bool flag)
+    {
+        if(flag)
+        std::cout << fontColorRedBold << str << fontColorReset << std::endl;
+    }
+    void ColorTerminal::white(const std::string str,bool flag)
+    {
+        if(flag)
+        std::cout << fontColorWhiteBold << str << fontColorReset << std::endl;
+    }
+    void ColorTerminal::yellow(const std::string str,bool flag)
+    {
+        if(flag)
+        std::cout << fontColorYellowBold << str << fontColorReset << std::endl;
+    }
+    void ColorTerminal::blue(const std::string str,bool flag)
+    {
+        if(flag)
+        std::cout << fontColorBlueBold << str << fontColorReset << std::endl;
+    }
+    void ColorTerminal::cyan(const std::string str,bool flag)
+    {
+        if(flag)
+        std::cout << fontColorCyanBold << str << fontColorReset << std::endl;
+    }
 } // namespace robot_localization
