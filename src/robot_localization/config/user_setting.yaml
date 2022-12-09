@@ -1,1 +1,25 @@
 if_show_working_info: true #那些运行中的正常提示或者什么的
+
+if_simulink: true 
+########input_topic_part########配置传感器输入部分
+
+imu_topic: /livox/imu
+scan_pointcloud_topic: /livox/lidar  #未去畸变原始点云
+imu_link: laser_link
+lidar_link: laser_link
+car_base_link: laser_link                     #仿真车体连结点
+
+
+sim_imu_topic: /imu
+sim_scan_pointcloud_topic: /velodyne_points  #未去畸变原始点云
+sim_imu_link: imu
+sim_lidar_link: velodyne_base_link
+sim_car_base_link: base_link                     #仿真车体连结点
+
+
+base_frame_id:  map                   ##不要有斜杠
+########input_topic_part########
+
+
+
+registration_method: ICP # 选择点云匹配方法 目前支持ICP_SVD,ICP,NDT,NDT_CPU(编译没通过),SICP(已有接口，缺少实现)

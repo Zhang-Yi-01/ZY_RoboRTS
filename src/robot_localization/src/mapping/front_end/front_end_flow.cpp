@@ -18,13 +18,32 @@ namespace robot_localization
     FrontEndFlow::FrontEndFlow(ros::NodeHandle &nh)
     {
         // 读取YAML参数
-        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/front_end.yaml";
+        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
         YAML::Node config_node = YAML::LoadFile(config_file_path);
         // 配置消息话题
-        std::string imu_raw_data_topic = config_node["topic"]["imu_raw_data_topic"].as<std::string>();
-        std::string undistrotion_pointcloud_topic = config_node["topic"]["undistrotion_pointcloud_topic"].as<std::string>();
-        std::string imu_link = config_node["topic"]["imu_link"].as<std::string>();
-        std::string lidar_link = config_node["topic"]["lidar_link"].as<std::string>();
+        std::string imu_raw_data_topic;
+        std::string undistrotion_pointcloud_topic;
+        std::string imu_link;
+        std::string lidar_link;
+        std::string car_base_link;
+        if(topic_yaml["if_simulink"].as<bool>())
+        {
+
+        imu_raw_data_topic = config_node["sim_imu_topic"].as<std::string>();
+        undistrotion_pointcloud_topic = config_node["sim_scan_pointcloud_topic"].as<std::string>();
+        imu_link = config_node["sim_imu_link"].as<std::string>();
+        lidar_link = config_node["sim_lidar_link"].as<std::string>();
+        car_base_link = config_node["sim_car_base_link"].as<std::string>();
+        }else
+        {
+        imu_raw_data_topic = config_node["imu_topic"].as<std::string>();
+        undistrotion_pointcloud_topic = config_node["scan_pointcloud_topic"].as<std::string>();
+        imu_link = config_node["imu_link"].as<std::string>();
+        lidar_link = config_node["lidar_link"].as<std::string>();
+        car_base_link = config_node["car_base_link"].as<std::string>();
+
+        }
+        
 
         // 订阅
         // 1.IMU原始数据
@@ -48,7 +67,7 @@ namespace robot_localization
         // 5.fused psoe in map frame
         fused_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "fused_localization", "map", "lidar", 100);
         // 6.tf
-        laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("map", "base_link");
+        laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("map", car_base_link);
 
         // 前端算法
         front_end_ptr_ = std::make_shared<FrontEnd>();
@@ -97,7 +116,7 @@ namespace robot_localization
                             Predict();
                         }
 
-                        // 将取出的IMU数据放回队列
+                        // 如果imu原始数据大于lidar基准数据时间,将取出的IMU数据插回队列尾部
                         if (current_imu_raw_data_.time_stamp_ >= current_cloud_data_.time_stamp_)
                         {
                             imu_raw_data_buff_.push_back(current_imu_raw_data_);
