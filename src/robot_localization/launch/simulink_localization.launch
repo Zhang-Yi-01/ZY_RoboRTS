@@ -1,14 +1,14 @@
 <launch>
 <!-- 启动 gazebo -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find my_robot_)/world/test_world01.world" />        
+        <arg name="world_name" value="$(find robot_simulation)/world/test_world01.world" />        
     </include>
 
     <!--  加载机器人描述 -->
     
     <arg name="gpu" default="false" />
     <arg name="organize_cloud" default="false" />
-    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find ros_enhance)/urdf/my_car_VLP16.xacro" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find robot_simulation)/urdf/my_car_VLP16.xacro" />
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
@@ -20,16 +20,9 @@
     <!-- <node pkg="tf" type="static_transform_publisher" name="a_static_transform_publisher" args="0.0 0.0 0.0 0 0 0.0 /velodyne2_base_link /livox_frame 1000"/>
     <node pkg="tf" type="static_transform_publisher" name="b_static_transform_publisher" args="0.0 0.0 0.0 0 0 0.0 /odom /map 1000"/> -->
 
-    <!-- 加载地图描述 -->
-    <!-- <node pkg="map_server" type="map_server" name="map_server" args="$(find map_read_or_save)/map/test_box.yaml"/> -->
-    <!-- 加载amcl文件 -->
-    <!-- <include file="$(find ros_enhance)/launch/amcl.launch" /> -->
-    <!-- 加载路径规划文件 -->
-    <!-- <include file="$(find ros_enhance)/launch/path.launch" /> -->
-    
     
     <!-- 手写的键盘控制节点的发送部分 -->
-    <node pkg="my_robot_" type="teleop_send_cmd" name="moving_control_by_cmd" args="" output="screen" />
+    <node pkg="robot_simulation" type="send_cmd" name="moving_control_by_cmd" args="" />
 
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robot_localization)/config/3d_lidar.rviz" />
     <node pkg="robot_localization" type="front_end_node" name="front_end_node" output="screen" />

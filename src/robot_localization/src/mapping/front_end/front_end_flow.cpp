@@ -26,7 +26,7 @@ namespace robot_localization
         std::string imu_link;
         std::string lidar_link;
         std::string car_base_link;
-        if(topic_yaml["if_simulink"].as<bool>())
+        if(config_node["if_simulink"].as<bool>())
         {
 
         imu_raw_data_topic = config_node["sim_imu_topic"].as<std::string>();

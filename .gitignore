@@ -3,6 +3,5 @@ build
 devel
 src/robot_localization/log/
 src/my_robot_
-src/ros_enhance
 velodyne_simulator
-src/robot_localization/launch/simulink_localization.launch
+robot_simulation

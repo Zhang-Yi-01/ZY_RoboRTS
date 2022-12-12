@@ -62,7 +62,9 @@ namespace robot_localization
 
     bool FrontEnd::ConfigRegistrationMethod(std::shared_ptr<RegistrationInterface> &registration_ptr, const YAML::Node &config_node)
     {
-        std::string registration_method = config_node["registration_method"].as<std::string>();
+        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
+        YAML::Node user_setting_node = YAML::LoadFile(config_file_path);
+        std::string registration_method = user_setting_node["registration_method"].as<std::string>();
 
         if (registration_method == "NDT")
         {
