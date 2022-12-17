@@ -15,7 +15,7 @@
 #include "../../../include/models/registration/ndt_registration.hpp"
 #include "../../../include/models/registration/icp_registration.hpp"
 #include "../../../include/models/registration/icp_svd_registration.hpp"
-// #include "../../../include/models/registration/ndt_cpu/ndt_cpu_registration.hpp"
+#include "../../../include/models/registration/ndt_cpu/ndt_cpu_registration.hpp"
 // 滤波
 #include "../../../include/models/cloud_filter/voxel_filter.hpp"
 // 融合
@@ -84,12 +84,12 @@ namespace robot_localization
             LOG(INFO) << "[registration_method]" << std::endl
                       << registration_method << std::endl;
         }
-        // else if (registration_method == "NDT_CPU")
-        // {
-        //     registration_ptr = std::make_shared<NDTCPURegistration>(config_node[registration_method]);
-        //     LOG(INFO) << "[registration_method]" << std::endl
-        //               << registration_method << std::endl;
-        // }
+        else if (registration_method == "NDT_CPU")
+        {
+            registration_ptr = std::make_shared<NDTCPURegistration>(config_node[registration_method]);
+            LOG(INFO) << "[registration_method]" << std::endl
+                      << registration_method << std::endl;
+        }
         else
         {
             LOG(ERROR) << "[无对应匹配方法]" << std::endl;

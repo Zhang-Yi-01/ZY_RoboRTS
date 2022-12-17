@@ -22,4 +22,4 @@ base_frame_id:  map                   ##不要有斜杠
 
 
 
-registration_method: ICP_SVD # 选择点云匹配方法 目前支持ICP_SVD,ICP,NDT,NDT_CPU(编译没通过),SICP(已有接口，缺少实现)
+registration_method: NDT_CPU # 选择点云匹配方法 目前支持ICP_SVD,ICP,NDT,NDT_CPU(编译没通过),SICP(已有接口，缺少实现)
