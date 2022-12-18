@@ -4,4 +4,4 @@ devel
 src/robot_localization/log/
 src/my_robot_
 velodyne_simulator
-robot_simulation
+src/robot_simulation
