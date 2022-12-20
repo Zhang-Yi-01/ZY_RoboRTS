@@ -16,7 +16,8 @@ include(cmake/glog.cmake)
 include(cmake/pcl.cmake) 
 include(cmake/sophus.cmake)
 include(cmake/yamlcpp.cmake)
-
+include(cmake/protobuf.cmake)
+include(cmake/geographicLib.cmake)
 
 #ROS配置
 set( ROS_CXX_DEPENDENCIES
@@ -34,9 +35,12 @@ file(GLOB_RECURSE ALL_SRCS "*.cpp")
 file(GLOB_RECURSE NODE_SRCS "src/apps/*_node.cpp")
 list(REMOVE_ITEM ALL_SRCS ${NODE_SRCS})
 
-# 前端里程计节点
+# lidar耦合imu里程计节点
 add_executable(front_end_node src/apps/front_end_node.cpp ${ALL_SRCS} )
 target_link_libraries(front_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
+
+# 点云图匹配节点
+
 # 后端优化节点
 # add_executable(back_end_node src/apps/back_end_node.cpp ${ALL_SRCS} )
 # target_link_libraries(back_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})

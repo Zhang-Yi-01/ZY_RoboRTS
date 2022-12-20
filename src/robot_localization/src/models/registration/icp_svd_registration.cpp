@@ -223,4 +223,4 @@ namespace robot_localization
             (rotation_magnitude > trans_eps));
     }
 
-} // namespace lidar_localization
+} // namespace  robot_localization

@@ -25,6 +25,6 @@ namespace robot_localization
     cpu::NormalDistributionsTransform<CloudData::POINT, CloudData::POINT> ndt_cpu_; // 实例化cpu_ndt 对象
   };
 
-} // namespace lidar_localization
+} // namespace  robot_localization
 
 #endif
