@@ -158,7 +158,8 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
 {
     static Eigen::Matrix4f step_pose = Eigen::Matrix4f::Identity();
     static Eigen::Matrix4f last_pose = init_pose_;
-    static Eigen::Matrix4f predict_pose = init_pose_;
+    // static Eigen::Matrix4f predict_pose = init_pose_;
+    static Eigen::Matrix4d predict_pose = init_pose_.cast<double>();
 
     // 删除nan值无效点:
     std::vector<int> indices;
@@ -177,9 +178,9 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
 
     // matching:
     CloudData::CLOUD_PTR result_cloud_ptr(new CloudData::CLOUD());
-    static Eigen::Matrix4d scan_match_result_pose = Eigen::Matrix4f::Identity();
+    static Eigen::Matrix4d scan_match_result_pose = Eigen::Matrix4d::Identity();
     registration_ptr_->ScanMatch(filtered_cloud_ptr, predict_pose, result_cloud_ptr, scan_match_result_pose);
-    cloud_pose=scan_match_result_pose;// 不合理的，到时候改一改精度
+    cloud_pose=scan_match_result_pose.cast<float>();// 不合理的，到时候改一改精度
     pcl::transformPointCloud(*cloud_data.cloud_ptr_, *current_scan_ptr_, cloud_pose);
 
     // update predicted pose:
