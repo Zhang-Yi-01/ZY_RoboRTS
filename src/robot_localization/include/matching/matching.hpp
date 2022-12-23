@@ -16,7 +16,7 @@
 #include "../models/cloud_filter/box_filter.hpp"
 #include "../models/registration/registration_interface.hpp"
 
-#include "lidar_localization/models/scan_context_manager/scan_context_manager.hpp"
+// #include "lidar_localization/models/scan_context_manager/scan_context_manager.hpp"
 
 namespace  robot_localization 
 {
@@ -57,7 +57,7 @@ class Matching {
 
     std::string loop_closure_method_ = "";
 
-    std::shared_ptr<ScanContextManager> scan_context_manager_ptr_;
+    // std::shared_ptr<ScanContextManager> scan_context_manager_ptr_;
     std::shared_ptr<RegistrationInterface> registration_ptr_; 
 
     std::shared_ptr<CloudFilterInterface> global_map_filter_ptr_;
@@ -72,9 +72,8 @@ class Matching {
     CloudData::CLOUD_PTR current_scan_ptr_;
 
     Eigen::Matrix4f current_pose_ = Eigen::Matrix4f::Identity();
-
     Eigen::Matrix4f init_pose_ = Eigen::Matrix4f::Identity();
-    Eigen::Matrix4f current_gnss_pose_ = Eigen::Matrix4f::Identity();
+    // Eigen::Matrix4f current_gnss_pose_ = Eigen::Matrix4f::Identity();
 
     bool has_inited_ = false;
     bool has_new_global_map_ = false;

@@ -8,7 +8,8 @@
 #include "glog/logging.h"
 #include "../../include/global_defination/global_defination.h.in"
 
-namespace  robot_localization {
+namespace  robot_localization 
+{
 MatchingFlow::MatchingFlow(ros::NodeHandle& nh) 
 {   
     std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
@@ -43,7 +44,7 @@ MatchingFlow::MatchingFlow(ros::NodeHandle& nh)
     // a. 已去畸变的点云（但其实这里还没有）: 
     cloud_sub_ptr_ = std::make_shared<CloudSubscriber>(nh, undistrotion_pointcloud_topic, 100000);
     // b. lidar pose in map frame:
-    gnss_sub_ptr_ = std::make_shared<OdometrySubscriber>(nh, "/synced_gnss", 100000);
+    // gnss_sub_ptr_ = std::make_shared<OdometrySubscriber>(nh, "/synced_gnss", 100000);
 
     // publisher:
     // 1. global point cloud map:
@@ -55,14 +56,16 @@ MatchingFlow::MatchingFlow(ros::NodeHandle& nh)
     // 4. estimated lidar pose in map frame:
     laser_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "laser_localization", "map", "lidar", 100);
     // 5. tf
-    laser_tf_pub_ptr_ = std::make_shared<TFBroadCaster>("map", car_base_link);
+    laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("map", car_base_link);
 
+    //matching任务管理器，构造函数会为其配置yaml参数内容，以及加载全局点云pcd文件并更新一次局部地图
     matching_ptr_ = std::make_shared<Matching>();
 }
 
 bool MatchingFlow::Run() 
 {
-    if (matching_ptr_->HasNewGlobalMap() && global_map_pub_ptr_->HasSubscribers()) {
+    if (matching_ptr_->HasNewGlobalMap() && global_map_pub_ptr_->HasSubscribers()) 
+    {
         CloudData::CLOUD_PTR global_map_ptr(new CloudData::CLOUD());
         matching_ptr_->GetGlobalMap(global_map_ptr);
         global_map_pub_ptr_->Publish(global_map_ptr);
@@ -73,13 +76,16 @@ bool MatchingFlow::Run()
 
     ReadData();
 
-    while(HasData()) {
-        if (!ValidData()) {
+    while(HasData()) 
+    {
+        if (!ValidData())
+        {
             LOG(INFO) << "Invalid data. Skip matching" << std::endl;
             continue;
         }
 
-        if (UpdateMatching()) {
+        if (UpdateMatching()) 
+        {
             PublishData();
         }
     }
@@ -91,7 +97,7 @@ bool MatchingFlow::ReadData()
 {
     // pipe lidar measurements and pose into buffer:
     cloud_sub_ptr_->ParseData(cloud_data_buff_);
-    gnss_sub_ptr_->ParseData(gnss_data_buff_);
+    // gnss_sub_ptr_->ParseData(gnss_data_buff_);
     return true;
 }
 
@@ -102,58 +108,58 @@ bool MatchingFlow::HasData() {
     if (matching_ptr_->HasInited())
         return true;
     
-    if (gnss_data_buff_.size() == 0)
-        return false;
         
     return true;
 }
 
-bool MatchingFlow::ValidData() {
+bool MatchingFlow::ValidData() 
+{
     current_cloud_data_ = cloud_data_buff_.front();
 
     if (matching_ptr_->HasInited()) {
         cloud_data_buff_.pop_front();
-        gnss_data_buff_.clear();
+        // gnss_data_buff_.clear();
         return true;
     }
 
-    current_gnss_data_ = gnss_data_buff_.front();
-
-    double diff_time = current_cloud_data_.time - current_gnss_data_.time;
+    // current_gnss_data_ = gnss_data_buff_.front();
+    double diff_time = current_cloud_data_.time_stamp_;
+    // double diff_time = current_cloud_data_.time - current_gnss_data_.time;
     if (diff_time < -0.05) {
         cloud_data_buff_.pop_front();
         return false;
     }
 
     if (diff_time > 0.05) {
-        gnss_data_buff_.pop_front();
+        // gnss_data_buff_.pop_front();
         return false;
     }
 
     cloud_data_buff_.pop_front();
-    gnss_data_buff_.pop_front();
+    // gnss_data_buff_.pop_front();
 
     return true;
 }
 
-bool MatchingFlow::UpdateMatching() {
-    if (!matching_ptr_->HasInited()) {                //  第一帧点云数据
+bool MatchingFlow::UpdateMatching() 
+{
+    if (!matching_ptr_->HasInited())    //  第一帧点云数据
+    {                
         //
         // TODO: implement global initialization here
         //
         // Hints: You can use SetGNSSPose & SetScanContextPose from matching.hpp
-        //
+        // 这里原本有三种初始化方法：
 
         // naive implementation:
         /*地图原点初始化    初始化设置 init_pose  为单位阵*/
-        // Eigen::Matrix4f init_pose = Eigen::Matrix4f::Identity();          
-        
-        // matching_ptr_->SetInitPose(init_pose);
-        // matching_ptr_->SetInited();
+        Eigen::Matrix4f init_pose = Eigen::Matrix4f::Identity();          
+        matching_ptr_->SetInitPose(init_pose);
+        matching_ptr_->SetInited();
         /*利用ScanContext 进行位姿初始化*/
         // matching_ptr_->SetScanContextPose(current_cloud_data_);
         /*利用GNSS 进行位姿初始化*/
-        matching_ptr_->SetGNSSPose(current_gnss_data_.pose);
+        // matching_ptr_->SetGNSSPose(current_gnss_data_.pose);
     }
 
     return matching_ptr_->Update(current_cloud_data_, laser_odometry_);
@@ -161,8 +167,8 @@ bool MatchingFlow::UpdateMatching() {
 
 bool MatchingFlow::PublishData() 
 {
-    laser_tf_pub_ptr_->SendTransform(laser_odometry_, current_cloud_data_.time);
-    laser_odom_pub_ptr_->Publish(laser_odometry_, current_cloud_data_.time);
+    laser_tf_pub_ptr_->SendTransform(laser_odometry_, current_cloud_data_.time_stamp_);
+    laser_odom_pub_ptr_->Publish(laser_odometry_, current_cloud_data_.time_stamp_);
     current_scan_pub_ptr_->Publish(matching_ptr_->GetCurrentScan());
 
     return true;

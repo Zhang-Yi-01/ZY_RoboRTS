@@ -14,6 +14,12 @@
 
 
 namespace  robot_localization {
+    
+/**
+ * @brief 构造函数会为matching任务管理器配置yaml参数内容，以及加载全局点云pcd文件并更新一次局部地图
+ * @note
+ * @param
+ **/
 Matching::Matching()
     : global_map_ptr_(new CloudData::CLOUD()),
       local_map_ptr_(new CloudData::CLOUD()),
@@ -27,7 +33,8 @@ Matching::Matching()
     ResetLocalMap(0.0, 0.0, 0.0);
 }
 
-bool Matching::InitWithConfig() {
+bool Matching::InitWithConfig() 
+{
     std::string config_file_path = WORK_SPACE_PATH + "/config/matching/matching.yaml";
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 
@@ -57,26 +64,26 @@ bool Matching::InitDataPath(const YAML::Node& config_node) {
     return true;
 }
 
-bool Matching::InitScanContextManager(const YAML::Node& config_node) {
-    // get loop closure config:
-    loop_closure_method_ = config_node["loop_closure_method"].as<std::string>();
+// bool Matching::InitScanContextManager(const YAML::Node& config_node) {
+//     // get loop closure config:
+//     loop_closure_method_ = config_node["loop_closure_method"].as<std::string>();
 
-    // create instance:
-    scan_context_manager_ptr_ = std::make_shared<ScanContextManager>(config_node[loop_closure_method_]);
+//     // create instance:
+//     scan_context_manager_ptr_ = std::make_shared<ScanContextManager>(config_node[loop_closure_method_]);
 
-    // load pre-built index:
-    scan_context_path_ = config_node["scan_context_path"].as<std::string>();
-    scan_context_manager_ptr_->Load(scan_context_path_);
+//     // load pre-built index:
+//     scan_context_path_ = config_node["scan_context_path"].as<std::string>();
+//     scan_context_manager_ptr_->Load(scan_context_path_);
 
-    return true;
-}
+//     return true;
+// }
 
 bool Matching::InitRegistration(std::shared_ptr<RegistrationInterface>& registration_ptr, const YAML::Node& config_node) {
     std::string registration_method = config_node["registration_method"].as<std::string>();
     std::cout << "\tPoint Cloud Registration Method: " << registration_method << std::endl;
 
     if (registration_method == "NDT") {
-        registration_ptr = std::make_shared<NDTRegistration>(config_node[registration_method]);
+        registration_ptr = std::make_shared<NdtRegistration>(config_node[registration_method]);
     } else {
         LOG(ERROR) << "Registration method " << registration_method << " NOT FOUND!";
         return false;
@@ -106,7 +113,13 @@ bool Matching::InitBoxFilter(const YAML::Node& config_node) {
     return true;
 }
 
-bool Matching::InitGlobalMap() {
+/**
+ * @brief 获取全局地图，读取点云pcd文件
+ * @note
+ * @param
+ **/
+bool Matching::InitGlobalMap() 
+{
     pcl::io::loadPCDFile(map_path_, *global_map_ptr_);
     LOG(INFO) << "Load global map, size:" << global_map_ptr_->points.size();
 
@@ -141,27 +154,33 @@ bool Matching::ResetLocalMap(float x, float y, float z) {
     return true;
 }
 
-bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose) {
+bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose) 
+{
     static Eigen::Matrix4f step_pose = Eigen::Matrix4f::Identity();
     static Eigen::Matrix4f last_pose = init_pose_;
     static Eigen::Matrix4f predict_pose = init_pose_;
 
-    // remove invalid measurements:
+    // 删除nan值无效点:
     std::vector<int> indices;
-    pcl::removeNaNFromPointCloud(*cloud_data.cloud_ptr, *cloud_data.cloud_ptr, indices);
+    // pcl::removeNaNFromPointCloud(*cloud_data.cloud_ptr, *cloud_data.cloud_ptr, indices);
+    pcl::removeNaNFromPointCloud(*cloud_data.cloud_ptr_, *cloud_data.cloud_ptr_, indices);
 
-    // downsample:
+    // 降采样
     CloudData::CLOUD_PTR filtered_cloud_ptr(new CloudData::CLOUD());
-    frame_filter_ptr_->Filter(cloud_data.cloud_ptr, filtered_cloud_ptr);
+    frame_filter_ptr_->Filter(cloud_data.cloud_ptr_, filtered_cloud_ptr);
 
-    if (!has_inited_) {
-        predict_pose = current_gnss_pose_;
+    if (!has_inited_) // 第一帧处理
+    {   
+        has_inited_=true;
+        // predict_pose = current_gnss_pose_;
     }
 
     // matching:
     CloudData::CLOUD_PTR result_cloud_ptr(new CloudData::CLOUD());
-    registration_ptr_->ScanMatch(filtered_cloud_ptr, predict_pose, result_cloud_ptr, cloud_pose);
-    pcl::transformPointCloud(*cloud_data.cloud_ptr, *current_scan_ptr_, cloud_pose);
+    static Eigen::Matrix4d scan_match_result_pose = Eigen::Matrix4f::Identity();
+    registration_ptr_->ScanMatch(filtered_cloud_ptr, predict_pose, result_cloud_ptr, scan_match_result_pose);
+    cloud_pose=scan_match_result_pose;// 不合理的，到时候改一改精度
+    pcl::transformPointCloud(*cloud_data.cloud_ptr_, *current_scan_ptr_, cloud_pose);
 
     // update predicted pose:
     step_pose = last_pose.inverse() * cloud_pose;
@@ -170,11 +189,11 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose) 
 
     // 匹配之后判断是否需要更新局部地图
     std::vector<float> edge = box_filter_ptr_->GetEdge();
-    for (int i = 0; i < 3; i++) {
-        if (
-            fabs(cloud_pose(i, 3) - edge.at(2 * i)) > 50.0 &&
-            fabs(cloud_pose(i, 3) - edge.at(2 * i + 1)) > 50.0
-        ) {
+    for (int i = 0; i < 3; i++) 
+    {
+        if ( fabs(cloud_pose(i, 3) - edge.at(2 * i)) > 50.0 &&
+             fabs(cloud_pose(i, 3) - edge.at(2 * i + 1)) > 50.0) 
+        {
             continue;
         }
             
@@ -186,21 +205,21 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose) 
 }
 
 // TODO: understand this function    
-bool Matching::SetGNSSPose(const Eigen::Matrix4f& gnss_pose) {      //   利用GNSS 数据找到定位的初始位姿，初始定位的GNSS值，需要在建图时保存
-    static int gnss_cnt = 0;
+// bool Matching::SetGNSSPose(const Eigen::Matrix4f& gnss_pose) {      //   利用GNSS 数据找到定位的初始位姿，初始定位的GNSS值，需要在建图时保存
+//     static int gnss_cnt = 0;
 
-    current_gnss_pose_ = gnss_pose;
+//     current_gnss_pose_ = gnss_pose;
 
-    if ( gnss_cnt == 0 ) {
-        SetInitPose(gnss_pose);
-    } else if (gnss_cnt > 3) {
-        has_inited_ = true;
-    }
+//     if ( gnss_cnt == 0 ) {
+//         SetInitPose(gnss_pose);
+//     } else if (gnss_cnt > 3) {
+//         has_inited_ = true;
+//     }
 
-    gnss_cnt++;
+//     gnss_cnt++;
 
-    return true;
-}
+//     return true;
+// }
 
 /**
  * @brief  get init pose using scan context matching
@@ -208,22 +227,22 @@ bool Matching::SetGNSSPose(const Eigen::Matrix4f& gnss_pose) {      //   利用G
  * @return true if success otherwise false
  */
 // TODO: understand this function
-bool Matching::SetScanContextPose(const CloudData& init_scan) {                      //    利用闭环检测，找到定位的初始位姿
-    // get init pose proposal using scan context match:
-    Eigen::Matrix4f init_pose =  Eigen::Matrix4f::Identity();                                             //    初始化位姿为单位阵
+// bool Matching::SetScanContextPose(const CloudData& init_scan) {                      //    利用闭环检测，找到定位的初始位姿
+//     // get init pose proposal using scan context match:
+//     Eigen::Matrix4f init_pose =  Eigen::Matrix4f::Identity();                                             //    初始化位姿为单位阵
 
-    if (
-        !scan_context_manager_ptr_->DetectLoopClosure(init_scan, init_pose)
-    ) {
-        return false;
-    }
+//     if (
+//         !scan_context_manager_ptr_->DetectLoopClosure(init_scan, init_pose)
+//     ) {
+//         return false;
+//     }
 
-    // set init pose:
-    SetInitPose(init_pose);
-    has_inited_ = true;
+//     // set init pose:
+//     SetInitPose(init_pose);
+//     has_inited_ = true;
     
-    return true;
-}
+//     return true;
+// }
 
 // TODO: understand this function                   
 bool Matching::SetInitPose(const Eigen::Matrix4f& init_pose) {                              // 设置定位的初始位姿，根据此位姿可以找到定位需要用到的局部地图；这个位姿可以通过GNSS数据得到，或者回环检测得到
@@ -269,4 +288,5 @@ bool Matching::HasNewGlobalMap() {
 bool Matching::HasNewLocalMap() {
     return has_new_local_map_;
 }
+
 }
