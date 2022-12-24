@@ -8,6 +8,7 @@
 
 #include <ros/ros.h>
 #include <ros/package.h>
+#include "../tools/color_terminal.hpp"
 // subscriber
 #include "../subscriber/cloud_subscriber.hpp"
 #include "../subscriber/odometry_subscriber.hpp"

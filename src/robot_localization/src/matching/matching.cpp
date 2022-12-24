@@ -33,6 +33,11 @@ Matching::Matching()
     ResetLocalMap(0.0, 0.0, 0.0);
 }
 
+/**
+ * @brief 由config/params/matching.yaml配置参数
+ * @note
+ * @param
+ **/
 bool Matching::InitWithConfig() 
 {
     // std::string config_file_path = WORK_SPACE_PATH + "/config/matching/matching.yaml";
@@ -119,16 +124,16 @@ bool Matching::InitBoxFilter(const YAML::Node& config_node) {
 }
 
 /**
- * @brief 获取全局地图，读取点云pcd文件
+ * @brief 读取点云pcd文件，获取全局地图
  * @note
- * @param
+ * @param map_path_
  **/
 bool Matching::InitGlobalMap() 
 {
     pcl::io::loadPCDFile(map_path_, *global_map_ptr_);
     LOG(INFO) << "Load global map, size:" << global_map_ptr_->points.size();
 
-    // since scan-map matching is used, here apply the same filter to local map & scan:
+    // 由于用了scan-map匹配，所以这里将相同的过滤器应用于local map & scan:
     local_map_filter_ptr_->Filter(global_map_ptr_, global_map_ptr_);
     LOG(INFO) << "Filtered global map, size:" << global_map_ptr_->points.size();
 
@@ -137,10 +142,16 @@ bool Matching::InitGlobalMap()
     return true;
 }
 
-bool Matching::ResetLocalMap(float x, float y, float z) {
+/**
+ * @brief 更新局部地图
+ * @note
+ * @param 
+ **/
+bool Matching::ResetLocalMap(float x, float y, float z) 
+{
     std::vector<float> origin = {x, y, z};
 
-    // use ROI filtering for local map segmentation:
+    // 使用ROI过滤进行局部地图分割：
     box_filter_ptr_->SetOrigin(origin);
     box_filter_ptr_->Filter(global_map_ptr_, local_map_ptr_);
 
@@ -268,7 +279,9 @@ Eigen::Matrix4f Matching::GetInitPose(void) {
     return init_pose_;
 }
 
-void Matching::GetGlobalMap(CloudData::CLOUD_PTR& global_map) {
+
+void Matching::GetGlobalMap(CloudData::CLOUD_PTR& global_map) 
+{
     // downsample global map for visualization:
     global_map_filter_ptr_->Filter(global_map_ptr_, global_map);
 
@@ -287,11 +300,17 @@ bool Matching::HasInited() {
     return has_inited_;
 }
 
-bool Matching::HasNewGlobalMap() {
+/**
+ * @brief  判断全局地图是否是刚刚更新
+ * @return true or false
+ */
+bool Matching::HasNewGlobalMap() 
+{
     return has_new_global_map_;
 }
 
-bool Matching::HasNewLocalMap() {
+bool Matching::HasNewLocalMap() 
+{
     return has_new_local_map_;
 }
 
