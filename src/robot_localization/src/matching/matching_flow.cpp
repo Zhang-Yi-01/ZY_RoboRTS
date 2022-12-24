@@ -14,39 +14,33 @@ MatchingFlow::MatchingFlow(ros::NodeHandle& nh)
 {   
     std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
     YAML::Node user_node = YAML::LoadFile(config_file_path);
-    // 配置消息话题
-    std::string imu_raw_data_topic;
+    // 配置用户设置消息话题
     std::string undistrotion_pointcloud_topic;
-    std::string imu_link;
     std::string lidar_link;
     std::string car_base_link;
     
     if(user_node["if_simulink"].as<bool>())
     {
-
-    imu_raw_data_topic = user_node["sim_imu_topic"].as<std::string>();
+ 
     undistrotion_pointcloud_topic = user_node["sim_scan_pointcloud_topic"].as<std::string>();
-    imu_link = user_node["sim_imu_link"].as<std::string>();
     lidar_link = user_node["sim_lidar_link"].as<std::string>();
     car_base_link = user_node["sim_car_base_link"].as<std::string>();
     }else
     {
-    imu_raw_data_topic = user_node["imu_topic"].as<std::string>();
     undistrotion_pointcloud_topic = user_node["scan_pointcloud_topic"].as<std::string>();
-    imu_link = user_node["imu_link"].as<std::string>();
     lidar_link = user_node["lidar_link"].as<std::string>();
     car_base_link = user_node["car_base_link"].as<std::string>();
 
     }
 
 
-    // subscriber:
+    // 订阅:
     // a. 已去畸变的点云（但其实这里还没有）: 
     cloud_sub_ptr_ = std::make_shared<CloudSubscriber>(nh, undistrotion_pointcloud_topic, 100000);
     // b. lidar pose in map frame:
     // gnss_sub_ptr_ = std::make_shared<OdometrySubscriber>(nh, "/synced_gnss", 100000);
 
-    // publisher:
+    // 发布:
     // 1. global point cloud map:
     global_map_pub_ptr_ = std::make_shared<CloudPublisher>(nh, "global_map", "map", 100);
     // 2. local point cloud map:
@@ -167,8 +161,8 @@ bool MatchingFlow::UpdateMatching()
 
 bool MatchingFlow::PublishData() 
 {
-    laser_tf_pub_ptr_->SendTransform(laser_odometry_, current_cloud_data_.time_stamp_);
-    laser_odom_pub_ptr_->Publish(laser_odometry_, current_cloud_data_.time_stamp_);
+    laser_tf_pub_ptr_->SendTransform(laser_odometry_.cast<double>(), current_cloud_data_.time_stamp_);
+    laser_odom_pub_ptr_->Publish(laser_odometry_.cast<double>(), current_cloud_data_.time_stamp_);
     current_scan_pub_ptr_->Publish(matching_ptr_->GetCurrentScan());
 
     return true;

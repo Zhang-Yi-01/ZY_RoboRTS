@@ -11,7 +11,7 @@
 #include "../../include/models/registration/ndt_registration.hpp"
 #include "../../include/models/cloud_filter/voxel_filter.hpp"
 #include "../../include/models/cloud_filter/no_filter.hpp"
-
+#include "ros/package.h"
 
 namespace  robot_localization {
     
@@ -35,16 +35,17 @@ Matching::Matching()
 
 bool Matching::InitWithConfig() 
 {
-    std::string config_file_path = WORK_SPACE_PATH + "/config/matching/matching.yaml";
+    // std::string config_file_path = WORK_SPACE_PATH + "/config/matching/matching.yaml";
+    std::string config_file_path = ros::package::getPath("robot_localization") + "/config/params/matching.yaml";
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 
     LOG(INFO) << std::endl
-              << "-----------------Init Localization-------------------" 
+              << "-----------------Init Matching With Config-------------------" 
               << std::endl;
 
     InitDataPath(config_node);
 
-    InitScanContextManager(config_node);
+    // InitScanContextManager(config_node);//应该不需要我lsc先注释了
     InitRegistration(registration_ptr_, config_node);
 
     // a. global map filter -- downsample point cloud map for visualization:
@@ -185,7 +186,7 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
 
     // update predicted pose:
     step_pose = last_pose.inverse() * cloud_pose;
-    predict_pose = cloud_pose * step_pose;
+    predict_pose = cloud_pose.cast<double>() * step_pose.cast<double>();
     last_pose = cloud_pose;
 
     // 匹配之后判断是否需要更新局部地图

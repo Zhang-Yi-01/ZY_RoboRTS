@@ -10,7 +10,6 @@
 #include <Eigen/Dense>
 #include <yaml-cpp/yaml.h>
 #include "../sensor_data/cloud_data.hpp"
-// #include "lidar_localization/sensor_data/pose_data.hpp"
 #include "../models/registration/registration_interface.hpp"
 #include "../models/cloud_filter/cloud_filter_interface.hpp"
 #include "../models/cloud_filter/box_filter.hpp"
@@ -26,8 +25,8 @@ class Matching {
 
     bool Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose);
 
-    bool SetGNSSPose(const Eigen::Matrix4f& init_pose);
-    bool SetScanContextPose(const CloudData& init_scan);
+    // bool SetGNSSPose(const Eigen::Matrix4f& init_pose);
+    // bool SetScanContextPose(const CloudData& init_scan);
 
     bool SetInitPose(const Eigen::Matrix4f& init_pose);
     bool SetInited(void);
