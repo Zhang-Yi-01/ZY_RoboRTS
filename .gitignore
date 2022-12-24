@@ -5,3 +5,5 @@ src/robot_localization/log/
 src/my_robot_
 velodyne_simulator
 src/robot_simulation
+src/recordings_of_rosbag
+src/robot_localization/pcd_map/*.pcd

@@ -41,7 +41,7 @@ class Matching {
 
   private:
     bool InitWithConfig();
-    bool InitDataPath(const YAML::Node& config_node);
+    bool InitDataPath(const std::string pcd_map_path);
     bool InitScanContextManager(const YAML::Node& config_node);
     bool InitRegistration(std::shared_ptr<RegistrationInterface>& registration_ptr, const YAML::Node& config_node);
     bool InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface>& filter_ptr, const YAML::Node& config_node);

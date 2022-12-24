@@ -43,7 +43,9 @@ bool Matching::InitWithConfig()
               << "-----------------Init Matching With Config-------------------" 
               << std::endl;
 
-    InitDataPath(config_node);
+    std::string pcd_map_path = ros::package::getPath("robot_localization") + "/pcd_map/scans.pcd";
+
+    InitDataPath(pcd_map_path);
 
     // InitScanContextManager(config_node);//应该不需要我lsc先注释了
     InitRegistration(registration_ptr_, config_node);
@@ -59,8 +61,10 @@ bool Matching::InitWithConfig()
     return true;
 }
 
-bool Matching::InitDataPath(const YAML::Node& config_node) {
-    map_path_ = config_node["map_path"].as<std::string>();
+bool Matching::InitDataPath(const std::string pcd_map_path) 
+{   
+    map_path_ = pcd_map_path;
+    // map_path_ = config_node["map_path"].as<std::string>();
 
     return true;
 }

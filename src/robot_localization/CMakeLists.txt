@@ -40,6 +40,8 @@ add_executable(front_end_node src/apps/front_end_node.cpp ${ALL_SRCS} )
 target_link_libraries(front_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
 
 # 点云图匹配节点
+add_executable(matching_node src/apps/matching_node.cpp ${ALL_SRCS} )
+target_link_libraries(matching_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
 
 # 后端优化节点
 # add_executable(back_end_node src/apps/back_end_node.cpp ${ALL_SRCS} )
