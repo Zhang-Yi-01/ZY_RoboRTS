@@ -23,7 +23,7 @@ class Matching {
   public:
     Matching();
 
-    bool Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose);
+    bool Update(const CloudData& cloud_data, Eigen::Matrix4d& cloud_pose);
 
     // bool SetGNSSPose(const Eigen::Matrix4f& init_pose);
     // bool SetScanContextPose(const CloudData& init_scan);
@@ -70,9 +70,7 @@ class Matching {
     CloudData::CLOUD_PTR local_map_ptr_;
     CloudData::CLOUD_PTR current_scan_ptr_;
 
-    Eigen::Matrix4f current_pose_ = Eigen::Matrix4f::Identity();
-    Eigen::Matrix4f init_pose_ = Eigen::Matrix4f::Identity();
-    // Eigen::Matrix4f current_gnss_pose_ = Eigen::Matrix4f::Identity();
+    Eigen::Matrix4d init_pose_ = Eigen::Matrix4d::Identity();
 
     bool has_inited_ = false;
     bool has_new_global_map_ = false;

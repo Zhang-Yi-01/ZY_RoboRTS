@@ -36,7 +36,7 @@ class MatchingFlow {
   private:
     // subscriber 
     std::shared_ptr<CloudSubscriber> cloud_sub_ptr_;
-    // std::shared_ptr<OdometrySubscriber> gnss_sub_ptr_;
+
     // publisher
     std::shared_ptr<CloudPublisher> global_map_pub_ptr_;
     std::shared_ptr<CloudPublisher> local_map_pub_ptr_;
@@ -47,10 +47,8 @@ class MatchingFlow {
     std::shared_ptr<Matching> matching_ptr_;
 
     std::deque<CloudData> cloud_data_buff_;
-    // std::deque<PoseData> gnss_data_buff_;
 
     CloudData current_cloud_data_;
-    // PoseData current_gnss_data_;
 
     Eigen::Matrix4f laser_odometry_ = Eigen::Matrix4f::Identity();
 };

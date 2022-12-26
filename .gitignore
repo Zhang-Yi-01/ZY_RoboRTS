@@ -2,7 +2,7 @@
 build
 devel
 src/robot_localization/log/
-
+src/robot_localization/launch/simulink_localization.launch
 src/my_robot_
 velodyne_simulator
 src/robot_simulation

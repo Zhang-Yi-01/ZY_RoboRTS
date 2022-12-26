@@ -143,7 +143,7 @@ bool Matching::InitGlobalMap()
 }
 
 /**
- * @brief 更新局部地图
+ * @brief 更新局部地图，并将局部地图导入registration匹配模块
  * @note
  * @param 
  **/
@@ -172,10 +172,10 @@ bool Matching::ResetLocalMap(float x, float y, float z)
 
 bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose) 
 {
-    static Eigen::Matrix4f step_pose = Eigen::Matrix4f::Identity();
-    static Eigen::Matrix4f last_pose = init_pose_;
+    static Eigen::Matrix4d step_pose = Eigen::Matrix4d::Identity();
+    static Eigen::Matrix4d last_pose = init_pose_;
     // static Eigen::Matrix4f predict_pose = init_pose_;
-    static Eigen::Matrix4d predict_pose = init_pose_.cast<double>();
+    static Eigen::Matrix4d predict_pose = init_pose_;
 
     // 删除nan值无效点:
     std::vector<int> indices;
@@ -186,11 +186,6 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
     CloudData::CLOUD_PTR filtered_cloud_ptr(new CloudData::CLOUD());
     frame_filter_ptr_->Filter(cloud_data.cloud_ptr_, filtered_cloud_ptr);
 
-    if (!has_inited_) // 第一帧处理
-    {   
-        has_inited_=true;
-        // predict_pose = current_gnss_pose_;
-    }
 
     // matching:
     CloudData::CLOUD_PTR result_cloud_ptr(new CloudData::CLOUD());
@@ -201,10 +196,10 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
 
     // update predicted pose:
     step_pose = last_pose.inverse() * cloud_pose;
-    predict_pose = cloud_pose.cast<double>() * step_pose.cast<double>();
+    predict_pose = cloud_pose.cast<double>() * step_pose;
     last_pose = cloud_pose;
 
-    // 匹配之后判断是否需要更新局部地图
+    // 匹配之后判断是否需要更新局部地图,这一部分是图匹配的实现部分
     std::vector<float> edge = box_filter_ptr_->GetEdge();
     for (int i = 0; i < 3; i++) 
     {
@@ -221,22 +216,6 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
     return true;
 }
 
-// TODO: understand this function    
-// bool Matching::SetGNSSPose(const Eigen::Matrix4f& gnss_pose) {      //   利用GNSS 数据找到定位的初始位姿，初始定位的GNSS值，需要在建图时保存
-//     static int gnss_cnt = 0;
-
-//     current_gnss_pose_ = gnss_pose;
-
-//     if ( gnss_cnt == 0 ) {
-//         SetInitPose(gnss_pose);
-//     } else if (gnss_cnt > 3) {
-//         has_inited_ = true;
-//     }
-
-//     gnss_cnt++;
-
-//     return true;
-// }
 
 /**
  * @brief  get init pose using scan context matching
@@ -256,20 +235,21 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
 
 //     // set init pose:
 //     SetInitPose(init_pose);
-//     has_inited_ = true;
     
 //     return true;
 // }
 
 // TODO: understand this function                   
-bool Matching::SetInitPose(const Eigen::Matrix4f& init_pose) {                              // 设置定位的初始位姿，根据此位姿可以找到定位需要用到的局部地图；这个位姿可以通过GNSS数据得到，或者回环检测得到
+bool Matching::SetInitPose(const Eigen::Matrix4f& init_pose) 
+{                              // 设置定位的初始位姿，根据此位姿可以找到定位需要用到的局部地图；这个位姿可以通过GNSS数据得到，或者回环检测得到
     init_pose_ = init_pose;
     ResetLocalMap(init_pose(0,3), init_pose(1,3), init_pose(2,3));                 //  定位需要用到的局部地图，通过获取(x,y,z) 更新local map
 
     return true;
 }
 
-bool Matching::SetInited(void) {
+bool Matching::SetInited(void) 
+{
     has_inited_ = true;
 
     return true;
@@ -288,15 +268,18 @@ void Matching::GetGlobalMap(CloudData::CLOUD_PTR& global_map)
     has_new_global_map_ = false;
 }
 
-CloudData::CLOUD_PTR& Matching::GetLocalMap() {
+CloudData::CLOUD_PTR& Matching::GetLocalMap() 
+{
     return local_map_ptr_;
 }
 
-CloudData::CLOUD_PTR& Matching::GetCurrentScan() {
+CloudData::CLOUD_PTR& Matching::GetCurrentScan() 
+{
     return current_scan_ptr_;
 }
 
-bool Matching::HasInited() {
+bool Matching::HasInited() 
+{
     return has_inited_;
 }
 

@@ -35,10 +35,8 @@ MatchingFlow::MatchingFlow(ros::NodeHandle& nh)
 
 
     // 订阅:
-    // a. 已去畸变的点云（但其实这里还没有）: 
+    // 已去畸变的点云（但其实这里还没有）: 
     cloud_sub_ptr_ = std::make_shared<CloudSubscriber>(nh, undistrotion_pointcloud_topic, 100000);
-    // b. lidar pose in map frame:
-    // gnss_sub_ptr_ = std::make_shared<OdometrySubscriber>(nh, "/synced_gnss", 100000);
 
     // 发布:
     // 1. global point cloud map:
@@ -118,7 +116,6 @@ bool MatchingFlow::ValidData()
         return true;
     }
 
-    // current_gnss_data_ = gnss_data_buff_.front();
     // double diff_time = current_cloud_data_.time - current_gnss_data_.time;
     // if (diff_time < -0.05) 
     // {
@@ -133,7 +130,6 @@ bool MatchingFlow::ValidData()
     // }
 
     cloud_data_buff_.pop_front();
-    // gnss_data_buff_.pop_front();
 
     return true;
 }
@@ -148,14 +144,14 @@ bool MatchingFlow::UpdateMatching()
         // Hints: You can use SetGNSSPose & SetScanContextPose from matching.hpp
         // 选用ScanContext或者原点进行位姿初始化：
 
-        
         /*地图原点初始化，置 init_pose  为单位阵*/// 原注释此为天真（naive）的方法
         Eigen::Matrix4f init_pose = Eigen::Matrix4f::Identity();          
         matching_ptr_->SetInitPose(init_pose);
-        matching_ptr_->SetInited();
+        
         /*利用ScanContext 进行位姿初始化*/
         // matching_ptr_->SetScanContextPose(current_cloud_data_);
-        
+
+        matching_ptr_->SetInited();
     }
 
     return matching_ptr_->Update(current_cloud_data_, laser_odometry_);
