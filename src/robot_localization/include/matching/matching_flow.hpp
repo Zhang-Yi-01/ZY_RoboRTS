@@ -11,7 +11,6 @@
 #include "../tools/color_terminal.hpp"
 // subscriber
 #include "../subscriber/cloud_subscriber.hpp"
-#include "../subscriber/odometry_subscriber.hpp"
 // publisher
 #include "../publisher/cloud_publisher.hpp"
 #include "../publisher/odometry_publisher.hpp"
@@ -50,7 +49,7 @@ class MatchingFlow {
 
     CloudData current_cloud_data_;
 
-    Eigen::Matrix4f laser_odometry_ = Eigen::Matrix4f::Identity();
+    Eigen::Matrix4d laser_odometry_ = Eigen::Matrix4d::Identity();
 };
 }
 

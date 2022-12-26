@@ -145,7 +145,7 @@ bool MatchingFlow::UpdateMatching()
         // 选用ScanContext或者原点进行位姿初始化：
 
         /*地图原点初始化，置 init_pose  为单位阵*/// 原注释此为天真（naive）的方法
-        Eigen::Matrix4f init_pose = Eigen::Matrix4f::Identity();          
+        Eigen::Matrix4d init_pose = Eigen::Matrix4d::Identity();          
         matching_ptr_->SetInitPose(init_pose);
         
         /*利用ScanContext 进行位姿初始化*/

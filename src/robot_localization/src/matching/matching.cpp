@@ -40,7 +40,7 @@ Matching::Matching()
  **/
 bool Matching::InitWithConfig() 
 {
-    // std::string config_file_path = WORK_SPACE_PATH + "/config/matching/matching.yaml";
+    
     std::string config_file_path = ros::package::getPath("robot_localization") + "/config/params/matching.yaml";
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 
@@ -69,12 +69,12 @@ bool Matching::InitWithConfig()
 bool Matching::InitDataPath(const std::string pcd_map_path) 
 {   
     map_path_ = pcd_map_path;
-    // map_path_ = config_node["map_path"].as<std::string>();
 
     return true;
 }
 
-// bool Matching::InitScanContextManager(const YAML::Node& config_node) {
+// bool Matching::InitScanContextManager(const YAML::Node& config_node) 
+// {
 //     // get loop closure config:
 //     loop_closure_method_ = config_node["loop_closure_method"].as<std::string>();
 
@@ -170,11 +170,10 @@ bool Matching::ResetLocalMap(float x, float y, float z)
     return true;
 }
 
-bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose) 
+bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4d& cloud_pose) 
 {
     static Eigen::Matrix4d step_pose = Eigen::Matrix4d::Identity();
     static Eigen::Matrix4d last_pose = init_pose_;
-    // static Eigen::Matrix4f predict_pose = init_pose_;
     static Eigen::Matrix4d predict_pose = init_pose_;
 
     // 删除nan值无效点:
@@ -191,7 +190,7 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
     CloudData::CLOUD_PTR result_cloud_ptr(new CloudData::CLOUD());
     static Eigen::Matrix4d scan_match_result_pose = Eigen::Matrix4d::Identity();
     registration_ptr_->ScanMatch(filtered_cloud_ptr, predict_pose, result_cloud_ptr, scan_match_result_pose);
-    cloud_pose=scan_match_result_pose.cast<float>();// 不合理的，到时候改一改精度
+    cloud_pose=scan_match_result_pose;// 不合理的，到时候改一改精度
     pcl::transformPointCloud(*cloud_data.cloud_ptr_, *current_scan_ptr_, cloud_pose);
 
     // update predicted pose:
@@ -225,7 +224,7 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
 // TODO: understand this function
 // bool Matching::SetScanContextPose(const CloudData& init_scan) {                      //    利用闭环检测，找到定位的初始位姿
 //     // get init pose proposal using scan context match:
-//     Eigen::Matrix4f init_pose =  Eigen::Matrix4f::Identity();                                             //    初始化位姿为单位阵
+//     Eigen::Matrix4d init_pose =  Eigen::Matrix4d::Identity();                                             //    初始化位姿为单位阵
 
 //     if (
 //         !scan_context_manager_ptr_->DetectLoopClosure(init_scan, init_pose)
@@ -240,7 +239,7 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose)
 // }
 
 // TODO: understand this function                   
-bool Matching::SetInitPose(const Eigen::Matrix4f& init_pose) 
+bool Matching::SetInitPose(const Eigen::Matrix4d& init_pose) 
 {                              // 设置定位的初始位姿，根据此位姿可以找到定位需要用到的局部地图；这个位姿可以通过GNSS数据得到，或者回环检测得到
     init_pose_ = init_pose;
     ResetLocalMap(init_pose(0,3), init_pose(1,3), init_pose(2,3));                 //  定位需要用到的局部地图，通过获取(x,y,z) 更新local map
@@ -255,7 +254,8 @@ bool Matching::SetInited(void)
     return true;
 }
 
-Eigen::Matrix4f Matching::GetInitPose(void) {
+Eigen::Matrix4d Matching::GetInitPose(void) 
+{
     return init_pose_;
 }
 

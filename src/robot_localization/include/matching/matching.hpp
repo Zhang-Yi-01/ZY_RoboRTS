@@ -25,13 +25,12 @@ class Matching {
 
     bool Update(const CloudData& cloud_data, Eigen::Matrix4d& cloud_pose);
 
-    // bool SetGNSSPose(const Eigen::Matrix4f& init_pose);
     // bool SetScanContextPose(const CloudData& init_scan);
 
-    bool SetInitPose(const Eigen::Matrix4f& init_pose);
+    bool SetInitPose(const Eigen::Matrix4d& init_pose);
     bool SetInited(void);
 
-    Eigen::Matrix4f GetInitPose(void);
+    Eigen::Matrix4d GetInitPose(void);
     void GetGlobalMap(CloudData::CLOUD_PTR& global_map);
     CloudData::CLOUD_PTR& GetLocalMap();
     CloudData::CLOUD_PTR& GetCurrentScan();

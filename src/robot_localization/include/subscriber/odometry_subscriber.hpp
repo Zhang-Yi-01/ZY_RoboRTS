@@ -14,8 +14,6 @@
 #include <nav_msgs/Odometry.h>
 #include <Eigen/Dense>
 
-// #include "lidar_localization/sensor_data/pose_data.hpp"
-
 namespace robot_localization 
 {
 
