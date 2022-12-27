@@ -1,10 +1,10 @@
 /*
  * @Description: 前端算法
  * @Author: ZY
- * @Date: 2022.12.04
+ * @Date: 
  */
-#ifndef FRONT_END_HPP
-#define FRONT_END_HPP
+#ifndef LIDAR_ODOM_END_HPP
+#define LIDAR_ODOM_END_HPP
 
 // c++
 #include <deque>
@@ -30,7 +30,8 @@
 
 namespace robot_localization
 {
-    class FrontEnd
+    
+    class LidarOdomEnd
     {
     public:
         struct Frame
@@ -40,7 +41,7 @@ namespace robot_localization
         };
 
     public:
-        FrontEnd();
+        LidarOdomEnd();
 
         bool Init(const Eigen::Matrix4d &init_pose,
                   const Eigen::Vector3d &init_vel,

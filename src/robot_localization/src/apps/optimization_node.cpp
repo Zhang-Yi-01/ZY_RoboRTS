@@ -1,6 +1,6 @@
 /*
- * @Description: 后端优化
- * @Author: ZY
+ * @Description: 基于图优化之滑动窗口模型的优化节点
+ * @Author: ZY、lsc
  * @Date: 2022.10.24
  */
 
@@ -18,11 +18,11 @@ using namespace robot_localization;
 int main(int argc, char *argv[])
 {
     // ros
-    ros::init(argc, argv, "back_end_node");
+    ros::init(argc, argv, "sliding_window_optimization_node");
     ros::NodeHandle nh;
 
     //彩色终端
-    ColorTerminal::ColorNodeInfo("back_end_node start ->");
+    ColorTerminal::ColorNodeInfo("sliding_window_optimization_node start ->");
 
     // glog
     google::InitGoogleLogging(argv[0]);

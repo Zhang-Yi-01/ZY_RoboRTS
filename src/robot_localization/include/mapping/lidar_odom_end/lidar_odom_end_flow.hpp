@@ -1,10 +1,10 @@
 /*
  * @Description: 前端任务管理器
  * @Author: ZY
- * @Date: 2022.10.24
+ * @Date: 
  */
-#ifndef FRONT_END_FLOW
-#define FRONT_END_FLOW
+#ifndef LIDAR_ODOM_END_FLOW
+#define LIDAR_ODOM_END_FLOW
 
 // ros
 #include <ros/ros.h>
@@ -27,14 +27,14 @@
 #include "../../sensor_data/imu_data.hpp"
 #include "../../sensor_data/cloud_data.hpp"
 // 前端算法
-#include "front_end.hpp"
+#include "lidar_odom_end.hpp"
 
 namespace robot_localization
 {
-    class FrontEndFlow
+    class LidarOdomEndFlow
     {
     public:
-        FrontEndFlow(ros::NodeHandle &nh);
+        LidarOdomEndFlow(ros::NodeHandle &nh);
 
         bool Run();
 
@@ -47,7 +47,7 @@ namespace robot_localization
         {
             if (!imu_raw_data_buff_.empty())
             {
-                double diff_filter_time = current_imu_raw_data_.time_stamp_ - front_end_ptr_->GetTime();
+                double diff_filter_time = current_imu_raw_data_.time_stamp_ - lidar_odom_end_ptr_->GetTime();
 
                 if (diff_filter_time <= 0.01)
                 {
@@ -114,7 +114,7 @@ namespace robot_localization
         ImuData current_imu_synced_data_;
 
         // 前端算法
-        std::shared_ptr<FrontEnd> front_end_ptr_;
+        std::shared_ptr<LidarOdomEnd> lidar_odom_end_ptr_;
 
         // 里程计信息
         Eigen::Matrix4d odometry_ = Eigen::Matrix4d::Identity();

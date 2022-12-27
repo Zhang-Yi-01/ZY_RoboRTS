@@ -50,7 +50,7 @@ bool Matching::InitWithConfig()
 
     std::string pcd_map_path = ros::package::getPath("robot_localization") + "/pcd_map/scans.pcd";
 
-    InitDataPath(pcd_map_path);
+    InitDataPath(pcd_map_path);// pcd点云地图文件路径制定
 
     // InitScanContextManager(config_node);//应该不需要我lsc先注释了
     InitRegistration(registration_ptr_, config_node);
@@ -66,6 +66,11 @@ bool Matching::InitWithConfig()
     return true;
 }
 
+
+/**
+ * @brief pcd点云地图文件路径设置
+ * @param string pcd_map_path
+ **/
 bool Matching::InitDataPath(const std::string pcd_map_path) 
 {   
     map_path_ = pcd_map_path;
@@ -190,12 +195,12 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4d& cloud_pose)
     CloudData::CLOUD_PTR result_cloud_ptr(new CloudData::CLOUD());
     static Eigen::Matrix4d scan_match_result_pose = Eigen::Matrix4d::Identity();
     registration_ptr_->ScanMatch(filtered_cloud_ptr, predict_pose, result_cloud_ptr, scan_match_result_pose);
-    cloud_pose=scan_match_result_pose;// 不合理的，到时候改一改精度
+    cloud_pose=scan_match_result_pose;
     pcl::transformPointCloud(*cloud_data.cloud_ptr_, *current_scan_ptr_, cloud_pose);
 
     // update predicted pose:
     step_pose = last_pose.inverse() * cloud_pose;
-    predict_pose = cloud_pose.cast<double>() * step_pose;
+    predict_pose = cloud_pose * step_pose;
     last_pose = cloud_pose;
 
     // 匹配之后判断是否需要更新局部地图,这一部分是图匹配的实现部分
@@ -243,7 +248,7 @@ bool Matching::SetInitPose(const Eigen::Matrix4d& init_pose)
 {                              // 设置定位的初始位姿，根据此位姿可以找到定位需要用到的局部地图；这个位姿可以通过GNSS数据得到，或者回环检测得到
     init_pose_ = init_pose;
     ResetLocalMap(init_pose(0,3), init_pose(1,3), init_pose(2,3));                 //  定位需要用到的局部地图，通过获取(x,y,z) 更新local map
-
+    
     return true;
 }
 

@@ -145,7 +145,8 @@ bool MatchingFlow::UpdateMatching()
         // 选用ScanContext或者原点进行位姿初始化：
 
         /*地图原点初始化，置 init_pose  为单位阵*/// 原注释此为天真（naive）的方法
-        Eigen::Matrix4d init_pose = Eigen::Matrix4d::Identity();          
+        Eigen::Matrix4d init_pose = Eigen::Matrix4d::Identity();     
+        // init_pose = Eigen::Matrix4d::Zero();     
         matching_ptr_->SetInitPose(init_pose);
         
         /*利用ScanContext 进行位姿初始化*/
@@ -159,8 +160,8 @@ bool MatchingFlow::UpdateMatching()
 
 bool MatchingFlow::PublishData() 
 {
-    laser_tf_pub_ptr_->SendTransform(laser_odometry_.cast<double>(), current_cloud_data_.time_stamp_);
-    laser_odom_pub_ptr_->Publish(laser_odometry_.cast<double>(), current_cloud_data_.time_stamp_);
+    laser_tf_pub_ptr_->SendTransform(laser_odometry_, current_cloud_data_.time_stamp_);
+    laser_odom_pub_ptr_->Publish(laser_odometry_, current_cloud_data_.time_stamp_);
     current_scan_pub_ptr_->Publish(matching_ptr_->GetCurrentScan());
 
     return true;

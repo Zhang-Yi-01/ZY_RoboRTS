@@ -1,4 +1,4 @@
-if_show_working_info: true #那些运行中的info正常提示或者什么的
+if_show_working_info: true #那些运行中的info正常提示或者什么的,要不要显示
 
 if_simulink: true         ##后面会自动根据是否处于仿真，分配话题
 ########input_topic_part########配置传感器话题输入部分

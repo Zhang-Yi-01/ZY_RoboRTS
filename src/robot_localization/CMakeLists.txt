@@ -36,13 +36,13 @@ file(GLOB_RECURSE NODE_SRCS "src/apps/*_node.cpp")
 list(REMOVE_ITEM ALL_SRCS ${NODE_SRCS})
 
 # lidar耦合imu里程计节点
-add_executable(front_end_node src/apps/front_end_node.cpp ${ALL_SRCS} )
-target_link_libraries(front_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
+add_executable(lidar_odom_end_node src/apps/lidar_odom_end_node.cpp ${ALL_SRCS} )
+target_link_libraries(lidar_odom_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
 
 # 点云图匹配节点
 add_executable(matching_node src/apps/matching_node.cpp ${ALL_SRCS} )
 target_link_libraries(matching_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
 
-# 后端优化节点
-# add_executable(back_end_node src/apps/back_end_node.cpp ${ALL_SRCS} )
-# target_link_libraries(back_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
+# 基于图优化之滑动窗口模型的后端优化节点
+add_executable(optimization_node src/apps/optimization_node.cpp ${ALL_SRCS} )
+target_link_libraries(optimization_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})

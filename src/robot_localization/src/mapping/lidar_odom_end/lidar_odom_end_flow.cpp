@@ -4,7 +4,7 @@
  * @Date: 2022.10.24
  */
 
-#include "../../../include/mapping/front_end/front_end_flow.hpp"
+#include "../../../include/mapping/lidar_odom_end/lidar_odom_end_flow.hpp"
 // tools
 #include "../../../include/tools/color_terminal.hpp"
 
@@ -15,7 +15,7 @@ namespace robot_localization
      * @note 订阅点云信息 发布激光里程计
      * @todo
      **/
-    FrontEndFlow::FrontEndFlow(ros::NodeHandle &nh)
+    LidarOdomEndFlow::LidarOdomEndFlow(ros::NodeHandle &nh)
     {
         // 读取YAML参数
         std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
@@ -70,7 +70,7 @@ namespace robot_localization
         laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("map", car_base_link);
 
         // 前端算法
-        front_end_ptr_ = std::make_shared<FrontEnd>();
+        lidar_odom_end_ptr_ = std::make_shared<LidarOdomEnd>();
 
         ColorTerminal::ColorFlowInfo("ESKF数据融合FLOW配置完成");
     }
@@ -80,14 +80,12 @@ namespace robot_localization
      * @note
      * @todo
      **/
-    bool FrontEndFlow::Run()
+    bool LidarOdomEndFlow::Run()
     {
         if (!InitCalibration())
         {
             return false;
         }
-        // PublishGlobalMap();
-        // PublishLocalMap();
 
         ReadData();
 
@@ -138,12 +136,12 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEndFlow::ReadData()
+    bool LidarOdomEndFlow::ReadData()
     {
         // 将IMU原属数据存入缓存
         imu_raw_sub_ptr_->ParseData(imu_raw_data_buff_);
 
-        while (HasInited() && HasIMUData() && imu_raw_data_buff_.front().time_stamp_ < front_end_ptr_->GetTime())
+        while (HasInited() && HasIMUData() && imu_raw_data_buff_.front().time_stamp_ < lidar_odom_end_ptr_->GetTime())
         {
             imu_raw_data_buff_.pop_front();
         }
@@ -155,12 +153,12 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEndFlow::HasInited(void)
+    bool LidarOdomEndFlow::HasInited(void)
     {
-        return front_end_ptr_->HasInited();
+        return lidar_odom_end_ptr_->HasInited();
     }
 
-    bool FrontEndFlow::HasData()
+    bool LidarOdomEndFlow::HasData()
     {
         if (!HasInited())
         {
@@ -180,7 +178,7 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEndFlow::ValidIMUData()
+    bool LidarOdomEndFlow::ValidIMUData()
     {
         current_imu_raw_data_ = imu_raw_data_buff_.front();
 
@@ -189,7 +187,7 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEndFlow::ValidLidarData()
+    bool LidarOdomEndFlow::ValidLidarData()
     {
         current_cloud_data_ = cloud_data_buff_.front();
         current_imu_synced_data_ = imu_synced_data_buff_.front();
@@ -214,7 +212,7 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEndFlow::InitCalibration()
+    bool LidarOdomEndFlow::InitCalibration()
     {
         // lookup imu pose in lidar frame:
         static bool calibration_received = false;
@@ -230,12 +228,12 @@ namespace robot_localization
         return calibration_received;
     }
 
-    bool FrontEndFlow::InitLocalization(void)
+    bool LidarOdomEndFlow::InitLocalization(void)
     {
         Eigen::Vector3d init_vel = Eigen::Vector3d::Zero();
         Eigen::Matrix4d init_pose = Eigen::Matrix4d::Identity();
 
-        if (front_end_ptr_->Init(init_pose, init_vel, current_imu_synced_data_))
+        if (lidar_odom_end_ptr_->Init(init_pose, init_vel, current_imu_synced_data_))
         {
             LOG(INFO) << " Localization Init Succeeded." << std::endl;
         }
@@ -243,9 +241,9 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEndFlow::Predict()
+    bool LidarOdomEndFlow::Predict()
     {
-        if (front_end_ptr_->Predict(current_imu_raw_data_))
+        if (lidar_odom_end_ptr_->Predict(current_imu_raw_data_))
         {
             PublishFusionOdom();
             return true;
@@ -254,9 +252,9 @@ namespace robot_localization
         return false;
     }
 
-    bool FrontEndFlow::Correct()
+    bool LidarOdomEndFlow::Correct()
     {
-        bool is_fusion_succeeded = front_end_ptr_->Correct(current_imu_synced_data_,
+        bool is_fusion_succeeded = lidar_odom_end_ptr_->Correct(current_imu_synced_data_,
                                                            current_cloud_data_,
                                                            laser_pose_);
         PublishLidarOdom();
@@ -270,12 +268,12 @@ namespace robot_localization
         return false;
     }
 
-    bool FrontEndFlow::PublishGlobalMap()
+    bool LidarOdomEndFlow::PublishGlobalMap()
     {
-        // if (front_end_ptr_->HasNewGlobalMap() && global_map_pub_ptr_->HasSubscribers())
+        // if (lidar_odom_end_ptr_->HasNewGlobalMap() && global_map_pub_ptr_->HasSubscribers())
         // {
         //     CloudData::CLOUD_PTR global_map_ptr(new CloudData::CLOUD());
-        //     front_end_ptr_->GetGlobalMap(global_map_ptr);
+        //     lidar_odom_end_ptr_->GetGlobalMap(global_map_ptr);
         //     global_map_pub_ptr_->Publish(global_map_ptr);
 
         //     return true;
@@ -284,11 +282,11 @@ namespace robot_localization
         return false;
     }
 
-    bool FrontEndFlow::PublishLocalMap()
+    bool LidarOdomEndFlow::PublishLocalMap()
     {
-        // if (front_end_ptr_->HasNewLocalMap() && local_map_pub_ptr_->HasSubscribers())
+        // if (lidar_odom_end_ptr_->HasNewLocalMap() && local_map_pub_ptr_->HasSubscribers())
         // {
-        //     local_map_pub_ptr_->Publish(front_end_ptr_->GetLocalMap());
+        //     local_map_pub_ptr_->Publish(lidar_odom_end_ptr_->GetLocalMap());
 
         //     return true;
         // }
@@ -296,20 +294,20 @@ namespace robot_localization
         return false;
     }
 
-    bool FrontEndFlow::PublishLidarOdom()
+    bool LidarOdomEndFlow::PublishLidarOdom()
     {
         // 1. publish lidar odometry
         laser_odom_pub_ptr_->Publish(laser_pose_, current_cloud_data_.time_stamp_);
         // 2. publish current scan:
-        current_scan_pub_ptr_->Publish(front_end_ptr_->GetCurrentScan());
+        current_scan_pub_ptr_->Publish(lidar_odom_end_ptr_->GetCurrentScan());
 
         return true;
     }
 
-    bool FrontEndFlow::PublishFusionOdom()
+    bool LidarOdomEndFlow::PublishFusionOdom()
     {
         // get odometry from Kalman filter:
-        front_end_ptr_->GetOdometry(fused_pose_, fused_vel_);
+        lidar_odom_end_ptr_->GetOdometry(fused_pose_, fused_vel_);
         // 1. publish tf:
         laser_tf_pub_ptr_->SendTransform(fused_pose_, current_imu_raw_data_.time_stamp_);
         // 2. publish fusion odometry:

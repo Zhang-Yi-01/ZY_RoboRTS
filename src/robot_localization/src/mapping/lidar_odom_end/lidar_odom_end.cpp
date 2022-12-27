@@ -4,7 +4,8 @@
  * @Date: 2022.10.24
  */
 
-#include "../../../include/mapping/front_end/front_end.hpp"
+#include "../../../include/mapping/lidar_odom_end/lidar_odom_end.hpp"
+
 // ros
 #include <ros/ros.h>
 #include <ros/package.h>
@@ -35,7 +36,7 @@ namespace robot_localization
      * @note 订阅点云信息 发布激光里程计
      * @todo
      **/
-    FrontEnd::FrontEnd() : local_map_ptr_(new CloudData::CLOUD()), current_scan_ptr_(new CloudData::CLOUD())
+    LidarOdomEnd::LidarOdomEnd() : local_map_ptr_(new CloudData::CLOUD()), current_scan_ptr_(new CloudData::CLOUD())
     {
         // 读取YAML参数
         std::string config_file_path = ros::package::getPath("robot_localization") + "/config/front_end.yaml";
@@ -53,14 +54,14 @@ namespace robot_localization
      * @note
      * @todo
      **/
-    bool FrontEnd::ConfigFrame(const YAML::Node &config_node)
+    bool LidarOdomEnd::ConfigFrame(const YAML::Node &config_node)
     {
         key_frame_distance_ = config_node["key_frame_distance"].as<float>();
         local_frame_num_ = config_node["local_frame_num"].as<int>();
         return true;
     }
 
-    bool FrontEnd::ConfigRegistrationMethod(std::shared_ptr<RegistrationInterface> &registration_ptr, const YAML::Node &config_node)
+    bool LidarOdomEnd::ConfigRegistrationMethod(std::shared_ptr<RegistrationInterface> &registration_ptr, const YAML::Node &config_node)
     {
         std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
         YAML::Node user_setting_node = YAML::LoadFile(config_file_path);
@@ -98,7 +99,7 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEnd::ConfigFilterMethod(std::string filter_user, std::shared_ptr<CloudFilterInterface> &filter_ptr, const YAML::Node &config_node)
+    bool LidarOdomEnd::ConfigFilterMethod(std::string filter_user, std::shared_ptr<CloudFilterInterface> &filter_ptr, const YAML::Node &config_node)
     {
         std::string filter_mothod = config_node[filter_user + "_filter"].as<std::string>();
 
@@ -116,7 +117,7 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEnd::ConfigKalmanFilterMethod(std::shared_ptr<KalmanFilterInterface> &kalman_filter_ptr_, const YAML::Node &config_node)
+    bool LidarOdomEnd::ConfigKalmanFilterMethod(std::shared_ptr<KalmanFilterInterface> &kalman_filter_ptr_, const YAML::Node &config_node)
     {
         std::string kalman_filter_method = config_node["kalman_filter_method"].as<std::string>();
 
@@ -135,7 +136,7 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEnd::Init(const Eigen::Matrix4d &init_pose,
+    bool LidarOdomEnd::Init(const Eigen::Matrix4d &init_pose,
                         const Eigen::Vector3d &init_vel,
                         const ImuData &init_imu_data)
     {
@@ -149,7 +150,7 @@ namespace robot_localization
         return true;
     }
 
-    bool FrontEnd::Predict(const ImuData &imu_data)
+    bool LidarOdomEnd::Predict(const ImuData &imu_data)
     {
         if (kalman_filter_ptr_->Update(imu_data))
         {
@@ -161,7 +162,7 @@ namespace robot_localization
         return false;
     }
 
-    bool FrontEnd::Correct(const ImuData &imu_data,
+    bool LidarOdomEnd::Correct(const ImuData &imu_data,
                            const CloudData &cloud_data,
                            Eigen::Matrix4d &cloud_pose)
     {
@@ -229,7 +230,7 @@ namespace robot_localization
         return false;
     }
 
-    void FrontEnd::GetOdometry(Eigen::Matrix4d &pose, Eigen::Vector3d &vel)
+    void LidarOdomEnd::GetOdometry(Eigen::Matrix4d &pose, Eigen::Vector3d &vel)
     {
         pose = init_pose_ * current_pose_;
         vel = init_pose_.block<3, 3>(0, 0) * current_vel_;
@@ -240,7 +241,7 @@ namespace robot_localization
      * @note
      * @todo
      **/
-    bool FrontEnd::AddNewFrame(const Frame &new_key_frame)
+    bool LidarOdomEnd::AddNewFrame(const Frame &new_key_frame)
     {
         /*深拷贝到本地*/
         Frame key_frame = new_key_frame;
