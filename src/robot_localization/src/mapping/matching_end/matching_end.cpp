@@ -1,16 +1,16 @@
 /*
  * @Description: 前端里程计算法
- * @Author: lsc
+ * @Author: genshin_zy
  * @Date: 
  */
-#include "../../include/matching/matching.hpp"
+#include "../../../include/mapping/matching_end/matching_end.hpp"
 #include <pcl/common/transforms.h>
 #include <pcl/io/pcd_io.h>
 #include "glog/logging.h"
-#include "../../include/global_defination/global_defination.h.in"
-#include "../../include/models/registration/ndt_registration.hpp"
-#include "../../include/models/cloud_filter/voxel_filter.hpp"
-#include "../../include/models/cloud_filter/no_filter.hpp"
+#include "../../../include/global_defination/global_defination.h.in"
+#include "../../../include/models/registration/ndt_registration.hpp"
+#include "../../../include/models/cloud_filter/voxel_filter.hpp"
+#include "../../../include/models/cloud_filter/no_filter.hpp"
 #include "ros/package.h"
 
 namespace  robot_localization {
@@ -52,7 +52,7 @@ bool Matching::InitWithConfig()
 
     InitDataPath(pcd_map_path);// pcd点云地图文件路径制定
 
-    // InitScanContextManager(config_node);//应该不需要我lsc先注释了
+    // InitScanContextManager(config_node);//应该不需要我genshin_zy先注释了
     InitRegistration(registration_ptr_, config_node);
 
     // a. global map filter -- downsample point cloud map for visualization:

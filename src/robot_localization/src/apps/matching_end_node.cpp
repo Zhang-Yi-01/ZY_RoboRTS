@@ -1,6 +1,6 @@
 /*
- * @Description: 地图匹配定位的node
- * @Author: lsc
+ * @Description: 地图匹配定位端
+ * @Author: genshin_zy
  * @Date: 
  */
 // ros
@@ -10,8 +10,8 @@
 #include <glog/logging.h>
 // 彩色文字终端
 #include "../../include/tools/color_terminal.hpp"
+#include "../../include/mapping/matching_end/matching_end_flow.hpp"
 
-#include "../../include/matching/matching_flow.hpp"
 using namespace robot_localization;
 
 int main(int argc, char *argv[]) 

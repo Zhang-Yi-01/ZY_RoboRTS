@@ -1,6 +1,6 @@
 /*
- * @Description: 基于图优化之滑动窗口模型的优化节点
- * @Author: ZY、lsc
+ * @Description: 基于图优化之滑动窗口模型的优化端
+ * @Author: ZY、genshin_zy
  * @Date: 2022.10.24
  */
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     FLAGS_log_dir = path + "/log";
     FLAGS_alsologtostderr = 1; //记录Log到本地 & 在终端中显示
 
-    //后端任务管理器
+    //优化端任务管理器
 
     ros::Rate rate(100);
     while (ros::ok())

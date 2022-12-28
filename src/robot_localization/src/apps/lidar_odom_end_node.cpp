@@ -1,6 +1,6 @@
 /*
- * @Description: 前段里程计
- * @Author: ZY
+ * @Description: 激光雷达里程计端
+ * @Author: ZY、genshin_zy
  * @Date: 2022.10.24
  */
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     FLAGS_log_dir = path + "/log";
     FLAGS_alsologtostderr = 1; // 记录Log到本地 & 在终端中显示
 
-    // 前端任务管理器
+    // 激光雷达里程计端任务管理器
     std::shared_ptr<LidarOdomEndFlow> lidar_odom_end_flow_ptr = std::make_shared<LidarOdomEndFlow>(nh);
 
     ros::Rate rate(100);

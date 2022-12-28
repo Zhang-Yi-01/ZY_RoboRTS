@@ -1,6 +1,6 @@
 /*
  * @Description: 从点云中截取一个立方体部分
- * @Author: lsc
+ * @Author: genshin_zy
  * @Date: 
  */
 #include <vector>
