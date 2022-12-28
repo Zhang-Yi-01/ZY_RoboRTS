@@ -1,5 +1,5 @@
 /*
- * @Description: 地图匹配定位端
+ * @Description: scan to map 地图匹配定位端
  * @Author: genshin_zy
  * @Date: 
  */
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "matching_node");
     ros::NodeHandle nh;
 
-    // 匹配段任务管理器
+    // 匹配端任务管理器
     std::shared_ptr<MatchingFlow> matching_flow_ptr = std::make_shared<MatchingFlow>(nh);
 
     ros::Rate rate(100);

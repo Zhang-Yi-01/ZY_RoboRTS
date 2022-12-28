@@ -1,6 +1,6 @@
 /*
  * @Description: 基于图优化之滑动窗口模型的优化端
- * @Author: ZY、genshin_zy
+ * @Author: ZY 、 genshin_zy
  * @Date: 2022.10.24
  */
 
@@ -11,7 +11,7 @@
 #include <glog/logging.h>
 // tools
 #include "../../include/tools/color_terminal.hpp"
-// 后端数据处理流程控制
+#include "../../include/mapping/optimizing_end/sliding_window_flow.hpp"
 
 using namespace robot_localization;
 
@@ -30,13 +30,14 @@ int main(int argc, char *argv[])
     FLAGS_log_dir = path + "/log";
     FLAGS_alsologtostderr = 1; //记录Log到本地 & 在终端中显示
 
-    //优化端任务管理器
+    //优化端工作流任务管理器
+    std::shared_ptr<SlidingWindowFlow> sliding_window_flow_ptr = std::make_shared<SlidingWindowFlow>(nh);
 
     ros::Rate rate(100);
     while (ros::ok())
     {
         ros::spinOnce();
-
+        sliding_window_flow_ptr->Run();
         rate.sleep();
     }
 

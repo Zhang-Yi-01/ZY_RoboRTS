@@ -65,7 +65,7 @@ namespace robot_localization
         // 4.estimated lidar pose in map frame
         laser_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "laser_localization", "map", "lidar", 100);
         // 5.fused psoe in map frame
-        fused_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "fused_localization", "map", "lidar", 100);
+        fused_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "fused_odom", "map", "lidar", 100);
         // 6.tf
         laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("map", car_base_link);
 
