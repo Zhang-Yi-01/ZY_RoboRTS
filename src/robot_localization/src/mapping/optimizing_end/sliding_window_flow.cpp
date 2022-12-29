@@ -20,22 +20,22 @@ SlidingWindowFlow::SlidingWindowFlow(ros::NodeHandle& nh)
     // b. map matching odometry 来自图匹配端的位姿:
     map_matching_odom_sub_ptr_ = std::make_shared<OdometrySubscriber>(nh, "/map_matching_odom", 100000);
     // c. IMU measurement, for pre-integration:
-    imu_raw_sub_ptr_ = std::make_shared<IMUSubscriber>(nh, "/kitti/oxts/imu/extract", 1000000);
-    imu_synced_sub_ptr_ = std::make_shared<IMUSubscriber>(nh, "/synced_imu", 100000);
+    imu_raw_sub_ptr_ = std::make_shared<ImuSubscriber>(nh, "/kitti/oxts/imu/extract", 1000000);
+    imu_synced_sub_ptr_ = std::make_shared<ImuSubscriber>(nh, "/synced_imu", 100000);
     // d. GNSS position:
     // gnss_pose_sub_ptr_ = std::make_shared<OdometrySubscriber>(nh, "/synced_gnss", 100000);
 
     //  优化端发布:
     // a. current lidar key frame:
-    key_frame_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_frame", "/map", 100);
+    // key_frame_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_frame", "/map", 100);
     // b. current reference GNSS frame:
-    key_gnss_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_gnss", "/map", 100);
+    // key_gnss_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_gnss", "/map", 100);
     // c. optimized odometry 最终优化位姿:
     optimized_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "/optimized_odometry", "/map", "/lidar", 100);
     // d. optimized trajectory:
-    optimized_trajectory_pub_ptr_ = std::make_shared<KeyFramesPublisher>(nh, "/optimized_trajectory", "/map", 100);
+    // optimized_trajectory_pub_ptr_ = std::make_shared<KeyFramesPublisher>(nh, "/optimized_trajectory", "/map", 100);
     // e. lidar frame
-    laser_tf_pub_ptr_ = std::make_shared<TFBroadCaster>("/map", "/velo_link");
+    laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("/map", "/velo_link");
 
     // 优化端任务管理器:
     sliding_window_ptr_ = std::make_shared<SlidingWindow>();
@@ -104,7 +104,7 @@ bool SlidingWindowFlow::ValidData()
     current_gnss_pose_data_ = gnss_pose_data_buff_.front();
 
     double diff_map_matching_odom_time = current_laser_odom_data_.time - current_map_matching_odom_data_.time;
-    double diff_imu_time = current_laser_odom_data_.time - current_imu_data_.time;
+    double diff_imu_time = current_laser_odom_data_.time - current_imu_data_.time_stamp_;
     double diff_gnss_pose_time = current_laser_odom_data_.time - current_gnss_pose_data_.time;
 
     if ( diff_map_matching_odom_time < -0.05 || diff_imu_time < -0.05 || diff_gnss_pose_time < -0.05 ) {
@@ -143,7 +143,7 @@ bool SlidingWindowFlow::ValidData()
 bool SlidingWindowFlow::UpdateIMUPreIntegration(void) 
 {
     while (!imu_raw_data_buff_.empty() && 
-            imu_raw_data_buff_.front().time < current_imu_data_.time && 
+            imu_raw_data_buff_.front().time_stamp_ < current_imu_data_.time_stamp_ && 
             sliding_window_ptr_->UpdateIMUPreIntegration(imu_raw_data_buff_.front())) 
     {
         imu_raw_data_buff_.pop_front();
@@ -181,18 +181,21 @@ bool SlidingWindowFlow::UpdateBackEnd()
     );
 }
 
-bool SlidingWindowFlow::PublishData() {
-    if ( sliding_window_ptr_->HasNewKeyFrame() ) {        
+bool SlidingWindowFlow::PublishData() 
+{
+    if ( sliding_window_ptr_->HasNewKeyFrame() ) 
+    {        
         KeyFrame key_frame;
 
         sliding_window_ptr_->GetLatestKeyFrame(key_frame);
-        key_frame_pub_ptr_->Publish(key_frame);
+        // key_frame_pub_ptr_->Publish(key_frame);
 
         sliding_window_ptr_->GetLatestKeyGNSS(key_frame);
-        key_gnss_pub_ptr_->Publish(key_frame);
+        // key_gnss_pub_ptr_->Publish(key_frame);
     }
 
-    if ( sliding_window_ptr_->HasNewOptimized() ) {
+    if ( sliding_window_ptr_->HasNewOptimized() ) 
+    {
         KeyFrame key_frame;
         sliding_window_ptr_->GetLatestOptimizedOdometry(key_frame);
         optimized_odom_pub_ptr_->Publish(key_frame.pose, key_frame.time);

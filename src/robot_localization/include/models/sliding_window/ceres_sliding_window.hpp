@@ -20,8 +20,7 @@
 
 #include "../../sensor_data/key_frame.hpp"
 
-#include "lidar_localization/models/pre_integrator/imu_pre_integrator.hpp"
-
+#include "../pre_integrator/imu_pre_integrator.hpp"
 #include <ceres/ceres.h>
 
 #include "params/param_prvag.hpp"

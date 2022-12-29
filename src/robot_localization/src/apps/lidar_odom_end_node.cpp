@@ -13,7 +13,7 @@
 #include "../../include/tools/color_terminal.hpp"
 // 前段数据处理流程控制
 #include "../../include/mapping/lidar_odom_end/lidar_odom_end_flow.hpp"
-
+#include "../../include/global_defination/global_defination.h.in"
 
 using namespace robot_localization;
 
@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
 
     ros::Rate rate(100);
     while (ros::ok())
-    {
+    {   
+        std::cout << WORK_SPACE_PATH;
         ros::spinOnce();
         lidar_odom_end_flow_ptr->Run();
         rate.sleep();
