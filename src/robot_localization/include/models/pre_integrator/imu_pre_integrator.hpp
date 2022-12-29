@@ -76,14 +76,14 @@ public:
      * @param  init_imu_data, init IMU measurements
      * @return true if success false otherwise
      */
-    bool Init(const IMUData &init_imu_data);
+    bool Init(const ImuData &init_imu_data);
 
     /**
      * @brief  update IMU pre-integrator
      * @param  imu_data, current IMU measurements
      * @return true if success false otherwise
      */
-    bool Update(const IMUData &imu_data);
+    bool Update(const ImuData &imu_data);
 
     /**
      * @brief  reset IMU pre-integrator using new init IMU measurement
@@ -91,7 +91,7 @@ public:
      * @param  output pre-integration result for constraint building as IMUPreIntegration
      * @return true if success false otherwise
      */
-    bool Reset(const IMUData &init_imu_data, IMUPreIntegration &imu_pre_integration);
+    bool Reset(const ImuData &init_imu_data, IMUPreIntegration &imu_pre_integration);
 
 private:
     static const int DIM_NOISE = 18;
@@ -114,7 +114,7 @@ private:
     typedef Eigen::Matrix<double, DIM_NOISE, DIM_NOISE> MatrixQ;
 
     // data buff:
-    std::deque<IMUData> imu_data_buff_;
+    std::deque<ImuData> imu_data_buff_;
 
     // hyper-params:
     // a. earth constants:
@@ -168,7 +168,7 @@ private:
      * @param  void
      * @return void
      */
-    void ResetState(const IMUData &init_imu_data);
+    void ResetState(const ImuData &init_imu_data);
 
     /**
      * @brief  update pre-integrator state: mean, covariance and Jacobian

@@ -6,11 +6,15 @@
 #ifndef OPTIMIZING_END_SLIDING_WINDOW_HPP_
 #define OPTIMIZING_END_SLIDING_WINDOW_HPP_
 
+#include <ros/ros.h>
+#include <ros/package.h>
+
 #include <string>
 #include <deque>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 
+#include "../../sensor_data/pose_data.hpp"
 #include "../../sensor_data/imu_data.hpp"
 #include "../../sensor_data/key_frame.hpp"
 
@@ -23,11 +27,11 @@ class SlidingWindow {
   public:
     SlidingWindow();
 
-    bool UpdateIMUPreIntegration(const IMUData &imu_data);
+    bool UpdateIMUPreIntegration(const ImuData &imu_data);
     bool Update(
       const PoseData &laser_odom,
       const PoseData &map_matching_odom,
-      const IMUData &imu_data, 
+      const ImuData &imu_data, 
       const PoseData& gnss_pose
     );
 
@@ -54,7 +58,7 @@ class SlidingWindow {
     bool MaybeNewKeyFrame(
       const PoseData& laser_odom, 
       const PoseData &map_matching_odom,
-      const IMUData &imu_data,
+      const ImuData &imu_data,
       const PoseData& gnss_pose
     );
     

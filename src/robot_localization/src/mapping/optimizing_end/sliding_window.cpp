@@ -1,31 +1,34 @@
 /*
  * @Description: lio localization backend workflow, implementation
  * @Author: genshin_zy
- * @Date: 2020-11-29 15:47:49
+ * @Date: 
  */
-#include "lidar_localization/matching/back_end/sliding_window.hpp"
 
+#include "../../../include/mapping/optimizing_end/sliding_window.hpp"
 #include <Eigen/Dense>
 #include <pcl/io/pcd_io.h>
 #include "glog/logging.h"
 
-#include "lidar_localization/global_defination/global_defination.h"
-#include "lidar_localization/tools/file_manager.hpp"
+#include "../../../include/global_defination/global_defination.h.in"
+#include "../../../include/tools/file_manager.hpp"
 
 namespace robot_localization {
 
-SlidingWindow::SlidingWindow() {
+SlidingWindow::SlidingWindow() 
+{
     InitWithConfig();
 }
 
-bool SlidingWindow::InitWithConfig() {
+bool SlidingWindow::InitWithConfig() 
+{
     //
     // load lio localization backend config file:
     //
-    std::string config_file_path = WORK_SPACE_PATH + "/config/matching/sliding_window.yaml";
+    std::string config_file_path = ros::package::getPath("robot_localization") + "/params/sliding_window.yaml";
+
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 
-    std::cout << "-----------------Init LIO Localization, Backend-------------------" << std::endl;
+    std::cout << "-----------------Init LIO Localization, Optimizing_end-------------------" << std::endl;
 
     // a. estimation output path:
     InitDataPath(config_node);
@@ -103,7 +106,7 @@ bool SlidingWindow::InitIMUPreIntegrator(const YAML::Node& config_node)
     return true;
 }
 
-bool SlidingWindow::UpdateIMUPreIntegration(const IMUData &imu_data) 
+bool SlidingWindow::UpdateIMUPreIntegration(const ImuData &imu_data) 
 {
     if ( !measurement_config_.source.imu_pre_integration || nullptr == imu_pre_integrator_ptr_ )
         return false;
@@ -117,22 +120,23 @@ bool SlidingWindow::UpdateIMUPreIntegration(const IMUData &imu_data)
     return false;
 }
 
-bool SlidingWindow::Update(
-    const PoseData &laser_odom,
-    const PoseData &map_matching_odom,
-    const IMUData &imu_data, 
-    const PoseData& gnss_pose
-) {
+/**
+ * @brief 
+ * @note  
+ * @param laser_odom,map_matching_odom,imu_data
+ **/
+bool SlidingWindow::Update(const PoseData &laser_odom,
+                           const PoseData &map_matching_odom,
+                           const ImuData &imu_data, 
+                           const PoseData& gnss_pose) 
+{
     ResetParam();
 
-    if ( 
-        MaybeNewKeyFrame(
-            laser_odom, 
-            map_matching_odom,
-            imu_data,
-            gnss_pose
-        ) 
-    ) {
+    if ( MaybeNewKeyFrame(  laser_odom, 
+                            map_matching_odom,
+                            imu_data,
+                            gnss_pose ) ) 
+    {
         Update();
         MaybeOptimized();
     }
@@ -188,7 +192,8 @@ bool SlidingWindow::SavePose(std::ofstream& ofs, const Eigen::Matrix4f& pose) {
     return true;
 }
 
-bool SlidingWindow::SaveOptimizedTrajectory() {
+bool SlidingWindow::SaveOptimizedTrajectory() 
+{
     static Eigen::Matrix4f current_pose = Eigen::Matrix4f::Identity();
 
     if ( sliding_window_ptr_->GetNumParamBlocks() == 0 )
@@ -232,17 +237,19 @@ bool SlidingWindow::SaveOptimizedTrajectory() {
     return true;
 }
 
-void SlidingWindow::ResetParam() {
+void SlidingWindow::ResetParam() 
+{
     has_new_key_frame_ = false;
     has_new_optimized_ = false;
 }
 
 bool SlidingWindow::MaybeNewKeyFrame( 
-    const PoseData &laser_odom, 
-    const PoseData &map_matching_odom,
-    const IMUData &imu_data,
-    const PoseData &gnss_odom
-) {
+                                    const PoseData &laser_odom, 
+                                    const PoseData &map_matching_odom,
+                                    const ImuData &imu_data,
+                                    const PoseData &gnss_odom
+                                    ) 
+{
     static KeyFrame last_key_frame;
 
     // 
@@ -277,12 +284,13 @@ bool SlidingWindow::MaybeNewKeyFrame(
     }
 
     // if so:
-    if ( has_new_key_frame_ ) {
+    if ( has_new_key_frame_ ) 
+    {
         // create key frame for lidar odometry, relative pose measurement:
         current_key_frame_.time = laser_odom.time;
         current_key_frame_.index = key_frames_.lidar.size();
         current_key_frame_.pose = laser_odom.pose;
-        current_key_frame_.vel.v = gnss_odom.vel.v;
+        current_key_frame_.vel.v = gnss_odom.vel.v;//这里可以换成里程计的速度
         current_key_frame_.vel.w = gnss_odom.vel.w;
 
         current_map_matching_pose_ = map_matching_odom;
@@ -305,17 +313,20 @@ bool SlidingWindow::MaybeNewKeyFrame(
     return has_new_key_frame_;
 }
 
-bool SlidingWindow::Update(void) {
+bool SlidingWindow::Update(void) 
+{
     static KeyFrame last_key_frame_ = current_key_frame_;
 
     //
     // add node for new key frame pose:
     //
     // fix the pose of the first key frame for lidar only mapping:
-    if ( sliding_window_ptr_->GetNumParamBlocks() == 0 ) {
+    if ( sliding_window_ptr_->GetNumParamBlocks() == 0 ) 
+    {
         // TODO: add init key frame
         sliding_window_ptr_->AddPRVAGParam(current_key_frame_, true);
-    } else {
+    }else 
+    {
         // TODO: add current key frame
         sliding_window_ptr_->AddPRVAGParam(current_key_frame_, false);
     }
@@ -327,11 +338,10 @@ bool SlidingWindow::Update(void) {
 
     //
     // add unary constraints:
-    //
-    //
     // a. map matching / GNSS position:
     //
-    if ( N > 0 && measurement_config_.source.map_matching ) {
+    if ( N > 0 && measurement_config_.source.map_matching ) 
+    {
         // get prior position measurement:
         Eigen::Matrix4d prior_pose = current_map_matching_pose_.pose.cast<double>();
 

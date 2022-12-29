@@ -63,7 +63,7 @@ IMUPreIntegrator::IMUPreIntegrator(const YAML::Node& node) {
  * @param  init_imu_data, init IMU measurements
  * @return true if success false otherwise
  */
-bool IMUPreIntegrator::Init(const IMUData &init_imu_data) {
+bool IMUPreIntegrator::Init(const ImuData &init_imu_data) {
     // reset pre-integrator state:
     ResetState(init_imu_data);
     
@@ -78,8 +78,10 @@ bool IMUPreIntegrator::Init(const IMUData &init_imu_data) {
  * @param  imu_data, current IMU measurements
  * @return true if success false otherwise
  */
-bool IMUPreIntegrator::Update(const IMUData &imu_data) {
-    if ( imu_data_buff_.front().time < imu_data.time ) {
+bool IMUPreIntegrator::Update(const ImuData &imu_data) 
+{
+    if ( imu_data_buff_.front().time_stamp_ < imu_data.time_stamp_ ) 
+    {
         // set buffer:
         imu_data_buff_.push_back(imu_data);
 
@@ -100,14 +102,15 @@ bool IMUPreIntegrator::Update(const IMUData &imu_data) {
  * @return true if success false otherwise
  */
 bool IMUPreIntegrator::Reset(
-    const IMUData &init_imu_data, 
-    IMUPreIntegration &imu_pre_integration
-) {
+                            const ImuData &init_imu_data, 
+                            IMUPreIntegration &imu_pre_integration
+                            ) 
+{
     // one last update:
     Update(init_imu_data);
 
     // set output IMU pre-integration:
-    imu_pre_integration.T_ = init_imu_data.time - time_;
+    imu_pre_integration.T_ = init_imu_data.time_stamp_ - time_;
 
     // set gravity constant:
     imu_pre_integration.g_ = state.g_;
@@ -134,9 +137,9 @@ bool IMUPreIntegrator::Reset(
  * @param  void
  * @return void
  */
-void IMUPreIntegrator::ResetState(const IMUData &init_imu_data) {
+void IMUPreIntegrator::ResetState(const ImuData &init_imu_data) {
     // reset time:
-    time_ = init_imu_data.time;
+    time_ = init_imu_data.time_stamp_;
 
     // a. reset relative translation:
     state.alpha_ij_ = Eigen::Vector3d::Zero();
@@ -173,7 +176,8 @@ void IMUPreIntegrator::ResetState(const IMUData &init_imu_data) {
  * @param  void
  * @return void
  */
-void IMUPreIntegrator::UpdateState(void) {
+void IMUPreIntegrator::UpdateState(void) 
+{
     static double T = 0.0;
 
     static Eigen::Vector3d w_mid = Eigen::Vector3d::Zero();
@@ -193,33 +197,33 @@ void IMUPreIntegrator::UpdateState(void) {
     // parse measurements:
     //
     // get measurement handlers:
-    const IMUData &prev_imu_data = imu_data_buff_.at(0);
-    const IMUData &curr_imu_data = imu_data_buff_.at(1);
+    const ImuData &prev_imu_data = imu_data_buff_.at(0);
+    const ImuData &curr_imu_data = imu_data_buff_.at(1);
 
     // get time delta:
-    T = curr_imu_data.time - prev_imu_data.time;
+    T = curr_imu_data.time_stamp_ - prev_imu_data.time_stamp_;
 
     // get measurements:
     const Eigen::Vector3d prev_w(
-        prev_imu_data.angular_velocity.x - state.b_g_i_.x(),
-        prev_imu_data.angular_velocity.y - state.b_g_i_.y(),
-        prev_imu_data.angular_velocity.z - state.b_g_i_.z()
+        prev_imu_data.angular_velocity_.x - state.b_g_i_.x(),
+        prev_imu_data.angular_velocity_.y - state.b_g_i_.y(),
+        prev_imu_data.angular_velocity_.z - state.b_g_i_.z()
     );
     const Eigen::Vector3d curr_w(
-        curr_imu_data.angular_velocity.x - state.b_g_i_.x(),
-        curr_imu_data.angular_velocity.y - state.b_g_i_.y(),
-        curr_imu_data.angular_velocity.z - state.b_g_i_.z()
+        curr_imu_data.angular_velocity_.x - state.b_g_i_.x(),
+        curr_imu_data.angular_velocity_.y - state.b_g_i_.y(),
+        curr_imu_data.angular_velocity_.z - state.b_g_i_.z()
     );
 
     const Eigen::Vector3d prev_a(
-        prev_imu_data.linear_acceleration.x - state.b_a_i_.x(),
-        prev_imu_data.linear_acceleration.y - state.b_a_i_.y(),
-        prev_imu_data.linear_acceleration.z - state.b_a_i_.z()
+        prev_imu_data.linear_acceleration_.x - state.b_a_i_.x(),
+        prev_imu_data.linear_acceleration_.y - state.b_a_i_.y(),
+        prev_imu_data.linear_acceleration_.z - state.b_a_i_.z()
     );
     const Eigen::Vector3d curr_a(
-        curr_imu_data.linear_acceleration.x - state.b_a_i_.x(),
-        curr_imu_data.linear_acceleration.y - state.b_a_i_.y(),
-        curr_imu_data.linear_acceleration.z - state.b_a_i_.z()
+        curr_imu_data.linear_acceleration_.x - state.b_a_i_.x(),
+        curr_imu_data.linear_acceleration_.y - state.b_a_i_.y(),
+        curr_imu_data.linear_acceleration_.z - state.b_a_i_.z()
     );
 
     //

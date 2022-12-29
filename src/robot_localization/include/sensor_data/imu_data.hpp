@@ -1,10 +1,10 @@
 /*
  * @Description: 自定义imu数据
- * @Author: ZY
+ * @Author: ZY 、 genshin_zy
  * @Date: 2022.10.24
  */
-#ifndef CLOUD_DATA_HPP_
-#define CLOUD_DATA_HPP_
+#ifndef SENSOR_DATA_IMU_DATA_HPP_
+#define SENSOR_DATA_IMU_DATA_HPP_
 
 #include <deque>
 #include <cmath>
@@ -23,6 +23,15 @@ namespace robot_localization
         {
             double x = 0.0, y = 0.0, z = 0.0;
         };
+        struct AccelBias 
+        {
+            double x = 0.0 ; double y = 0.0 ; double z = 0.0;
+        };
+        struct GyroBias 
+        { 
+            double x = 0.0; double y = 0.0; double z = 0.0;
+        };
+
 
         class Orientation
         {
@@ -43,6 +52,11 @@ namespace robot_localization
         double time_stamp_ = 0.0;
         LinerAcceleration linear_acceleration_;
         AngularVelocity angular_velocity_;
+        AccelBias accel_bias;
+        GyroBias gyro_bias;
+
+
+
         Orientation orientation_;
 
     public:

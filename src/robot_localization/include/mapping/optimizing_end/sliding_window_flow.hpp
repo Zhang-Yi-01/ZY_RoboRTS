@@ -20,8 +20,8 @@
 #include "../../publisher/odometry_publisher.hpp"
 #include "../../tf/tf_broadcaster.hpp"
 
-#include "lidar_localization/publisher/key_frame_publisher.hpp"
-#include "lidar_localization/publisher/key_frames_publisher.hpp"
+// #include "../../publisher/key_frame_publisher.hpp"
+// #include "../../publisher/key_frames_publisher.hpp"
 
 
 #include "../../mapping/optimizing_end/sliding_window.hpp"
@@ -55,10 +55,10 @@ public:
     std::shared_ptr<OdometrySubscriber> map_matching_odom_sub_ptr_;
     std::deque<PoseData> map_matching_odom_data_buff_;
     // c. IMU measurement, for pre-integration:
-    std::shared_ptr<IMUSubscriber> imu_raw_sub_ptr_;
-    std::deque<IMUData> imu_raw_data_buff_;
-    std::shared_ptr<IMUSubscriber> imu_synced_sub_ptr_;
-    std::deque<IMUData> imu_synced_data_buff_;
+    std::shared_ptr<ImuSubscriber> imu_raw_sub_ptr_;
+    std::deque<ImuData> imu_raw_data_buff_;
+    std::shared_ptr<ImuSubscriber> imu_synced_sub_ptr_;
+    std::deque<ImuData> imu_synced_data_buff_;
     // d. GNSS position:
     std::shared_ptr<OdometrySubscriber> gnss_pose_sub_ptr_;
     std::deque<PoseData> gnss_pose_data_buff_;
@@ -66,11 +66,11 @@ public:
     //
     // publishers:
     //
-    std::shared_ptr<KeyFramePublisher> key_frame_pub_ptr_;
-    std::shared_ptr<KeyFramePublisher> key_gnss_pub_ptr_;
+    // std::shared_ptr<KeyFramePublisher> key_frame_pub_ptr_;
+    // std::shared_ptr<KeyFramePublisher> key_gnss_pub_ptr_;
     std::shared_ptr<OdometryPublisher> optimized_odom_pub_ptr_;
-    std::shared_ptr<KeyFramesPublisher> optimized_trajectory_pub_ptr_;
-    std::shared_ptr<TFBroadCaster> laser_tf_pub_ptr_;
+    // std::shared_ptr<KeyFramesPublisher> optimized_trajectory_pub_ptr_;
+    std::shared_ptr<TFBroadcaster> laser_tf_pub_ptr_;
 
     //
     // backend:
@@ -82,7 +82,7 @@ public:
     //
     PoseData current_laser_odom_data_;
     PoseData current_map_matching_odom_data_;
-    IMUData current_imu_data_;
+    ImuData current_imu_data_;
     PoseData current_gnss_pose_data_;
 };
 
