@@ -42,9 +42,11 @@ bool SlidingWindow::InitWithConfig()
     return true;
 }
 
-bool SlidingWindow::InitDataPath(const YAML::Node& config_node) {
+bool SlidingWindow::InitDataPath(const YAML::Node& config_node) 
+{
     std::string data_path = config_node["data_path"].as<std::string>();
-    if (data_path == "./") {
+    if (data_path == "./") 
+    {
         data_path = WORK_SPACE_PATH;
     }
 
@@ -59,7 +61,8 @@ bool SlidingWindow::InitDataPath(const YAML::Node& config_node) {
 }
 
 
-bool SlidingWindow::InitKeyFrameSelection(const YAML::Node& config_node) {
+bool SlidingWindow::InitKeyFrameSelection(const YAML::Node& config_node) 
+{
     key_frame_config_.max_distance = config_node["key_frame"]["max_distance"].as<float>();
     key_frame_config_.max_interval = config_node["key_frame"]["max_interval"].as<float>();
 
@@ -78,7 +81,8 @@ bool SlidingWindow::InitSlidingWindow(const YAML::Node& config_node) {
     // get measurement noises, pose:
     measurement_config_.noise.lidar_odometry.resize(6);
     measurement_config_.noise.map_matching.resize(6);
-    for (int i = 0; i < 6; ++i) {
+    for (int i = 0; i < 6; ++i) 
+    {
         measurement_config_.noise.lidar_odometry(i) =
             config_node["lidar_odometry"]["noise"][i].as<double>();
         measurement_config_.noise.map_matching(i) =
@@ -87,11 +91,12 @@ bool SlidingWindow::InitSlidingWindow(const YAML::Node& config_node) {
 
     // get measurement noises, position:
     measurement_config_.noise.gnss_position.resize(3);
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) 
+    {
         measurement_config_.noise.gnss_position(i) =
             config_node["gnss_position"]["noise"][i].as<double>();
     }
-
+    
     return true;
 }
 
@@ -164,7 +169,8 @@ void SlidingWindow::GetLatestOptimizedOdometry(KeyFrame& key_frame) {
     sliding_window_ptr_->GetLatestOptimizedKeyFrame(key_frame);
 }
 
-void SlidingWindow::GetOptimizedKeyFrames(std::deque<KeyFrame>& key_frames_deque) {
+void SlidingWindow::GetOptimizedKeyFrames(std::deque<KeyFrame>& key_frames_deque) 
+{
     key_frames_deque.clear();
     
     // load optimized key frames:
@@ -176,12 +182,16 @@ void SlidingWindow::GetOptimizedKeyFrames(std::deque<KeyFrame>& key_frames_deque
     );
 }
 
-bool SlidingWindow::SavePose(std::ofstream& ofs, const Eigen::Matrix4f& pose) {
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 4; ++j) {
+bool SlidingWindow::SavePose(std::ofstream& ofs, const Eigen::Matrix4f& pose) 
+{
+    for (int i = 0; i < 3; ++i) 
+    {
+        for (int j = 0; j < 4; ++j) 
+        {
             ofs << pose(i, j);
             
-            if (i == 2 && j == 3) {
+            if (i == 2 && j == 3) 
+            {
                 ofs << std::endl;
             } else {
                 ofs << " ";
@@ -373,7 +383,8 @@ bool SlidingWindow::Update(void)
         //
         // b. IMU pre-integration:
         //
-        if ( measurement_config_.source.imu_pre_integration ) {
+        if ( measurement_config_.source.imu_pre_integration ) 
+        {
             // TODO: add constraint, IMU pre-integraion:
             sliding_window_ptr_->AddPRVAGIMUPreIntegrationFactor(
                 param_index_i, param_index_j,
