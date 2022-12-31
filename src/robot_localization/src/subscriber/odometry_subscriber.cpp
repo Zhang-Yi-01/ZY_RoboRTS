@@ -10,11 +10,13 @@ namespace robot_localization{
 
 
 OdometrySubscriber::OdometrySubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size)
-    :nh_(nh) {
+    :nh_(nh) 
+{
     subscriber_ = nh_.subscribe(topic_name, buff_size, &OdometrySubscriber::msg_callback, this);
 }
 
-void OdometrySubscriber::msg_callback(const nav_msgs::OdometryConstPtr& odom_msg_ptr) {
+void OdometrySubscriber::msg_callback(const nav_msgs::OdometryConstPtr& odom_msg_ptr) 
+{
     buff_mutex_.lock();
     PoseData pose_data;
     pose_data.time = odom_msg_ptr->header.stamp.toSec();
@@ -31,13 +33,25 @@ void OdometrySubscriber::msg_callback(const nav_msgs::OdometryConstPtr& odom_msg
     q.w() = odom_msg_ptr->pose.pose.orientation.w;
     pose_data.pose.block<3,3>(0,0) = q.matrix();
 
+    pose_data.vel.v = Eigen::Vector3f(odom_msg_ptr->twist.twist.linear.x,
+                                    odom_msg_ptr->twist.twist.linear.y,
+                                    odom_msg_ptr->twist.twist.linear.z
+                                    );
+    
+    pose_data.vel.w = Eigen::Vector3f(odom_msg_ptr->twist.twist.angular.x,
+                                    odom_msg_ptr->twist.twist.angular.y,
+                                    odom_msg_ptr->twist.twist.angular.z
+                                    );
+
     new_pose_data_.push_back(pose_data);
     buff_mutex_.unlock();
 }
 
-void OdometrySubscriber::ParseData(std::deque<PoseData>& pose_data_buff) {
+void OdometrySubscriber::ParseData(std::deque<PoseData>& pose_data_buff) 
+{
     buff_mutex_.lock();
-    if (new_pose_data_.size() > 0) {
+    if (new_pose_data_.size() > 0) 
+    {
         pose_data_buff.insert(pose_data_buff.end(), new_pose_data_.begin(), new_pose_data_.end());
         new_pose_data_.clear();
     }

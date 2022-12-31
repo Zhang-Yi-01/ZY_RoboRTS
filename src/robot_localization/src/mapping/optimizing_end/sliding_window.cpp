@@ -24,7 +24,7 @@ bool SlidingWindow::InitWithConfig()
     //
     // load lio localization backend config file:
     //
-    std::string config_file_path = ros::package::getPath("robot_localization") + "/params/sliding_window.yaml";
+    std::string config_file_path = ros::package::getPath("robot_localization") + "/config/params/sliding_window.yaml";
 
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 
@@ -66,7 +66,8 @@ bool SlidingWindow::InitKeyFrameSelection(const YAML::Node& config_node) {
     return true;
 }
 
-bool SlidingWindow::InitSlidingWindow(const YAML::Node& config_node) {
+bool SlidingWindow::InitSlidingWindow(const YAML::Node& config_node) 
+{
     // init sliding window:
     const int sliding_window_size = config_node["sliding_window_size"].as<int>();
     sliding_window_ptr_ = std::make_shared<CeresSlidingWindow>(sliding_window_size);
@@ -127,15 +128,11 @@ bool SlidingWindow::UpdateIMUPreIntegration(const ImuData &imu_data)
  **/
 bool SlidingWindow::Update(const PoseData &laser_odom,
                            const PoseData &map_matching_odom,
-                           const ImuData &imu_data, 
-                           const PoseData& gnss_pose) 
+                           const ImuData &imu_data) 
 {
     ResetParam();
 
-    if ( MaybeNewKeyFrame(  laser_odom, 
-                            map_matching_odom,
-                            imu_data,
-                            gnss_pose ) ) 
+    if ( MaybeNewKeyFrame( laser_odom, map_matching_odom, imu_data ) ) 
     {
         Update();
         MaybeOptimized();
@@ -246,8 +243,7 @@ void SlidingWindow::ResetParam()
 bool SlidingWindow::MaybeNewKeyFrame( 
                                     const PoseData &laser_odom, 
                                     const PoseData &map_matching_odom,
-                                    const ImuData &imu_data,
-                                    const PoseData &gnss_odom
+                                    const ImuData &imu_data
                                     ) 
 {
     static KeyFrame last_key_frame;
@@ -255,13 +251,15 @@ bool SlidingWindow::MaybeNewKeyFrame(
     // 
     // key frame selection for sliding window:
     // 
-    if ( key_frames_.lidar.empty() ) {
+    if ( key_frames_.lidar.empty() ) 
+    {
         // init IMU pre-integrator:
-        if ( imu_pre_integrator_ptr_ ) {
+        if ( imu_pre_integrator_ptr_ ) 
+        {
             imu_pre_integrator_ptr_->Init(imu_data);
         }
-
         has_new_key_frame_ = true;
+
     } else if (
         // spatial:
         ( 
@@ -272,7 +270,8 @@ bool SlidingWindow::MaybeNewKeyFrame(
         (
             laser_odom.time - last_key_frame.time
         ) > key_frame_config_.max_interval
-    ) {
+              ) 
+    {
         // finish current IMU pre-integration:
         if ( imu_pre_integrator_ptr_ ) {
             imu_pre_integrator_ptr_->Reset(imu_data, imu_pre_integration_); 
@@ -286,25 +285,25 @@ bool SlidingWindow::MaybeNewKeyFrame(
     // if so:
     if ( has_new_key_frame_ ) 
     {
-        // create key frame for lidar odometry, relative pose measurement:
+        // create key frame for lidar odometry, relative pose measurement
+        // 为激光雷达里程计、相对姿态测量创建key frame:
         current_key_frame_.time = laser_odom.time;
         current_key_frame_.index = key_frames_.lidar.size();
         current_key_frame_.pose = laser_odom.pose;
-        current_key_frame_.vel.v = gnss_odom.vel.v;//这里可以换成里程计的速度
-        current_key_frame_.vel.w = gnss_odom.vel.w;
-
+        // current_key_frame_.vel.v = gnss_odom.vel.v;//这里可以换成里程计的速度
+        // current_key_frame_.vel.w = gnss_odom.vel.w;
+        current_key_frame_.vel.v = laser_odom.vel.v;
+        current_key_frame_.vel.w = laser_odom.vel.w;
+        
         current_map_matching_pose_ = map_matching_odom;
 
-        // create key frame for GNSS measurement, full LIO state:
+        // create key frame for GNSS measurement, full LIO state: 这部分也是缓存以用于以后的evo评估跟我们没关
         current_key_gnss_.time = current_key_frame_.time;
         current_key_gnss_.index = current_key_frame_.index;
-        current_key_gnss_.pose = gnss_odom.pose;
-        current_key_gnss_.vel.v = gnss_odom.vel.v;
-        current_key_gnss_.vel.w = gnss_odom.vel.w;
 
-        // add to cache for later evo evaluation:
+        
         key_frames_.lidar.push_back(current_key_frame_);
-        key_frames_.reference.push_back(current_key_gnss_);
+        key_frames_.reference.push_back(current_key_gnss_);//用于以后的evo评估这部分跟我们应该没关系:
 
         // save for next key frame selection:
         last_key_frame = current_key_frame_;
@@ -317,17 +316,16 @@ bool SlidingWindow::Update(void)
 {
     static KeyFrame last_key_frame_ = current_key_frame_;
 
-    //
     // add node for new key frame pose:
     //
     // fix the pose of the first key frame for lidar only mapping:
-    if ( sliding_window_ptr_->GetNumParamBlocks() == 0 ) 
+    if ( sliding_window_ptr_->GetNumParamBlocks() == 0 ) // 第一次
     {
-        // TODO: add init key frame
+        // 添加init key frame
         sliding_window_ptr_->AddPRVAGParam(current_key_frame_, true);
     }else 
     {
-        // TODO: add current key frame
+        // 添加当前的 key frame
         sliding_window_ptr_->AddPRVAGParam(current_key_frame_, false);
     }
 

@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
 
     // 激光雷达里程计端任务管理器
     std::shared_ptr<LidarOdomEndFlow> lidar_odom_end_flow_ptr = std::make_shared<LidarOdomEndFlow>(nh);
-
+    
     ros::Rate rate(100);
     while (ros::ok())
     {   
-        std::cout << WORK_SPACE_PATH;
+        
         ros::spinOnce();
         lidar_odom_end_flow_ptr->Run();
         rate.sleep();

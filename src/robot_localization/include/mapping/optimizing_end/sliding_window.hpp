@@ -31,8 +31,7 @@ class SlidingWindow {
     bool Update(
       const PoseData &laser_odom,
       const PoseData &map_matching_odom,
-      const ImuData &imu_data, 
-      const PoseData& gnss_pose
+      const ImuData &imu_data
     );
 
     bool HasNewKeyFrame();
@@ -58,8 +57,7 @@ class SlidingWindow {
     bool MaybeNewKeyFrame(
       const PoseData& laser_odom, 
       const PoseData &map_matching_odom,
-      const ImuData &imu_data,
-      const PoseData& gnss_pose
+      const ImuData &imu_data
     );
     
     bool Update(void);

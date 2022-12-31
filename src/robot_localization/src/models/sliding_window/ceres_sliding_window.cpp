@@ -52,9 +52,9 @@ CeresSlidingWindow::~CeresSlidingWindow() {
  * @param  fixed, shall the param block be fixed to eliminate trajectory estimation ambiguity
  * @return true if success false otherwise
  */
-void CeresSlidingWindow::AddPRVAGParam(
-    const KeyFrame &lio_key_frame, const bool fixed
-) {
+void CeresSlidingWindow::AddPRVAGParam(const KeyFrame &lio_key_frame,
+                                        const bool fixed) 
+{
     // create new key frame:
     OptimizedKeyFrame optimized_key_frame;
 

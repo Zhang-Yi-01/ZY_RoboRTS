@@ -19,7 +19,9 @@ namespace robot_localization
 {
 
 
-class OdometrySubscriber {
+class OdometrySubscriber 
+{
+  
   public:
     OdometrySubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size);
     OdometrySubscriber() = default;

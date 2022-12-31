@@ -41,7 +41,7 @@ public:
     bool HasData();
     bool ValidData();
     bool UpdateIMUPreIntegration(void);
-    bool UpdateBackEnd();
+    bool sliding_window_optimizing();
     bool PublishData();
 
   private:

@@ -11,8 +11,8 @@ namespace  robot_localization
 {
 MatchingFlow::MatchingFlow(ros::NodeHandle& nh) 
 {   
-    std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
-    YAML::Node user_node = YAML::LoadFile(config_file_path);
+    std::string user_config_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
+    YAML::Node user_node = YAML::LoadFile(user_config_path);
     // 配置用户设置消息话题
     std::string undistrotion_pointcloud_topic;
     std::string lidar_link;
