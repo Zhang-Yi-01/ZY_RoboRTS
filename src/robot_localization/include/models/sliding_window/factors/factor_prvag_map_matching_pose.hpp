@@ -1,6 +1,6 @@
 /*
  * @Description: ceres residual block for map matching pose measurement
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #ifndef MODELS_SLIDING_WINDOW_FACTOR_PRVAG_MAP_MATCHING_POSE_HPP_
@@ -113,4 +113,4 @@ private:
 
 } // namespace sliding_window
 
-#endif // LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_FACTOR_PRVAG_MAP_MATCHING_POSE_HPP_
+#endif // MODELS_SLIDING_WINDOW_FACTOR_PRVAG_MAP_MATCHING_POSE_HPP_

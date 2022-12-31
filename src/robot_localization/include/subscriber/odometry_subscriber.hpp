@@ -1,6 +1,6 @@
 /*
  * @Description: 订阅odometry数据
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #ifndef LOCALIZATION_SUBSCRIBER_ODOMETRY_SUBSCRIBER_HPP_
@@ -14,17 +14,10 @@
 #include <nav_msgs/Odometry.h>
 #include <Eigen/Dense>
 
+#include "../sensor_data/pose_data.hpp"
 namespace robot_localization 
 {
 
-class PoseData {
-  public:
-    Eigen::Matrix4f pose = Eigen::Matrix4f::Identity();
-    double time = 0.0;
-
-  public:
-    Eigen::Quaternionf GetQuaternion();
-};
 
 class OdometrySubscriber {
   public:

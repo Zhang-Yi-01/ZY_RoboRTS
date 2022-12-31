@@ -1,6 +1,6 @@
 /*
  * @Description: 自定义imu数据
- * @Author: ZY 、 genshin_zy
+ * @Author: ZY 、 Genshin_Yi
  * @Date: 2022.10.24
  */
 #ifndef SENSOR_DATA_IMU_DATA_HPP_

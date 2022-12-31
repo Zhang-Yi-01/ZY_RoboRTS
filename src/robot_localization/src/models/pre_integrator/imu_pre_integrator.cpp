@@ -1,6 +1,6 @@
 /*
  * @Description: IMU pre-integrator for LIO mapping, implementation
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #include "../../../include/models/pre_integrator/imu_pre_integrator.hpp"

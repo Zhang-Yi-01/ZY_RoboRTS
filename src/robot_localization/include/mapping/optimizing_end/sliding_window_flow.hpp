@@ -1,6 +1,6 @@
 /*
  * @Description: 优化端工作流，接口
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #ifndef OPTIMIZING_END_SLIDING_WINDOW_FLOW_HPP_
@@ -88,4 +88,4 @@ public:
 
 } // namespace robot_localization
 
-#endif // LIDAR_LOCALIZATION_MATCHING_BACK_END_SLIDING_WINDOW_FLOW_HPP_
+#endif // MATCHING_BACK_END_SLIDING_WINDOW_FLOW_HPP_

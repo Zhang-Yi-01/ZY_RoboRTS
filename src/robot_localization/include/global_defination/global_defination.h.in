@@ -1,6 +1,6 @@
 /*
  * @Description:
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #ifndef ROBOT_LOCALIZATION_GLOBAL_DEFINATION_H_IN_
@@ -11,10 +11,10 @@
 
 namespace robot_localization
 {   
-    std::string robot_localization_package_path = ros::package::getPath("robot_localization");
+    // std::string robot_localization_package_path = ros::package::getPath("robot_localization");
 
-    const std::string WORK_PACKAGE_PATH = robot_localization_package_path;
-    const std::string WORK_SPACE_PATH = robot_localization_package_path;
+    const std::string WORK_PACKAGE_PATH = ros::package::getPath("robot_localization");
+    const std::string WORK_SPACE_PATH = ros::package::getPath("robot_localization");
 }
 
 #endif

@@ -1,11 +1,11 @@
 /*
  * @Description: ceres parameter block for LIO extended pose
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 2020-11-29 15:47:49
  */
 
-#ifndef LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_PARAM_PRVAG_HPP_
-#define LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_PARAM_PRVAG_HPP_
+#ifndef MODELS_SLIDING_WINDOW_PARAM_PRVAG_HPP_
+#define MODELS_SLIDING_WINDOW_PARAM_PRVAG_HPP_
 
 #include <ceres/ceres.h>
 
@@ -70,4 +70,4 @@ public:
 
 } // namespace sliding_window
 
-#endif //LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_PARAM_PRVAG_HPP_
+#endif //MODELS_SLIDING_WINDOW_PARAM_PRVAG_HPP_

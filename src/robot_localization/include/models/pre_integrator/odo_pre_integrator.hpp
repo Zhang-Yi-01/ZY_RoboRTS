@@ -1,6 +1,6 @@
 /*
  * @Description: Odometery pre-integrator for LIO mapping, interface
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 
@@ -9,12 +9,35 @@
 
 #include "pre_integrator.hpp"
 
-#include "lidar_localization/sensor_data/velocity_data.hpp"
-
 #include "../graph_optimizer/g2o/edge/edge_prvag_odo_pre_integration.hpp"
 #include <sophus/so3.hpp>
 
 namespace robot_localization {
+
+class VelocityData {
+  public:
+    struct LinearVelocity {
+      double x = 0.0;
+      double y = 0.0;
+      double z = 0.0;
+    };
+
+    struct AngularVelocity {
+      double x = 0.0;
+      double y = 0.0;
+      double z = 0.0;
+    };
+
+    double time = 0.0;
+    LinearVelocity linear_velocity;
+    AngularVelocity angular_velocity;
+  
+  public:
+    static bool SyncData(std::deque<VelocityData>& UnsyncedData, std::deque<VelocityData>& SyncedData, double sync_time);
+    void TransformCoordinate(Eigen::Matrix4f transform_matrix);
+    void NED2ENU(void);
+};
+
 
 class OdoPreIntegrator : public PreIntegrator {
 public:
@@ -132,4 +155,4 @@ private:
 
 } // namespace robot_localization
 
-#endif // LIDAR_LOCALIZATION_MODELS_PRE_INTEGRATOR_ODO_PRE_INTEGRATOR_HPP_
+#endif // MODELS_PRE_INTEGRATOR_ODO_PRE_INTEGRATOR_HPP_

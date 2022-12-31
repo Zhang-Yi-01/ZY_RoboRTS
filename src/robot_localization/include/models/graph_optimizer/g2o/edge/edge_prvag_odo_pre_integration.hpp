@@ -1,6 +1,6 @@
 /*
  * @Description: g2o edge for LIO odo pre-integration measurement
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #ifndef MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_PRVAG_ODO_PRE_INTEGRATION_HPP_
@@ -100,4 +100,4 @@ public:
 
 } // namespace g2o
 
-#endif // LIDAR_LOCALIZATION_MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_PRVAG_ODO_PRE_INTEGRATION_HPP_
+#endif // MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_PRVAG_ODO_PRE_INTEGRATION_HPP_

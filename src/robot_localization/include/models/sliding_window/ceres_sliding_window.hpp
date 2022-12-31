@@ -1,11 +1,11 @@
 /*
  * @Description: ceres sliding window optimizer, interface
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 
-#ifndef LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_CERES_SLIDING_WINDOW_HPP_
-#define LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_CERES_SLIDING_WINDOW_HPP_
+#ifndef MODELS_SLIDING_WINDOW_CERES_SLIDING_WINDOW_HPP_
+#define MODELS_SLIDING_WINDOW_CERES_SLIDING_WINDOW_HPP_
 
 #include <memory>
 
@@ -179,4 +179,4 @@ private:
 
 } // namespace robot_localization
 
-#endif // LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_CERES_SLIDING_WINDOW_HPP_
+#endif // MODELS_SLIDING_WINDOW_CERES_SLIDING_WINDOW_HPP_

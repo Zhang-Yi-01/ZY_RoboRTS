@@ -1,10 +1,10 @@
 /*
  * @Description: ceres residual block for lidar frontend relative pose measurement
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 2020-11-29 15:47:49
  */
-#ifndef LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_
-#define LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_
+#ifndef MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_
+#define MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_
 
 #include <ceres/ceres.h>
 
@@ -156,4 +156,4 @@ private:
 
 } // namespace sliding_window
 
-#endif // LIDAR_LOCALIZATION_MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_
+#endif // MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_

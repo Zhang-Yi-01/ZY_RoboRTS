@@ -1,6 +1,6 @@
 /*
  * @Description: 激光雷达里程计端
- * @Author: ZY、genshin_zy
+ * @Author: ZY、Genshin_Yi
  * @Date: 2022.10.24
  */
 

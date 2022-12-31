@@ -1,6 +1,6 @@
 /*
  * @Description: 存放处理后的IMU姿态,想了想认为还是加过来合适
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #ifndef SENSOR_DATA_POSE_DATA_HPP_

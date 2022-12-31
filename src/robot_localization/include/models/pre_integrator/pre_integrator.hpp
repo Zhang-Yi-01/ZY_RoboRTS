@@ -1,6 +1,6 @@
 /*
  * @Description: pre-integrator interface
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 
@@ -41,4 +41,4 @@ protected:
 
 } // namespace robot_localization
 
-#endif // LIDAR_LOCALIZATION_MODELS_PRE_INTEGRATOR_PRE_INTEGRATOR_HPP_
+#endif // MODELS_PRE_INTEGRATOR_PRE_INTEGRATOR_HPP_

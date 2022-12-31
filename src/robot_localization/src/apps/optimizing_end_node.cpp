@@ -1,6 +1,6 @@
 /*
  * @Description: 基于图优化之滑动窗口模型的优化端
- * @Author: ZY 、 genshin_zy
+ * @Author: ZY 、 Genshin_Yi
  * @Date: 2022.10.24
  */
 

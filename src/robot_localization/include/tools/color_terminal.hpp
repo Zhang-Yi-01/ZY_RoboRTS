@@ -1,6 +1,6 @@
 /*
  * @Description: 终端彩色输出
- * @Author: ZY、genshin_zy
+ * @Author: ZY、Genshin_Yi
  * @Date: 2022.10.24
  */
 #ifndef COLOR_TERMINAL_HPP

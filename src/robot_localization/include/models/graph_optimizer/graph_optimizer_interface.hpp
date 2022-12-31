@@ -1,6 +1,6 @@
 /*
  * @Description: 图优化接口
- * @Author: ZY 、 genshin_zy
+ * @Author: ZY 、 Genshin_Yi
  * @Date: 
  */
 
@@ -87,4 +87,4 @@ protected:
 
 } // namespace robot_localization
 
-#endif // LIDAR_LOCALIZATION_MODELS_GRAPH_OPTIMIZER_INTERFACE_GRAPH_OPTIMIZER_HPP_
+#endif // _MODELS_GRAPH_OPTIMIZER_INTERFACE_GRAPH_OPTIMIZER_HPP_

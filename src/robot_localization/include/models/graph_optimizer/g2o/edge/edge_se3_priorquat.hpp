@@ -1,10 +1,10 @@
 /*
  * @Description: 姿态的先验边
- * @Author: Ren Qian
- * @Date: 2020-03-01 18:05:35
+ * @Author: Genshin_Yi
+ * @Date:  
  */
-#ifndef LIDAR_LOCALIZATION_MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORQUAT_HPP_
-#define LIDAR_LOCALIZATION_MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORQUAT_HPP_
+#ifndef MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORQUAT_HPP_
+#define MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORQUAT_HPP_
 
 #include <g2o/types/slam3d/types_slam3d.h>
 #include <g2o/types/slam3d_addons/types_slam3d_addons.h>

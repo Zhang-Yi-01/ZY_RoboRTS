@@ -1,6 +1,6 @@
 /*
  * @Description: ceres sliding window optimizer, implementation
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #include "../../../include/models/sliding_window/ceres_sliding_window.hpp"

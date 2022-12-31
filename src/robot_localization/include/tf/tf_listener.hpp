@@ -3,8 +3,8 @@
  * @Author: ZY
  * @Date: 2022-12-03 16:01:21
  */
-#ifndef LIDAR_LOCALIZATION_TF_LISTENER_HPP_
-#define LIDAR_LOCALIZATION_TF_LISTENER_HPP_
+#ifndef TF_LISTENER_HPP_
+#define TF_LISTENER_HPP_
 
 // c++
 #include <string>

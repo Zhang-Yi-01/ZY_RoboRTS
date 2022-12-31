@@ -573,4 +573,4 @@ namespace IWICP {
     }
 }
 ///////////////////////////////////////////////////////////////////////////////
-#endif // LIDAR_LOCALIZATION_MODELS_REGISTRATION_SICP_IMPLEMENTATION_HPP_
+#endif // MODELS_REGISTRATION_SICP_IMPLEMENTATION_HPP_

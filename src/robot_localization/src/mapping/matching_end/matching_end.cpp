@@ -1,6 +1,6 @@
 /*
  * @Description: 前端里程计算法
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #include "../../../include/mapping/matching_end/matching_end.hpp"
@@ -52,7 +52,7 @@ bool Matching::InitWithConfig()
 
     InitDataPath(pcd_map_path);// pcd点云地图文件路径制定
 
-    // InitScanContextManager(config_node);//应该不需要我genshin_zy先注释了
+    // InitScanContextManager(config_node);//应该不需要我Genshin_Yi先注释了
     InitRegistration(registration_ptr_, config_node);
 
     // a. global map filter -- downsample point cloud map for visualization:

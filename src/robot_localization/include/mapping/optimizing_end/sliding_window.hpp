@@ -1,6 +1,6 @@
 /*
  * @Description: 优化端接口
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #ifndef OPTIMIZING_END_SLIDING_WINDOW_HPP_

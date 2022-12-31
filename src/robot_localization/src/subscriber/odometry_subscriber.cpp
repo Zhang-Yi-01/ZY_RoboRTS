@@ -1,6 +1,6 @@
 /*
  * @Description: 订阅odometry数据
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #include "../../include/subscriber/odometry_subscriber.hpp"
@@ -8,12 +8,6 @@
 
 namespace robot_localization{
 
-Eigen::Quaternionf PoseData::GetQuaternion() {
-    Eigen::Quaternionf q;
-    q = pose.block<3,3>(0,0);
-
-    return q;
-}
 
 OdometrySubscriber::OdometrySubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size)
     :nh_(nh) {

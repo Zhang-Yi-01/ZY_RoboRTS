@@ -1,6 +1,6 @@
 /*
  * @Description: lio localization backend workflow, implementation
- * @Author: genshin_zy
+ * @Author: Genshin_Yi
  * @Date: 
  */
 #include "../../../include/mapping/optimizing_end/sliding_window_flow.hpp"
@@ -198,10 +198,10 @@ bool SlidingWindowFlow::PublishData()
     {
         KeyFrame key_frame;
         sliding_window_ptr_->GetLatestOptimizedOdometry(key_frame);
-        optimized_odom_pub_ptr_->Publish(key_frame.pose, key_frame.time);
+        optimized_odom_pub_ptr_->Publish(key_frame.pose.cast<double>(), key_frame.time);
 
         // publish lidar TF:
-        laser_tf_pub_ptr_->SendTransform(key_frame.pose, key_frame.time);
+        laser_tf_pub_ptr_->SendTransform(key_frame.pose.cast<double>(), key_frame.time);
     }
 
     return true;

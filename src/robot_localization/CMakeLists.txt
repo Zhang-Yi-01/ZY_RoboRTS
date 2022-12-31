@@ -17,7 +17,8 @@ include(cmake/pcl.cmake)
 include(cmake/sophus.cmake)
 include(cmake/yamlcpp.cmake)
 include(cmake/protobuf.cmake)
-include(cmake/geographicLib.cmake)
+# include(cmake/geographicLib.cmake)
+include(cmake/ceres.cmake)
 
 #ROS配置
 set( ROS_CXX_DEPENDENCIES
@@ -37,12 +38,12 @@ list(REMOVE_ITEM ALL_SRCS ${NODE_SRCS})
 
 # lidar耦合imu里程计节点
 add_executable(lidar_odom_end_node src/apps/lidar_odom_end_node.cpp ${ALL_SRCS} )
-target_link_libraries(lidar_odom_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
+target_link_libraries(lidar_odom_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES} )
 
 # 点云图匹配节点
 add_executable(matching_end_node src/apps/matching_end_node.cpp ${ALL_SRCS} )
-target_link_libraries(matching_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
+target_link_libraries(matching_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES} )
 
 # 基于图优化之滑动窗口模型的后端优化节点
 add_executable(optimization_end_node src/apps/optimizing_end_node.cpp ${ALL_SRCS} )
-target_link_libraries(optimization_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES})
+target_link_libraries(optimization_end_node ${catkin_LIBRARIES} ${THIRD_PART_LIBRARIES} )
