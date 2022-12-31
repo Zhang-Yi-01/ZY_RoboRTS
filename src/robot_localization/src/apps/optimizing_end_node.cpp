@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     FLAGS_log_dir = path + "/log";
     FLAGS_alsologtostderr = 1; //记录Log到本地 & 在终端中显示
 
+    
     //优化端工作流任务管理器
     std::shared_ptr<SlidingWindowFlow> sliding_window_flow_ptr = std::make_shared<SlidingWindowFlow>(nh);
 
