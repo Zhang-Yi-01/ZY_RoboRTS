@@ -1,5 +1,5 @@
 /*
- * @Description: 前端任务管理器
+ * @Description: 里程计端任务管理器
  * @Author: ZY
  * @Date: 
  */
@@ -26,7 +26,7 @@
 // sensor_data
 #include "../../sensor_data/imu_data.hpp"
 #include "../../sensor_data/cloud_data.hpp"
-// 前端算法
+// 里程计端算法
 #include "lidar_odom_end.hpp"
 
 namespace robot_localization
@@ -113,7 +113,7 @@ namespace robot_localization
         ImuData current_imu_raw_data_;
         ImuData current_imu_synced_data_;
 
-        // 前端算法
+        // 里程计端算法
         std::shared_ptr<LidarOdomEnd> lidar_odom_end_ptr_;
 
         // 里程计信息
@@ -121,6 +121,8 @@ namespace robot_localization
         Eigen::Matrix4d laser_pose_ = Eigen::Matrix4d::Identity();
         Eigen::Matrix4d fused_pose_ = Eigen::Matrix4d::Identity();
         Eigen::Vector3d fused_vel_ = Eigen::Vector3d::Zero();
+
+        bool if_odom_end_tf_broadcast = false;
     };
 
 } // namespace robot_localization

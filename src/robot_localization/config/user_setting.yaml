@@ -1,7 +1,9 @@
-if_show_working_info: true #那些运行中的info正常提示或者什么的,要不要显示
+if_show_working_info: false #那些运行中的info正常提示或者什么的,要不要显示
 
 if_simulink: true         ##后面会自动根据是否处于仿真，分配话题
 ########input_topic_part########配置传感器话题输入部分
+odom_end_send_tf: true    #参数默认false，tf统一仅由优化端广播，调试odom_end时设置为true，则只由odom_end广播tf
+matching_end_send_tf: false #参数默认false，tf统一仅由优化端广播，调试matching_end时设置为true，则只由matching_end广播tf
 
 imu_topic: /livox/imu
 scan_pointcloud_topic: /livox/lidar  #未去畸变原始点云

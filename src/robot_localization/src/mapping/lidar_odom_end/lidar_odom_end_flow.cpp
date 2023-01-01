@@ -1,6 +1,6 @@
 /*
- * @Description: 前端任务管理器
- * @Author: ZY、Genshin_Yi
+ * @Description: 里程计端任务管理器
+ * @Author: ZY 、 Genshin_Yi
  * @Date: 2022.10.24
  */
 
@@ -11,7 +11,7 @@
 namespace robot_localization
 {
     /**
-     * @brief 前端流程控制初始化
+     * @brief 里程计端流程控制初始化
      * @note 订阅点云信息 发布激光里程计
      * @todo
      **/
@@ -26,6 +26,7 @@ namespace robot_localization
         std::string imu_link;
         std::string lidar_link;
         std::string car_base_link;
+
         if(config_node["if_simulink"].as<bool>())
         {
 
@@ -43,7 +44,7 @@ namespace robot_localization
         car_base_link = config_node["car_base_link"].as<std::string>();
 
         }
-        
+        if_odom_end_tf_broadcast = config_node["odom_end_send_tf"].as<bool>();
 
         // 订阅
         // 1.IMU原始数据
@@ -69,14 +70,14 @@ namespace robot_localization
         // 6.tf
         laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("map", car_base_link);
 
-        // 前端算法
+        // 里程计端算法
         lidar_odom_end_ptr_ = std::make_shared<LidarOdomEnd>();
 
         ColorTerminal::ColorFlowInfo("ESKF数据融合FLOW配置完成");
     }
 
     /**
-     * @brief 前端流程运行
+     * @brief 里程计端流程运行
      * @note
      * @todo
      **/
@@ -309,7 +310,8 @@ namespace robot_localization
         // get odometry from Kalman filter:
         lidar_odom_end_ptr_->GetOdometry(fused_pose_, fused_vel_);
         // 1. publish tf:
-        laser_tf_pub_ptr_->SendTransform(fused_pose_, current_imu_raw_data_.time_stamp_);
+        if(if_odom_end_tf_broadcast)
+            laser_tf_pub_ptr_->SendTransform(fused_pose_, current_imu_raw_data_.time_stamp_);
         // 2. publish fusion odometry:
         fused_odom_pub_ptr_->Publish(fused_pose_, fused_vel_, current_imu_raw_data_.time_stamp_);
 

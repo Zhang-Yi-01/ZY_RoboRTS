@@ -1,5 +1,5 @@
 /*
- * @Description: 地图匹配任务管理， 放在类里使代码更清晰
+ * @Description: 地图匹配任务管理
  * @Author: Genshin_Yi
  * @Date: 
  */
@@ -31,7 +31,7 @@ MatchingFlow::MatchingFlow(ros::NodeHandle& nh)
     car_base_link = user_node["car_base_link"].as<std::string>();
 
     }
-
+    if_matching_end_tf_broadcast=user_node["matching_end_send_tf"].as<bool>();
 
     // 订阅:
     // 已去畸变的点云（但其实这里还没有）: 
@@ -111,7 +111,7 @@ bool MatchingFlow::ValidData()
     if (matching_ptr_->HasInited()) 
     {
         cloud_data_buff_.pop_front();
-        // gnss_data_buff_.clear();
+
         return true;
     }
 
@@ -122,30 +122,27 @@ bool MatchingFlow::ValidData()
     //     return false;
     // }
 
-    // if (diff_time > 0.05) 
-    // {
-    //     // gnss_data_buff_.pop_front();
-    //     return false;
-    // }
-
     cloud_data_buff_.pop_front();
 
     return true;
 }
 
+/**
+ * @brief 更新匹配结果
+ * @param 
+ **/
 bool MatchingFlow::UpdateMatching() 
 {
     if (!matching_ptr_->HasInited())    // 第一帧点云数据，在此处实现位姿全局初始化
     {                
-        //
         // TODO: implement global initialization here
         //
-        // Hints: You can use SetGNSSPose & SetScanContextPose from matching.hpp
+        // Hints: You can use SetScanContextPose from matching.hpp
         // 选用ScanContext或者原点进行位姿初始化：
 
         /*地图原点初始化，置 init_pose  为单位阵*/// 原注释此为天真（naive）的方法
         Eigen::Matrix4d init_pose = Eigen::Matrix4d::Identity();     
-        // init_pose = Eigen::Matrix4d::Zero();     
+
         matching_ptr_->SetInitPose(init_pose);
         
         /*利用ScanContext 进行位姿初始化*/
@@ -158,8 +155,10 @@ bool MatchingFlow::UpdateMatching()
 }
 
 bool MatchingFlow::PublishData() 
-{
-    laser_tf_pub_ptr_->SendTransform(laser_odometry_, current_cloud_data_.time_stamp_);
+{   
+    if(if_matching_end_tf_broadcast)    
+        laser_tf_pub_ptr_->SendTransform(laser_odometry_, current_cloud_data_.time_stamp_);
+
     laser_odom_pub_ptr_->Publish(laser_odometry_, current_cloud_data_.time_stamp_);
     current_scan_pub_ptr_->Publish(matching_ptr_->GetCurrentScan());
 

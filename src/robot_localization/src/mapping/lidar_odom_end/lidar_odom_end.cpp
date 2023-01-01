@@ -1,6 +1,6 @@
 /*
- * @Description: 前端算法
- * @Author: ZY
+ * @Description: 里程计端算法
+ * @Author: ZY 、 Genshin_Yi
  * @Date: 2022.10.24
  */
 
@@ -32,7 +32,7 @@ namespace robot_localization
 {
 
     /**
-     * @brief 前端流程控制初始化
+     * @brief 里程计端流程控制初始化
      * @note 订阅点云信息 发布激光里程计
      * @todo
      **/

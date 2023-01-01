@@ -43,7 +43,7 @@ namespace robot_localization
         struct Measurement
         {
             double time;
-            // 激光雷达前端位姿观测
+            // 激光雷达里程计端位姿观测
             Eigen::Matrix4d T_nb;
             // 机器人基坐标速度观测，里程计给出
             Eigen::Vector3d v_b;

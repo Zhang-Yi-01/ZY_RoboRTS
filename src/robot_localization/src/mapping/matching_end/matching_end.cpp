@@ -1,5 +1,5 @@
 /*
- * @Description: 前端里程计算法
+ * @Description: 里程计端里程计算法
  * @Author: Genshin_Yi
  * @Date: 
  */
@@ -21,16 +21,16 @@ namespace  robot_localization {
  * @param
  **/
 Matching::Matching()
-    : global_map_ptr_(new CloudData::CLOUD()),
-      local_map_ptr_(new CloudData::CLOUD()),
-      current_scan_ptr_(new CloudData::CLOUD()) 
+        : global_map_ptr_  (new CloudData::CLOUD()),
+          local_map_ptr_   (new CloudData::CLOUD()),
+          current_scan_ptr_(new CloudData::CLOUD()) 
 {
     
     InitWithConfig();
 
     InitGlobalMap();
 
-    ResetLocalMap(0.0, 0.0, 0.0);
+    ResetLocalMap(0.00, 0.00, 0.00);
 }
 
 /**
@@ -50,9 +50,9 @@ bool Matching::InitWithConfig()
 
     std::string pcd_map_path = ros::package::getPath("robot_localization") + "/pcd_map/scans.pcd";
 
-    InitDataPath(pcd_map_path);// pcd点云地图文件路径制定
+    InitDataPath(pcd_map_path);// pcd点云地图文件路径👈定
 
-    // InitScanContextManager(config_node);//应该不需要我Genshin_Yi先注释了
+    // InitScanContextManager(config_node);//这个回环部分，是不是也可以要呢，我Genshin_Yi先注释了
     InitRegistration(registration_ptr_, config_node);
 
     // a. global map filter -- downsample point cloud map for visualization:
@@ -97,9 +97,11 @@ bool Matching::InitRegistration(std::shared_ptr<RegistrationInterface>& registra
     std::string registration_method = config_node["registration_method"].as<std::string>();
     std::cout << "\tPoint Cloud Registration Method: " << registration_method << std::endl;
 
-    if (registration_method == "NDT") {
+    if (registration_method == "NDT") 
+    {
         registration_ptr = std::make_shared<NdtRegistration>(config_node[registration_method]);
-    } else {
+    } else 
+    {
         LOG(ERROR) << "Registration method " << registration_method << " NOT FOUND!";
         return false;
     }
@@ -111,9 +113,11 @@ bool Matching::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterIn
     std::string filter_mothod = config_node[filter_user + "_filter"].as<std::string>();
     std::cout << "\tFilter Method for " << filter_user << ": " << filter_mothod << std::endl;
 
-    if (filter_mothod == "voxel_filter") {
+    if (filter_mothod == "voxel_filter") 
+    {
         filter_ptr = std::make_shared<VoxelFilter>(config_node[filter_mothod][filter_user]);
-    } else if (filter_mothod == "no_filter") {
+    } else if (filter_mothod == "no_filter") 
+    {
         filter_ptr = std::make_shared<NoFilter>();
     } else {
         LOG(ERROR) << "Filter method " << filter_mothod << " for " << filter_user << " NOT FOUND!";
@@ -123,7 +127,8 @@ bool Matching::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterIn
     return true;
 }
 
-bool Matching::InitBoxFilter(const YAML::Node& config_node) {
+bool Matching::InitBoxFilter(const YAML::Node& config_node) 
+{
     box_filter_ptr_ = std::make_shared<BoxFilter>(config_node);
     return true;
 }
@@ -245,7 +250,7 @@ bool Matching::Update(const CloudData& cloud_data, Eigen::Matrix4d& cloud_pose)
 
 // TODO: understand this function                   
 bool Matching::SetInitPose(const Eigen::Matrix4d& init_pose) 
-{                              // 设置定位的初始位姿，根据此位姿可以找到定位需要用到的局部地图；这个位姿可以通过GNSS数据得到，或者回环检测得到
+{                              // 设置定位的初始位姿，根据此位姿可以找到定位需要用到的局部地图；这个位姿可以通过回环检测得到
     init_pose_ = init_pose;
     ResetLocalMap(init_pose(0,3), init_pose(1,3), init_pose(2,3));                 //  定位需要用到的局部地图，通过获取(x,y,z) 更新local map
     

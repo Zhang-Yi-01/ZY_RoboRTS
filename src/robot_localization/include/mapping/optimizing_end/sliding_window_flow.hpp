@@ -84,6 +84,8 @@ public:
     PoseData current_map_matching_odom_data_;
     ImuData current_imu_data_;
     PoseData current_gnss_pose_data_;
+
+    bool if_sliding_window_tf_broadcast = false;
 };
 
 } // namespace robot_localization

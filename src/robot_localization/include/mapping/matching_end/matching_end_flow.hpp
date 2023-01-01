@@ -50,6 +50,9 @@ class MatchingFlow {
     CloudData current_cloud_data_;
 
     Eigen::Matrix4d laser_odometry_ = Eigen::Matrix4d::Identity();
+
+    bool if_matching_end_tf_broadcast = false;
+
 };
 }
 

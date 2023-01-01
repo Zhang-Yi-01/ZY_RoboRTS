@@ -19,7 +19,11 @@ SlidingWindowFlow::SlidingWindowFlow(ros::NodeHandle& nh)
     std::string undistrotion_pointcloud_topic;
     std::string lidar_link;
     std::string car_base_link;
-    //
+
+    if (user_node["matching_end_send_tf"].as<bool>() || 
+       user_node["odom_end_send_tf"].as<bool>()
+       )
+        if_sliding_window_tf_broadcast = true;
     // 优化端需要接收:
 
     // a. lidar odometry 激光雷达（紧耦合imu）里程计:
@@ -29,8 +33,7 @@ SlidingWindowFlow::SlidingWindowFlow(ros::NodeHandle& nh)
     // c. IMU measurement, for pre-integration:
     imu_raw_sub_ptr_ = std::make_shared<ImuSubscriber>(nh, "/imu", 1000000);
     imu_synced_sub_ptr_ = std::make_shared<ImuSubscriber>(nh, "/imu", 100000);
-    // d. GNSS position:
-    // gnss_pose_sub_ptr_ = std::make_shared<OdometrySubscriber>(nh, "/synced_gnss", 100000);
+    
 
     //  优化端发布:
     // a. current lidar key frame:
@@ -82,8 +85,7 @@ bool SlidingWindowFlow::ReadData()
     // c. IMU measurement, for pre-integration:
     imu_raw_sub_ptr_->ParseData(imu_raw_data_buff_);
     imu_synced_sub_ptr_->ParseData(imu_synced_data_buff_);
-    // d. GNSS position:
-    // gnss_pose_sub_ptr_->ParseData(gnss_pose_data_buff_);
+    
 
     return true;
 }
@@ -94,7 +96,8 @@ bool SlidingWindowFlow::HasData()
         laser_odom_data_buff_.empty() ||
         map_matching_odom_data_buff_.empty() ||
         imu_synced_data_buff_.empty()
-    ) {
+        ) 
+    {
         return false;
     }
 
@@ -106,7 +109,6 @@ bool SlidingWindowFlow::ValidData()
     current_laser_odom_data_ = laser_odom_data_buff_.front();
     current_map_matching_odom_data_ = map_matching_odom_data_buff_.front();
     current_imu_data_ = imu_synced_data_buff_.front();
-    // current_gnss_pose_data_ = gnss_pose_data_buff_.front();
 
     double diff_map_matching_odom_time = current_laser_odom_data_.time - current_map_matching_odom_data_.time;
     double diff_imu_time = current_laser_odom_data_.time - current_imu_data_.time_stamp_;
@@ -133,7 +135,6 @@ bool SlidingWindowFlow::ValidData()
     laser_odom_data_buff_.pop_front();
     map_matching_odom_data_buff_.pop_front();
     imu_synced_data_buff_.pop_front();
-    // gnss_pose_data_buff_.pop_front();
 
     return true;
 }
@@ -204,7 +205,8 @@ bool SlidingWindowFlow::PublishData()
         optimized_odom_pub_ptr_->Publish(key_frame.pose.cast<double>(), key_frame.time);
 
         // publish lidar TF:
-        // laser_tf_pub_ptr_->SendTransform(key_frame.pose.cast<double>(), key_frame.time);
+        if(if_sliding_window_tf_broadcast)
+            laser_tf_pub_ptr_->SendTransform(key_frame.pose.cast<double>(), key_frame.time);
     }
 
     return true;
