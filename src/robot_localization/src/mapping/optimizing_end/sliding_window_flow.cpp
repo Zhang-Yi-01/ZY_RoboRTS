@@ -20,10 +20,11 @@ SlidingWindowFlow::SlidingWindowFlow(ros::NodeHandle& nh)
     std::string lidar_link;
     std::string car_base_link;
 
+    if_sliding_window_tf_broadcast = true;
     if (user_node["matching_end_send_tf"].as<bool>() || 
        user_node["odom_end_send_tf"].as<bool>()
        )
-        if_sliding_window_tf_broadcast = true;
+        if_sliding_window_tf_broadcast = false;
     // 优化端需要接收:
 
     // a. lidar odometry 激光雷达（紧耦合imu）里程计:
@@ -37,13 +38,13 @@ SlidingWindowFlow::SlidingWindowFlow(ros::NodeHandle& nh)
 
     //  优化端发布:
     // a. current lidar key frame:
-    // key_frame_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_frame", "/map", 100);
+    // key_frame_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_frame", "map", 100);
     // b. current reference GNSS frame:
-    // key_gnss_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_gnss", "/map", 100);
+    // key_gnss_pub_ptr_ = std::make_shared<KeyFramePublisher>(nh, "/key_gnss", "map", 100);
     // c. optimized odometry 最终优化位姿:
-    optimized_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "/optimized_odometry", "/map", "/lidar", 100);
+    optimized_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "optimized_odometry", "map", "lidar", 100);
     // d. optimized trajectory:
-    // optimized_trajectory_pub_ptr_ = std::make_shared<KeyFramesPublisher>(nh, "/optimized_trajectory", "/map", 100);
+    // optimized_trajectory_pub_ptr_ = std::make_shared<KeyFramesPublisher>(nh, "/optimized_trajectory", "map", 100);
     // e. lidar frame
     // laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("/map", "/velo_link");
 
@@ -62,6 +63,7 @@ bool SlidingWindowFlow::Run()
         // 确保所有的测量数据是同步的:
         if ( !ValidData() )
             continue;
+        yellow_info("begin sliding_window_optimizing");
         sliding_window_optimizing();
         PublishData();
     }
@@ -171,6 +173,7 @@ bool SlidingWindowFlow::sliding_window_optimizing()
     }
     
     // update IMU pre-integration 更新imu预积分:
+    green_info("begin update IMU pre-integration");
     UpdateIMUPreIntegration();
     
     // current lidar odometry in map frame:

@@ -66,7 +66,7 @@ bool MatchingFlow::Run()
         local_map_pub_ptr_->Publish(matching_ptr_->GetLocalMap());
 
     ReadData();
-    yellow_info("ReadDate Done");
+    // yellow_info("ReadDate Done");
     while(HasData()) 
     {
         if (!ValidData())
@@ -74,7 +74,7 @@ bool MatchingFlow::Run()
             LOG(INFO) << "Invalid data. Skip matching" << std::endl;
             continue;
         }
-        yellow_info("Begin UpdateMatching");
+        // yellow_info("Begin UpdateMatching");
 
         if (UpdateMatching()) 
         {

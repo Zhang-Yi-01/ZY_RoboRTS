@@ -23,7 +23,7 @@
 // #include "../../publisher/key_frame_publisher.hpp"
 // #include "../../publisher/key_frames_publisher.hpp"
 
-
+#include "../../tools/color_terminal.hpp"
 #include "../../mapping/optimizing_end/sliding_window.hpp"
 
 

@@ -39,7 +39,7 @@ namespace robot_localization
     LidarOdomEnd::LidarOdomEnd() : local_map_ptr_(new CloudData::CLOUD()), current_scan_ptr_(new CloudData::CLOUD())
     {
         // 读取YAML参数
-        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/front_end.yaml";
+        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/params/front_end.yaml";
         YAML::Node config_node = YAML::LoadFile(config_file_path);
         // 参数配置
         ConfigFrame(config_node);
