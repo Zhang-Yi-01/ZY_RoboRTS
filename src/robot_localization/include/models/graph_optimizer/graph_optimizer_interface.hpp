@@ -8,9 +8,9 @@
 #define MODELS_GRAPH_OPTIMIZER_INTERFACE_GRAPH_OPTIMIZER_HPP_
 
 #include <string>
-#include <deque>
+// #include <deque>
 
-#include <Eigen/Dense>
+// #include <Eigen/Dense>
 
 // data input:
 #include "../../sensor_data/key_frame.hpp"

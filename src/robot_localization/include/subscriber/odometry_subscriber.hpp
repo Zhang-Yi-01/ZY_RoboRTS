@@ -12,7 +12,7 @@
 
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
-#include <Eigen/Dense>
+// #include <Eigen/Dense>
 
 #include "../sensor_data/pose_data.hpp"
 namespace robot_localization 

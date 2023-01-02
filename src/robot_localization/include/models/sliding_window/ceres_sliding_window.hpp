@@ -14,14 +14,14 @@
 #include <vector>
 #include <deque>
 
-#include <Eigen/Eigen>
-#include <Eigen/Core>
-#include <Eigen/Dense>
+// #include <Eigen/Eigen>
+// #include <Eigen/Core>
+// #include <Eigen/Dense>
 
 #include "../../sensor_data/key_frame.hpp"
 
 #include "../pre_integrator/imu_pre_integrator.hpp"
-#include <ceres/ceres.h>
+// #include <ceres/ceres.h>
 
 #include "params/param_prvag.hpp"
 

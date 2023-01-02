@@ -7,10 +7,10 @@
 #define SENSOR_DATA_KEY_FRAME_HPP_
 
 #include <Eigen/Eigen>
-#include <Eigen/Core>
-#include <Eigen/Dense>
+// #include <Eigen/Core>
+// #include <Eigen/Dense>
 
-#include <sophus/so3.hpp>
+// #include <sophus/so3.hpp>
 
 #include "../models/graph_optimizer/g2o/vertex/vertex_prvag.hpp"
 

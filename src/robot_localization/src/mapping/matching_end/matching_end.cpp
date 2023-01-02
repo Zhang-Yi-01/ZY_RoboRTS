@@ -7,11 +7,11 @@
 #include <pcl/common/transforms.h>
 #include <pcl/io/pcd_io.h>
 #include "glog/logging.h"
-#include "../../../include/global_defination/global_defination.h.in"
+// #include "../../../include/global_defination/global_defination.h.in"
 #include "../../../include/models/registration/ndt_registration.hpp"
 #include "../../../include/models/cloud_filter/voxel_filter.hpp"
 #include "../../../include/models/cloud_filter/no_filter.hpp"
-#include "ros/package.h"
+// #include "ros/package.h"
 
 namespace  robot_localization {
     
@@ -41,14 +41,14 @@ Matching::Matching()
 bool Matching::InitWithConfig() 
 {
     
-    std::string config_file_path = ros::package::getPath("robot_localization") + "/config/params/matching.yaml";
+    std::string config_file_path = WORK_PACKAGE_PATH + "/config/params/matching.yaml";
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 
     LOG(INFO) << std::endl
               << "-----------------Init Matching With Config-------------------" 
               << std::endl;
 
-    std::string pcd_map_path = ros::package::getPath("robot_localization") + "/pcd_map/scans.pcd";
+    std::string pcd_map_path = WORK_PACKAGE_PATH + "/pcd_map/scans.pcd";
 
     InitDataPath(pcd_map_path);// pcd点云地图文件路径👈定
 

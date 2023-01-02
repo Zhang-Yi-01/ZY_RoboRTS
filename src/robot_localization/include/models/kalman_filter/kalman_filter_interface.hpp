@@ -7,12 +7,12 @@
 #define KALMAN_FILTER_INTERFACE_
 
 // c++
-#include <deque>
+// #include <deque>
 // yaml
 #include <yaml-cpp/yaml.h>
 // eigen
 #include <Eigen/Core>
-#include <Eigen/Dense>
+// #include <Eigen/Dense>
 // 自定义imu数据类型
 #include "../../sensor_data/imu_data.hpp"
 

@@ -6,8 +6,6 @@
 #ifndef OPTIMIZING_END_SLIDING_WINDOW_FLOW_HPP_
 #define OPTIMIZING_END_SLIDING_WINDOW_FLOW_HPP_
 
-#include <ros/ros.h>
-
 //
 // subscribers:
 //

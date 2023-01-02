@@ -1,7 +1,7 @@
 /*
  * @Description: utils for ceres residual block analytic Jacobians
  * @Author: Genshin_Yi
- * @Date: 2020-11-29 15:47:49
+ * @Date: 
  */
 #ifndef MODELS_SLIDING_WINDOW_UTILS_HPP_
 #define MODELS_SLIDING_WINDOW_UTILS_HPP_
@@ -14,7 +14,8 @@
 
 namespace sliding_window {
 
-Eigen::Matrix3d JacobianRInv(const Eigen::Vector3d &w) {
+Eigen::Matrix3d JacobianRInv(const Eigen::Vector3d &w) 
+{
     Eigen::Matrix3d J_r_inv = Eigen::Matrix3d::Identity();
 
     double theta = w.norm();

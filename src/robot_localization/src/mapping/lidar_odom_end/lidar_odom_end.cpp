@@ -8,7 +8,7 @@
 
 // ros
 #include <ros/ros.h>
-#include <ros/package.h>
+// #include <ros/package.h>
 // pcl
 #include <pcl/common/transforms.h>
 #include <pcl/io/pcd_io.h>
@@ -20,13 +20,13 @@
 // 滤波
 #include "../../../include/models/cloud_filter/voxel_filter.hpp"
 // 融合
-#include "../../../include/models/kalman_filter/eskf.hpp"
+// #include "../../../include/models/kalman_filter/eskf.hpp"
 // tools
 #include "../../../include/tools/color_terminal.hpp"
 // yaml
-#include <yaml-cpp/yaml.h>
+// #include <yaml-cpp/yaml.h>
 // glog
-#include <glog/logging.h>
+// #include <glog/logging.h>
 
 namespace robot_localization
 {
@@ -39,7 +39,7 @@ namespace robot_localization
     LidarOdomEnd::LidarOdomEnd() : local_map_ptr_(new CloudData::CLOUD()), current_scan_ptr_(new CloudData::CLOUD())
     {
         // 读取YAML参数
-        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/params/front_end.yaml";
+        std::string config_file_path = WORK_PACKAGE_PATH + "/config/params/odom_end.yaml";
         YAML::Node config_node = YAML::LoadFile(config_file_path);
         // 参数配置
         ConfigFrame(config_node);
@@ -63,7 +63,7 @@ namespace robot_localization
 
     bool LidarOdomEnd::ConfigRegistrationMethod(std::shared_ptr<RegistrationInterface> &registration_ptr, const YAML::Node &config_node)
     {
-        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
+        std::string config_file_path = WORK_PACKAGE_PATH + "/config/user_setting.yaml";
         YAML::Node user_setting_node = YAML::LoadFile(config_file_path);
         std::string registration_method = user_setting_node["registration_method"].as<std::string>();
 

@@ -1,7 +1,7 @@
 /*
  * @Description: SICP registration
  * @Author: ZY
- * @Date: 2020-10-24 21:46:45
+ * @Date: 
  */
 
 #include <pcl/common/transforms.h>

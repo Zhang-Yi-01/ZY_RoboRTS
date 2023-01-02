@@ -1,11 +1,11 @@
 # data storage:
 # a. scan context:
-scan_context_path: /home/x/catkin_ws/src/lidar_localization/slam_data/scan_context   
-# b. 全局地图pcd文件路径:
+# scan_context_path: /home/x/catkin_ws/src/lidar_localization/slam_data/scan_context   
+# b. 全局地图点云pcd文件路径:
 map_path: ../../map_pcd/scans.pcd
 
 # 回环检测:
-loop_closure_method: scan_context # 选择回环检测方法, 目前支持scan_context
+# loop_closure_method: scan_context # 选择回环检测方法, 目前支持scan_context
 
 # 匹配
 registration_method: NDT   # 选择点云匹配方法，目前支持：NDT 

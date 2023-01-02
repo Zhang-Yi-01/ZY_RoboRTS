@@ -7,20 +7,20 @@
 #define OPTIMIZING_END_SLIDING_WINDOW_HPP_
 
 #include <ros/ros.h>
-#include <ros/package.h>
+// #include <ros/package.h>
 
-#include <string>
-#include <deque>
+// #include <string>
+// #include <deque>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
 
 #include "../../sensor_data/pose_data.hpp"
-#include "../../sensor_data/imu_data.hpp"
-#include "../../sensor_data/key_frame.hpp"
+// #include "../../sensor_data/imu_data.hpp"
+// #include "../../sensor_data/key_frame.hpp"
 
-#include "../../models/pre_integrator/imu_pre_integrator.hpp"
+// #include "../../models/pre_integrator/imu_pre_integrator.hpp"
 #include "../../models/sliding_window/ceres_sliding_window.hpp"
-
+#include "../../global_defination/global_defination.h.in"
 namespace robot_localization {
 
 class SlidingWindow {

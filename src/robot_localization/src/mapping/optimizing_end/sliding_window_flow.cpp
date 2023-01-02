@@ -4,10 +4,10 @@
  * @Date: 
  */
 #include "../../../include/mapping/optimizing_end/sliding_window_flow.hpp"
-#include "glog/logging.h"
+// #include "glog/logging.h"
 
 #include "../../../include/tools/file_manager.hpp"
-#include "../../../include/global_defination/global_defination.h.in"
+// #include "../../../include/global_defination/global_defination.h.in"
 
 namespace robot_localization {
 

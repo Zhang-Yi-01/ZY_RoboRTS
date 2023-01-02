@@ -1,13 +1,13 @@
 /*
  * @Description: 误差状态卡尔曼滤波：算法实现
- * @Author: ZY
+ * @Author: ZY 、 Genshin_Yi
  * @Date: 2022.10.24
  */
 
 // c++
 #include <cstdlib>
 #include <limits>
-#include <cmath>
+// #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <ostream>

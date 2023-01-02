@@ -1,10 +1,10 @@
 /*
  * @Description: 点云发布
  * @Author: ZY
- * @Date: 2020-02-05 02:27:30
+ * @Date: 
  */
 #ifndef PUBLISHER_CLOUD_PUBLISHER_HPP_
-#define TION_PUBLISHER_CLOUD_PUBLISHER_HPP_
+#define PUBLISHER_CLOUD_PUBLISHER_HPP_
 
 // ros
 #include <sensor_msgs/PointCloud2.h>

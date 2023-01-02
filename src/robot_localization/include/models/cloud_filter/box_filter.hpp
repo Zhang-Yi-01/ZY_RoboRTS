@@ -11,7 +11,8 @@
 #include "cloud_filter_interface.hpp"
 
 namespace  robot_localization {
-class BoxFilter: public CloudFilterInterface {
+class BoxFilter: public CloudFilterInterface 
+{
   public:
     BoxFilter(YAML::Node node);
     BoxFilter() = default;

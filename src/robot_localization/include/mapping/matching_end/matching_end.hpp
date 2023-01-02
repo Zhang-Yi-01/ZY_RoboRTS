@@ -7,13 +7,11 @@
 #define LOCALIZATION_MATCHING_MATCHING_HPP_
 
 #include <deque>
-#include <Eigen/Dense>
-#include <yaml-cpp/yaml.h>
-#include "../../sensor_data/cloud_data.hpp"
-#include "../../models/registration/registration_interface.hpp"
-#include "../../models/cloud_filter/cloud_filter_interface.hpp"
+
+#include "../../models/registration/registration_interface.hpp" //包含CloudDate
+// #include "../../models/cloud_filter/cloud_filter_interface.hpp"
 #include "../../models/cloud_filter/box_filter.hpp"
-#include "../../models/registration/registration_interface.hpp"
+#include "../../global_defination/global_defination.h.in"
 
 // #include "robot_localization/models/scan_context_manager/scan_context_manager.hpp"
 
@@ -25,7 +23,7 @@ class Matching {
 
     bool Update(const CloudData& cloud_data, Eigen::Matrix4d& cloud_pose);
 
-    // bool SetScanContextPose(const CloudData& init_scan);
+    // bool SetScanContextPose(const CloudData& init_scan); //回环要不先保留把
 
     bool SetInitPose(const Eigen::Matrix4d& init_pose);
     bool SetInited(void);
@@ -41,7 +39,7 @@ class Matching {
   private:
     bool InitWithConfig();
     bool InitDataPath(const std::string pcd_map_path);
-    bool InitScanContextManager(const YAML::Node& config_node);
+    // bool InitScanContextManager(const YAML::Node& config_node);  //回环要不先保留把
     bool InitRegistration(std::shared_ptr<RegistrationInterface>& registration_ptr, const YAML::Node& config_node);
     bool InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface>& filter_ptr, const YAML::Node& config_node);
     bool InitBoxFilter(const YAML::Node& config_node);

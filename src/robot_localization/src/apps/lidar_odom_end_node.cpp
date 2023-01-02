@@ -6,14 +6,13 @@
 
 // ros
 #include <ros/ros.h>
-#include <ros/package.h>
+// #include <ros/package.h>
 // glog
-#include <glog/logging.h>
+// #include <glog/logging.h>
 // tools
 #include "../../include/tools/color_terminal.hpp"
 // 前段数据处理流程控制
 #include "../../include/mapping/lidar_odom_end/lidar_odom_end_flow.hpp"
-#include "../../include/global_defination/global_defination.h.in"
 
 using namespace robot_localization;
 
@@ -28,7 +27,7 @@ int main(int argc, char *argv[])
 
     // glog配置
     google::InitGoogleLogging(argv[0]);
-    std::string path = ros::package::getPath("robot_localization");
+    std::string path = WORK_PACKAGE_PATH;
     FLAGS_log_dir = path + "/log";
     FLAGS_alsologtostderr = 1; // 记录Log到本地 & 在终端中显示
 

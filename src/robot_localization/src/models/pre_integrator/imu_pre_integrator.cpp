@@ -6,7 +6,7 @@
 #include "../../../include/models/pre_integrator/imu_pre_integrator.hpp"
 #include "../../../include/global_defination/global_defination.h.in"
 
-#include "glog/logging.h"
+// #include "glog/logging.h"
 
 namespace robot_localization {
 

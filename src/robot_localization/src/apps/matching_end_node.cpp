@@ -4,12 +4,12 @@
  * @Date: 
  */
 // ros
-#include <ros/ros.h>
-#include <ros/package.h>
+// #include <ros/ros.h>
+// #include <ros/package.h>
 // glog
 #include <glog/logging.h>
 // 彩色文字终端
-#include "../../include/tools/color_terminal.hpp"
+// #include "../../include/tools/color_terminal.hpp"
 #include "../../include/mapping/matching_end/matching_end_flow.hpp"
 
 using namespace robot_localization;
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 {
     // glog配置
     google::InitGoogleLogging(argv[0]);
-    std::string path = ros::package::getPath("robot_localization");
+    std::string path = WORK_PACKAGE_PATH;
     FLAGS_log_dir = path + "/log";
     FLAGS_alsologtostderr = 1; // 记录Log到本地 & 在终端中显示
 

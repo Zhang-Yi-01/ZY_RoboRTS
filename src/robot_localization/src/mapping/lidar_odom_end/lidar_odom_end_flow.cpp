@@ -18,7 +18,7 @@ namespace robot_localization
     LidarOdomEndFlow::LidarOdomEndFlow(ros::NodeHandle &nh)
     {
         // 读取YAML参数
-        std::string config_file_path = ros::package::getPath("robot_localization") + "/config/user_setting.yaml";
+        std::string config_file_path = WORK_PACKAGE_PATH + "/config/user_setting.yaml";
         YAML::Node config_node = YAML::LoadFile(config_file_path);
         // 配置消息话题
         std::string imu_raw_data_topic;

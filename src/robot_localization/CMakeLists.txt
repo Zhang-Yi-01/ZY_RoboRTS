@@ -10,14 +10,14 @@ add_definitions(-std=c++14)
 
 #第三方库配置
 set(ALL_TARGET_LIBRARIES "")
-include(cmake/CSM.cmake)
+# include(cmake/CSM.cmake)
 include(cmake/g2o.cmake)
 include(cmake/glog.cmake) 
 include(cmake/pcl.cmake) 
 include(cmake/sophus.cmake)
 include(cmake/yamlcpp.cmake)
-include(cmake/protobuf.cmake)
-# include(cmake/geographicLib.cmake)
+# include(cmake/protobuf.cmake)
+
 include(cmake/ceres.cmake)
 
 #ROS配置

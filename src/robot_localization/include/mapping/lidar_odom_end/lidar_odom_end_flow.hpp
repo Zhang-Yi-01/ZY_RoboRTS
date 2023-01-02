@@ -7,12 +7,10 @@
 #define LIDAR_ODOM_END_FLOW
 
 // ros
-#include <ros/ros.h>
-#include <ros/package.h>
+// #include <ros/package.h>
 // glog
-#include <glog/logging.h>
+// #include <glog/logging.h>
 // yaml
-#include <yaml-cpp/yaml.h>
 // subscriber
 #include "../../subscriber/cloud_subscriber.hpp"
 #include "../../subscriber/imu_subscriber.hpp"
@@ -24,8 +22,7 @@
 // tf broadcaster
 #include "../../tf/tf_broadcaster.hpp"
 // sensor_data
-#include "../../sensor_data/imu_data.hpp"
-#include "../../sensor_data/cloud_data.hpp"
+// #include "../../sensor_data/imu_data.hpp"
 // 里程计端算法
 #include "lidar_odom_end.hpp"
 

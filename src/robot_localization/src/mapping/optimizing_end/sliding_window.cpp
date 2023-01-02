@@ -5,11 +5,11 @@
  */
 
 #include "../../../include/mapping/optimizing_end/sliding_window.hpp"
-#include <Eigen/Dense>
+// #include <Eigen/Dense>
 #include <pcl/io/pcd_io.h>
-#include "glog/logging.h"
+// #include "glog/logging.h"
 
-#include "../../../include/global_defination/global_defination.h.in"
+// #include "../../../include/global_defination/global_defination.h.in"
 #include "../../../include/tools/file_manager.hpp"
 
 namespace robot_localization {
@@ -24,7 +24,7 @@ bool SlidingWindow::InitWithConfig()
     //
     // load lio localization backend config file:
     //
-    std::string config_file_path = ros::package::getPath("robot_localization") + "/config/params/sliding_window.yaml";
+    std::string config_file_path = WORK_PACKAGE_PATH + "/config/params/sliding_window.yaml";
 
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 

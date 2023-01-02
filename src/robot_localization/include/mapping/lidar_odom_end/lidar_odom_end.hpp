@@ -7,27 +7,21 @@
 #define LIDAR_ODOM_END_HPP
 
 // c++
-#include <deque>
 #include <unordered_map>
 #include <string>
 // eigen
-#include <Eigen/Dense>
-#include <yaml-cpp/yaml.h>
 
 #include "glog/logging.h"
 #include <pcl/common/transforms.h>
 #include <pcl/io/pcd_io.h>
 
-// 自定义点云数据类型
-#include "../../sensor_data/cloud_data.hpp"
 // 点云滤波虚继承接口
 #include "../../models/cloud_filter/cloud_filter_interface.hpp"
 // 点云匹配虚继承接口
 #include "../../models/registration/registration_interface.hpp"
-#include "../../sensor_data/imu_data.hpp"
-#include "../../models/kalman_filter/kalman_filter_interface.hpp"
-#include "../../models/kalman_filter/eskf.hpp"
 
+#include "../../models/kalman_filter/eskf.hpp"
+#include "../../global_defination/global_defination.h.in"
 namespace robot_localization
 {
     

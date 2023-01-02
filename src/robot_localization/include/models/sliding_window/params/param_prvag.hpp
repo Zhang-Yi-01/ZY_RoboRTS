@@ -1,7 +1,7 @@
 /*
  * @Description: ceres parameter block for LIO extended pose
  * @Author: Genshin_Yi
- * @Date: 2020-11-29 15:47:49
+ * @Date: 
  */
 
 #ifndef MODELS_SLIDING_WINDOW_PARAM_PRVAG_HPP_

@@ -10,7 +10,7 @@
 #include "pre_integrator.hpp"
 
 #include "../graph_optimizer/g2o/edge/edge_prvag_odo_pre_integration.hpp"
-#include <sophus/so3.hpp>
+// #include <sophus/so3.hpp>
 
 namespace robot_localization {
 
