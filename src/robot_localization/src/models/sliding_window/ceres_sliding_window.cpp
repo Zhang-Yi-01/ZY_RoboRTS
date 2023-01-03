@@ -234,20 +234,21 @@ sliding_window::FactorPRVAGIMUPreIntegration *CeresSlidingWindow::GetResIMUPreIn
     return factor_imu_pre_integration;
 }
 
-bool CeresSlidingWindow::Optimize() {
+bool CeresSlidingWindow::Optimize() 
+{
     static int optimization_count = 0;
     
     // get key frames count:
     const int N = GetNumParamBlocks();
 
-    if ( 
-        (kWindowSize + 1 <= N)
-    ) {
+    if ( (kWindowSize + 1 <= N) ) 
+    {
         // TODO: create new sliding window optimization problem:
         ceres::Problem problem;
 
         // TODO: a. add parameter blocks:
-        for ( int i = 1; i <= kWindowSize + 1; ++i) {
+        for ( int i = 1; i <= kWindowSize + 1; ++i) 
+        {
             auto &target_key_frame = optimized_key_frames_.at(N - i);
 
             ceres::LocalParameterization *local_parameterization = new sliding_window::ParamPRVAG();
@@ -255,18 +256,20 @@ bool CeresSlidingWindow::Optimize() {
             // TODO: add parameter block:      添加待优化的参数快
             problem.AddParameterBlock(target_key_frame.prvag, 15, local_parameterization);
 
-            if( target_key_frame.fixed ) {
+            if( target_key_frame.fixed ) 
+            {
                     problem.SetParameterBlockConstant(target_key_frame.prvag);
             }
         }
 
         // TODO: add residual blocks:         添加残差块
         // b.1. marginalization constraint:                //   边缘先验因子约束
-        if (
+        if  (
             !residual_blocks_.map_matching_pose.empty() && 
             !residual_blocks_.relative_pose.empty() && 
             !residual_blocks_.imu_pre_integration.empty()
-        ) {
+            ) 
+        {
             auto &key_frame_m = optimized_key_frames_.at(N - kWindowSize - 1);
             auto &key_frame_r = optimized_key_frames_.at(N - kWindowSize - 0);
 
@@ -327,8 +330,10 @@ bool CeresSlidingWindow::Optimize() {
         }
 
         // TODO: b.3. relative pose constraint:    帧间点云匹配
-        if ( !residual_blocks_.relative_pose.empty() ) {
-            for ( const auto &residual_relative_pose: residual_blocks_.relative_pose ) {
+        if ( !residual_blocks_.relative_pose.empty() ) 
+        {
+            for ( const auto &residual_relative_pose: residual_blocks_.relative_pose ) 
+            {
                 auto &key_frame_i = optimized_key_frames_.at(residual_relative_pose.param_index_i);
                 auto &key_frame_j = optimized_key_frames_.at(residual_relative_pose.param_index_j);
 
@@ -346,8 +351,10 @@ bool CeresSlidingWindow::Optimize() {
         }
 
         // TODO: b.4. IMU pre-integration constraint
-        if ( !residual_blocks_.imu_pre_integration.empty() ) {
-            for ( const auto &residual_imu_pre_integration: residual_blocks_.imu_pre_integration ) {
+        if ( !residual_blocks_.imu_pre_integration.empty() ) 
+        {
+            for ( const auto &residual_imu_pre_integration: residual_blocks_.imu_pre_integration ) 
+            {
                 auto &key_frame_i = optimized_key_frames_.at(residual_imu_pre_integration.param_index_i);
                 auto &key_frame_j = optimized_key_frames_.at(residual_imu_pre_integration.param_index_j);
 
@@ -385,7 +392,8 @@ bool CeresSlidingWindow::Optimize() {
     return false;
 }
 
-int CeresSlidingWindow::GetNumParamBlocks() {
+int CeresSlidingWindow::GetNumParamBlocks() 
+{
     return static_cast<int>(optimized_key_frames_.size());
 }
 
@@ -394,7 +402,8 @@ int CeresSlidingWindow::GetNumParamBlocks() {
  * @param  optimized_key_frame, output latest optimized key frame
  * @return true if success false otherwise
  */
-bool CeresSlidingWindow::GetLatestOptimizedKeyFrame(KeyFrame &optimized_key_frame) {
+bool CeresSlidingWindow::GetLatestOptimizedKeyFrame(KeyFrame &optimized_key_frame) 
+{
     const int N = GetNumParamBlocks();
     if ( 0 == N ) return false;
 
@@ -412,7 +421,8 @@ bool CeresSlidingWindow::GetLatestOptimizedKeyFrame(KeyFrame &optimized_key_fram
  * @param  optimized_key_frames, output optimized LIO key frames
  * @return true if success false otherwise
  */
-bool CeresSlidingWindow::GetOptimizedKeyFrames(std::deque<KeyFrame> &optimized_key_frames) {
+bool CeresSlidingWindow::GetOptimizedKeyFrames(std::deque<KeyFrame> &optimized_key_frames) 
+{
     optimized_key_frames.clear();
 
     const int N = GetNumParamBlocks();
@@ -432,12 +442,13 @@ bool CeresSlidingWindow::GetOptimizedKeyFrames(std::deque<KeyFrame> &optimized_k
  * @param  noise, measurement noise covariances
  * @return information matrix as square Eigen::MatrixXd
  */
-Eigen::MatrixXd CeresSlidingWindow::GetInformationMatrix(Eigen::VectorXd noise) {
+Eigen::MatrixXd CeresSlidingWindow::GetInformationMatrix(Eigen::VectorXd noise) 
+{
     Eigen::MatrixXd information_matrix = Eigen::MatrixXd::Identity(
-        noise.rows(), noise.rows()
-    );
+        noise.rows(), noise.rows());
 
-    for (int i = 0; i < noise.rows(); i++) {
+    for (int i = 0; i < noise.rows(); i++) 
+    {
         information_matrix(i, i) /= noise(i);
     }
 
