@@ -12,8 +12,6 @@
 #include "../subscriber/imu_subscriber.hpp"
 
 
-// #include "lidar_localization/subscriber/velocity_subscriber.hpp"
-// #include "lidar_localization/subscriber/gnss_subscriber.hpp"
 #include "../tf/tf_listener.hpp"
 
 // publisher
@@ -28,9 +26,9 @@
 // d. synced reference trajectory:
 #include "../publisher/odometry_publisher.hpp"
 
-
+#include "../subscriber/odometry_subscriber.hpp"
 // 去畸变处理
-// #include "lidar_localization/models/scan_adjust/distortion_adjust.hpp"
+#include "../models/scan_distortion_adjust/distortion_adjust.hpp"
 
 namespace robot_localization {
 class DataPretreatFlow {
@@ -42,7 +40,7 @@ class DataPretreatFlow {
   private:
     bool ReadData();
     bool InitCalibration();
-    bool InitGNSS();
+
     bool HasData();
     bool ValidData();
     bool TransformData();
@@ -50,6 +48,11 @@ class DataPretreatFlow {
 
   private:
     // subscriber
+    // a. lidar odometry:
+    std::shared_ptr<OdometrySubscriber> fused_odom_sub_ptr_;
+    std::deque<PoseData> fused_odom_data_buff_;
+    PoseData current_fused_odom_data_;
+
     std::shared_ptr<ImuSubscriber> imu_sub_ptr_;
     // std::shared_ptr<VelocitySubscriber> velocity_sub_ptr_;
     std::shared_ptr<CloudSubscriber> cloud_sub_ptr_;
@@ -58,8 +61,7 @@ class DataPretreatFlow {
     // publisher
     std::shared_ptr<CloudPublisher> cloud_pub_ptr_;
     std::shared_ptr<IMUPublisher> imu_pub_ptr_;
-    std::shared_ptr<PosVelPublisher> pos_vel_pub_ptr_;
-    std::shared_ptr<OdometryPublisher> gnss_pub_ptr_;
+    
     // models
     std::shared_ptr<DistortionAdjust> distortion_adjust_ptr_;
 
@@ -67,16 +69,13 @@ class DataPretreatFlow {
 
     std::deque<CloudData> cloud_data_buff_;
     std::deque<ImuData> imu_data_buff_;
-    // std::deque<VelocityData> velocity_data_buff_;
 
 
     CloudData current_cloud_data_;
     ImuData current_imu_data_;
-    // VelocityData current_velocity_data_;
 
 
-    PosVelData pos_vel_;
-    Eigen::Matrix4f gnss_pose_ = Eigen::Matrix4f::Identity();
+    // PosVelData pos_vel_;
 };
 }
 

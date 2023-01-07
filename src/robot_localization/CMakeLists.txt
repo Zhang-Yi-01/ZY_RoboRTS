@@ -1,5 +1,4 @@
-#定义cmake需求版本和工程名称
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.0.2)   #定义cmake需求版本和工程名称
 project(robot_localization)
 
 #cmake 编译配置
@@ -9,7 +8,7 @@ add_compile_options(-std=c++14)
 add_definitions(-std=c++14)
 
 #第三方库配置
-set(ALL_TARGET_LIBRARIES "")
+set(THIRD_PART_LIBRARIES "")
 # include(cmake/CSM.cmake)
 include(cmake/g2o.cmake)
 include(cmake/glog.cmake) 
@@ -17,7 +16,6 @@ include(cmake/pcl.cmake)
 include(cmake/sophus.cmake)
 include(cmake/yamlcpp.cmake)
 # include(cmake/protobuf.cmake)
-
 include(cmake/ceres.cmake)
 
 #ROS配置

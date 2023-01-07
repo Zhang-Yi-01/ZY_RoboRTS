@@ -8,13 +8,17 @@
 #include "glog/logging.h"
 
 namespace robot_localization {
-void DistortionAdjust::SetMotionInfo(float scan_period, VelocityData velocity_data) 
+
+void DistortionAdjust::SetMotionInfo(float scan_period, ImuData imu_data_, Eigen::Vector3d fused_vel_) 
 {
     scan_period_ = scan_period;
-    velocity_ << velocity_data.linear_velocity.x, velocity_data.linear_velocity.y, velocity_data.linear_velocity.z;
-    angular_rate_ << velocity_data.angular_velocity.x, velocity_data.angular_velocity.y, velocity_data.angular_velocity.z;
+    // velocity_ <<
+    angular_rate_ << imu_data_.angular_velocity_.x,
+                     imu_data_.angular_velocity_.y,
+                     imu_data_.angular_velocity_.z;
+    velocity_ = fused_vel_;
+    
 }
-
 bool DistortionAdjust::AdjustCloud(CloudData::CLOUD_PTR& input_cloud_ptr, CloudData::CLOUD_PTR& output_cloud_ptr) 
 {
     CloudData::CLOUD_PTR origin_cloud_ptr(new CloudData::CLOUD(*input_cloud_ptr));

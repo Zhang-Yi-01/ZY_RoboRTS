@@ -19,6 +19,9 @@ sim_lidar_link: velodyne_base_link
 sim_car_base_link: base_link                     #仿真车体连结点
 
 
+
+undistorted_pointcloud_topic: /undistorted_points #设定完成去畸变点云的发布话题
+
 base_frame_id:  map                   ##不要有斜杠
 ########input_topic_part########
 
