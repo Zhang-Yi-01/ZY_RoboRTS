@@ -1,0 +1,61 @@
+<robot name="my_car_move" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <!-- 传动实现:用于连接控制器与关节 -->
+    <xacro:macro name="joint_trans" params="joint_name">
+        <!-- Transmission is important to link the joints and the controller -->
+        <transmission name="${joint_name}_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${joint_name}_motor">
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+    <!-- 每一个驱动轮都需要配置传动装置 -->
+    <xacro:joint_trans joint_name="left_wheel2base_link" />
+    <xacro:joint_trans joint_name="right_wheel2base_link" />
+
+    <!-- 控制器 -->
+    <gazebo>
+
+        <plugin name='differential_drive_controller' filename='libgazebo_ros_diff_drive.so'>
+            <ros>
+              <namespace>/</namespace>
+              <remapping>cmd_vel:=cmd_vel</remapping>
+              <remapping>odom:=odom</remapping>
+            </ros>
+            <update_rate>100</update_rate>
+            <!-- wheels -->
+            <left_joint>left_wheel2base_link</left_joint>
+            <right_joint>right_wheel2base_link</right_joint>
+            <!-- kinematics -->
+            <wheel_separation>0.2</wheel_separation>
+            <wheel_diameter>0.065</wheel_diameter>
+            <!-- limits -->
+            <max_wheel_torque>40</max_wheel_torque>
+            <max_wheel_acceleration>2.5</max_wheel_acceleration>
+            <!-- output -->
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>false</publish_wheel_tf> 
+            <odometry_frame>odom</odometry_frame> 
+            <robot_base_frame>base_footprint</robot_base_frame> <!-- 根坐标系 -->
+        </plugin>
+
+        <plugin name="robot_joint_state" filename="libgazebo_ros_joint_state_publisher.so">
+            <ros>
+              <remapping>~/out:=joint_states</remapping>
+            </ros>
+            <update_rate>100</update_rate>
+            <joint_name>right_wheel2base_link</joint_name>
+            <joint_name>left_wheel2base_link</joint_name>
+          </plugin>  
+          
+
+    </gazebo>
+
+</robot>

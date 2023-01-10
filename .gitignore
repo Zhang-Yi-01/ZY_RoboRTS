@@ -8,3 +8,11 @@ velodyne_simulator
 src/robot_simulation
 src/recordings_of_rosbag
 src/robot_localization/pcd_map/*.pcd
+ros1_noetic_section/recordings_of_rosbag
+ros1_noetic_section/robot_simulation
+ros1_noetic_section/robot_localization/log/
+ros1_noetic_section/robot_localization/launch/simulink_localization.launch
+ros1_noetic_section/robot_localization/pcd_map/*.pcd
+
+install
+log

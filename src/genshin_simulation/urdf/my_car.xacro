@@ -1,0 +1,12 @@
+<robot name="my_car" xmlns:xacro="http://wiki.ros.org/xacro">
+
+
+    <xacro:include filename="4w_mecanum.xacro" />
+    <xacro:include filename="my_lidar.xacro" />
+    <xacro:include filename="my_lidar_sensor.xacro" />
+    <!-- <xacro:include filename="my_camera.xacro" />  -->
+    <!-- <xacro:include filename="my_camera_sensor.xacro" /> -->
+    <xacro:include filename="my_imu.xacro" />
+    <!-- <xacro:include filename="my_sensor_imu.xacro" /> -->
+    
+</robot>

@@ -1,0 +1,37 @@
+<!-- 
+    创建一个机器人模型(盒状即可)，显示在 Gazebo 中 
+-->
+
+<robot name="robot">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.5 0.2 0.1" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <material name="yellow">
+                <color rgba="0.8 0.2 0.8 0.58" />
+            </material>
+        </visual>
+        <!-- 如果是标准几何体，直接复制visual里的geometry和origin -->
+        <collision>
+            <geometry>
+                <box size="0.5 0.2 0.1" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        </collision>
+        <!--  -->
+        <inertial>
+            <origin xyz="0 0 0" />
+            <!-- mass：质量 -->
+            <mass value="6" />
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+        </inertial>
+
+    </link>
+    <!-- gazebo有自己的颜色标签 -->
+    <gazebo reference="base_link">
+        <material>Gazebo/Purple</material>
+    </gazebo>
+
+</robot>
