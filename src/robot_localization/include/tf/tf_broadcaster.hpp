@@ -1,5 +1,5 @@
 /*
- * @Description: tf广播,这🐶ros2还好ros模块改动不算太大
+ * @Description: tf广播,这🐶ros2还好tf模块改动不算太大
  * @Author: ZY 、 Genshin_Yi
  * @Date: 2022-12-03 15:23:26
  */
@@ -28,7 +28,7 @@ namespace robot_localization
         TFBroadcaster(std::shared_ptr<rclcpp::Node>& node_,std::string frame_id, std::string child_frame_id);
         TFBroadcaster() = default;
 
-        void SendTransform(Eigen::Matrix4d pose, double time);
+        void SendTransform(Eigen::Matrix4d pose, builtin_interfaces::msg::Time time);
 
     protected:
         

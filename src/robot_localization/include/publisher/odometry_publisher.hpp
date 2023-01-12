@@ -27,7 +27,12 @@ namespace robot_localization
         // void Publish(const Eigen::Matrix4d &transform_matrix, double time);
         void Publish(const Eigen::Matrix4d &transform_matrix);
         // void Publish(const Eigen::Matrix4d &transform_matrix, const Eigen::Vector3d &vel, double time);
-
+        void Publish(const Eigen::Matrix4d &transform_matrix, builtin_interfaces::msg::Time time);
+        void Publish(
+                                        const Eigen::Matrix4d &transform_matrix, 
+                                        const Eigen::Vector3d &vel, 
+                                        builtin_interfaces::msg::Time time
+                                        );
         bool HasSubscriber();
 
     private:

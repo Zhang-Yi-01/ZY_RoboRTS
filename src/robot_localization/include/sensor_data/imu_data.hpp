@@ -7,6 +7,7 @@
 #include <deque>
 #include <cmath>
 #include <Eigen/Dense>
+#include "rclcpp/time.hpp"
 
 namespace robot_localization
 {
@@ -48,6 +49,8 @@ namespace robot_localization
         };
 
         double time_stamp_ = 0.0;
+        builtin_interfaces::msg::Time ros2_time = rclcpp::Time(0,0);
+
         LinerAcceleration linear_acceleration_;
         AngularVelocity angular_velocity_;
         AccelBias accel_bias;

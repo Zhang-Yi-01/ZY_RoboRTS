@@ -29,6 +29,7 @@ void OdometrySubscriber::msg_callback(const nav_msgs::msg::Odometry& odom_msg)
     // 如果获取的是msg时间戳，恢复成完整表达如下
     // double now_sec = msg->header.stamp.sec + msg->header.stamp.nanosec * 1e-9;
     // auto now_sec = msg->header.stamp.sec + msg->header.stamp.nanosec * 1e-9;
+    pose_data.ros2_time = odom_msg.header.stamp;
     pose_data.time = odom_msg.header.stamp.sec + odom_msg.header.stamp.nanosec* 1e-9;
 
     //set the position

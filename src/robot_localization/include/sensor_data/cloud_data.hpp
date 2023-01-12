@@ -7,6 +7,7 @@
 // pcl
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
+#include "rclcpp/time.hpp"
 
 namespace robot_localization
 {
@@ -21,6 +22,7 @@ namespace robot_localization
         CloudData();
 
     public:
+        builtin_interfaces::msg::Time ros2_time = rclcpp::Time(0,0);
         double time_stamp_ = 0.0;
         CLOUD_PTR cloud_ptr_;
     };

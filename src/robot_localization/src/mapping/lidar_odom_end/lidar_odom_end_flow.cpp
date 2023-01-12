@@ -15,7 +15,7 @@ namespace robot_localization
      * @note 订阅点云信息 发布激光里程计
      * @todo
      **/
-    LidarOdomEndFlow::LidarOdomEndFlow(rclcpp::Node &node_)
+    LidarOdomEndFlow::LidarOdomEndFlow(std::shared_ptr<rclcpp::Node>& node_)
     {
         // 读取YAML参数
         std::string config_file_path = WORK_PACKAGE_PATH + "/config/user_setting.yaml";
@@ -48,27 +48,27 @@ namespace robot_localization
 
         // 订阅
         // 1.IMU原始数据
-        imu_raw_sub_ptr_ = std::make_shared<ImuSubscriber>(nh, imu_raw_data_topic, 1000000);
+        imu_raw_sub_ptr_ = std::make_shared<ImuSubscriber>(node_, imu_raw_data_topic, 1000000);
         // 2.去畸变点云
-        cloud_sub_ptr_ = std::make_shared<CloudSubscriber>(nh, undistrotion_pointcloud_topic, 1000000);
+        cloud_sub_ptr_ = std::make_shared<CloudSubscriber>(node_, undistrotion_pointcloud_topic, 1000000);
         // 3.IMU 同步测量
-        imu_synced_sub_ptr_ = std::make_shared<ImuSubscriber>(nh, imu_raw_data_topic, 1000000);
+        imu_synced_sub_ptr_ = std::make_shared<ImuSubscriber>(node_, imu_raw_data_topic, 1000000);
         // 4.lidar to imu tf
-        lidar_to_imu_ptr_ = std::make_shared<TFListener>(nh, imu_link, lidar_link);
+        lidar_to_imu_ptr_ = std::make_shared<TFListener>(node_, imu_link, lidar_link);
 
         // 发布
         // 1.全局点云地图
-        global_map_pub_ptr_ = std::make_shared<CloudPublisher>(nh, "global_map", "map", 100);
+        global_map_pub_ptr_ = std::make_shared<CloudPublisher>(node_, "global_map", "map", 100);
         // 2.局部点云地图
-        local_map_pub_ptr_ = std::make_shared<CloudPublisher>(nh, "local_map", "map", 100);
+        local_map_pub_ptr_ = std::make_shared<CloudPublisher>(node_, "local_map", "map", 100);
         // 3.当前帧雷达扫描
-        current_scan_pub_ptr_ = std::make_shared<CloudPublisher>(nh, "current_scan", "map", 100);
+        current_scan_pub_ptr_ = std::make_shared<CloudPublisher>(node_, "current_scan", "map", 100);
         // 4.estimated lidar pose in map frame
-        laser_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "laser_localization", "map", "lidar", 100);
+        laser_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(node_, "laser_localization", "map", "lidar", 100);
         // 5.fused psoe in map frame
-        fused_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(nh, "fused_odom", "map", "lidar", 100);
+        fused_odom_pub_ptr_ = std::make_shared<OdometryPublisher>(node_, "fused_odom", "map", "lidar", 100);
         // 6.tf
-        laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>("map", car_base_link);
+        laser_tf_pub_ptr_ = std::make_shared<TFBroadcaster>(node_, "map", car_base_link);
 
         // 里程计端算法
         lidar_odom_end_ptr_ = std::make_shared<LidarOdomEnd>();
@@ -89,9 +89,10 @@ namespace robot_localization
         }
 
         ReadData();
-
+        green_info("read data done");
         while (HasData())
-        {
+        {   
+            green_info("hasdata,normal working");
             // 初始化第一帧
             if (!HasInited())
             {
@@ -195,13 +196,13 @@ namespace robot_localization
 
         double diff_imu_time = current_cloud_data_.time_stamp_ - current_imu_synced_data_.time_stamp_;
 
-        if (diff_imu_time < -0.05)
+        if (diff_imu_time < -0.06)
         {
             cloud_data_buff_.pop_front();
             return false;
         }
 
-        if (diff_imu_time > 0.05)
+        if (diff_imu_time > 0.06)
         {
             imu_synced_data_buff_.pop_front();
             return false;
@@ -213,6 +214,7 @@ namespace robot_localization
         return true;
     }
 
+    // 标定初始化
     bool LidarOdomEndFlow::InitCalibration()
     {
         // lookup imu pose in lidar frame:
@@ -296,9 +298,9 @@ namespace robot_localization
     }
 
     bool LidarOdomEndFlow::PublishLidarOdom()
-    {
+    {   
         // 1. publish lidar odometry
-        laser_odom_pub_ptr_->Publish(laser_pose_, current_cloud_data_.time_stamp_);
+        laser_odom_pub_ptr_->Publish(laser_pose_, current_cloud_data_.ros2_time);
         // 2. publish current scan:
         current_scan_pub_ptr_->Publish(lidar_odom_end_ptr_->GetCurrentScan());
 
@@ -311,9 +313,9 @@ namespace robot_localization
         lidar_odom_end_ptr_->GetOdometry(fused_pose_, fused_vel_);
         // 1. publish tf:
         if(if_odom_end_tf_broadcast)
-            laser_tf_pub_ptr_->SendTransform(fused_pose_, current_imu_raw_data_.time_stamp_);
+            laser_tf_pub_ptr_->SendTransform(fused_pose_, current_imu_raw_data_.ros2_time);
         // 2. publish fusion odometry:
-        fused_odom_pub_ptr_->Publish(fused_pose_, fused_vel_, current_imu_raw_data_.time_stamp_);
+        fused_odom_pub_ptr_->Publish(fused_pose_, fused_vel_, current_imu_raw_data_.ros2_time);
 
         return true;
     }

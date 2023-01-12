@@ -37,6 +37,7 @@ namespace robot_localization
     // 如果获取的是msg时间戳，恢复成完整表达如下
     // double now_sec = msg->header.stamp.sec + msg->header.stamp.nanosec * 1e-9;
     // auto now_sec = msg->header.stamp.sec + msg->header.stamp.nanosec * 1e-9;
+        imu_data.ros2_time = imu_msg.header.stamp;
         imu_data.time_stamp_ = imu_msg.header.stamp.sec + imu_msg.header.stamp.nanosec* 1e-9;
 
         imu_data.linear_acceleration_.x = imu_msg.linear_acceleration.x;

@@ -51,6 +51,20 @@ namespace robot_localization
     //     ros::Time ros_time(time);
     //     PublishData(transform_matrix, vel, ros_time);
     // }
+
+    void OdometryPublisher::Publish(
+                                    const Eigen::Matrix4d &transform_matrix, 
+                                    const Eigen::Vector3d &vel, 
+                                    builtin_interfaces::msg::Time time
+                                    )
+    {
+        PublishData(transform_matrix, vel, time);
+    }
+
+    void OdometryPublisher::Publish(const Eigen::Matrix4d &transform_matrix, builtin_interfaces::msg::Time time)
+    {
+        PublishData(transform_matrix,time);
+    }
     /**
      * @brief 里程数据发布
      * @note

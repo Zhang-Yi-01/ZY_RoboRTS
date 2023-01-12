@@ -1,6 +1,6 @@
 /*
  * @Description: 里程计端任务管理器
- * @Author: ZY 、 Genshin_Yi
+ * @Author: ZY
  * @Date: 
  */
 #ifndef LIDAR_ODOM_END_FLOW
@@ -31,7 +31,7 @@ namespace robot_localization
     class LidarOdomEndFlow
     {
     public:
-        LidarOdomEndFlow(rclcpp::Node &node_);
+        LidarOdomEndFlow(std::shared_ptr<rclcpp::Node>& node_);
 
         bool Run();
 

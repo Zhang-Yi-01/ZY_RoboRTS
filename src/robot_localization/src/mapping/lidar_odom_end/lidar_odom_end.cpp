@@ -7,8 +7,7 @@
 #include "../../../include/mapping/lidar_odom_end/lidar_odom_end.hpp"
 
 // ros
-#include <ros/ros.h>
-// #include <ros/package.h>
+#include "rclcpp/rclcpp.hpp"
 // pcl
 #include <pcl/common/transforms.h>
 #include <pcl/io/pcd_io.h>
@@ -94,7 +93,8 @@ namespace robot_localization
         else
         {
             LOG(ERROR) << "[无对应匹配方法]" << std::endl;
-            ROS_BREAK();
+            rclcpp::shutdown();
+            // ROS_BREAK();
         }
         return true;
     }
@@ -112,7 +112,9 @@ namespace robot_localization
         else
         {
             LOG(ERROR) << "[无对应滤波方法]" << std::endl;
-            ROS_BREAK();
+            // ROS_BREAK();
+            rclcpp::shutdown();
+
         }
         return true;
     }
@@ -130,7 +132,8 @@ namespace robot_localization
         else
         {
             LOG(ERROR) << "[无对应卡尔曼融合方法]" << std::endl;
-            ROS_BREAK();
+            rclcpp::shutdown();
+            // ROS_BREAK();
         }
 
         return true;

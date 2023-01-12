@@ -32,18 +32,20 @@ int main(int argc, char *argv[])
     FLAGS_log_dir = path + "/log";
     FLAGS_alsologtostderr = 1; // 记录Log到本地 & 在终端中显示
 
+
     // 激光雷达里程计端任务管理器
-    std::shared_ptr<LidarOdomEndFlow> lidar_odom_end_flow_ptr = std::make_shared<LidarOdomEndFlow>(nh);
+    std::shared_ptr<LidarOdomEndFlow> lidar_odom_end_flow_ptr = std::make_shared<LidarOdomEndFlow>(ros2_node);
     
     rclcpp::Rate loop_rate(110);
     
     while (rclcpp::ok())
     {   
         
-        rclcpp::spin_some();
+        rclcpp::spin_some(ros2_node);
         lidar_odom_end_flow_ptr->Run();
         loop_rate.sleep();
     }
+    rclcpp::shutdown();
 
     return 0;
 }

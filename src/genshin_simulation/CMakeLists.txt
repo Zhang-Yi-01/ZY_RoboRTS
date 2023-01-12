@@ -19,7 +19,6 @@ find_package(pluginlib REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
 find_package(nav_msgs)
-find_package(nav2_msgs)
 
 find_package(map_msgs REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
@@ -48,7 +47,6 @@ set(dependencies
   geometry_msgs
   map_msgs
   # message_filters
-  nav2_msgs
   nav_msgs
   pluginlib
   rclcpp

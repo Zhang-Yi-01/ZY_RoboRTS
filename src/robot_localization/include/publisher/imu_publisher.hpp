@@ -23,6 +23,7 @@ class IMUPublisher {
 
     void Publish(const ImuData &imu_data, double time);
     void Publish(const ImuData &imu_data);
+    void Publish(const ImuData &imu_data, builtin_interfaces::msg::Time time);
 
     bool HasSubscribers(void);
 

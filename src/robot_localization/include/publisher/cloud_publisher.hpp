@@ -28,6 +28,7 @@ namespace robot_localization
 
         void Publish(CloudData::CLOUD_PTR &cloud_ptr_input, double time);
         void Publish(CloudData::CLOUD_PTR &cloud_ptr_input);
+        void Publish(CloudData::CLOUD_PTR &cloud_ptr_input,builtin_interfaces::msg::Time time);
 
         bool HasSubscribers();
 

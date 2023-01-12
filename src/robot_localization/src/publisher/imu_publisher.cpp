@@ -29,6 +29,11 @@ void IMUPublisher::Publish(const ImuData &imu_data, double time)
     PublishData(imu_data, ros2_time);
 }
 
+void IMUPublisher::Publish(const ImuData &imu_data, builtin_interfaces::msg::Time time) 
+{
+    PublishData(imu_data, time);
+}
+
 void IMUPublisher::Publish(const ImuData &imu_data) 
 {
     builtin_interfaces::msg::Time time = ros2_node_->now();

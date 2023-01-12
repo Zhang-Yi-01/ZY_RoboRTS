@@ -35,7 +35,10 @@ def generate_launch_description():
     start_gazebo_cmd = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
-                launch_arguments={'use_sim_time': 'true', 'world':world_model_path}.items()
+                launch_arguments={
+                                    'use_sim_time': 'true', 
+                                    'world':world_model_path
+                                 }.items()
              )
     # 将机器人模型通过robot_description话题发布出去（gazebo好像不能直接加载xacro文件）
     robot_state_publisher_node = Node(
@@ -67,7 +70,7 @@ def generate_launch_description():
     
     ld.add_action(start_gazebo_cmd)
     ld.add_action(robot_state_publisher_node)
-    ld.add_action(joint_state_publisher_node)
+    # ld.add_action(joint_state_publisher_node)
     ld.add_action(spawn_entity_cmd) 
 
     return ld

@@ -40,6 +40,7 @@ namespace robot_localization
     // 如果获取的是msg时间戳，恢复成完整表达如下
     // double now_sec = msg->header.stamp.sec + msg->header.stamp.nanosec * 1e-9;
     // auto now_sec = msg->header.stamp.sec + msg->header.stamp.nanosec * 1e-9;
+        cloud_data.ros2_time = cloud_msg.header.stamp;
         cloud_data.time_stamp_ = cloud_msg.header.stamp.sec + cloud_msg.header.stamp.nanosec* 1e-9;
 
         // cloud_data.time_stamp_ = cloud_msg_ptr->header.stamp.sec + cloud_msg_ptr->header.stamp.nanosec* 1e-9;

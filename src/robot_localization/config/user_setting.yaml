@@ -5,6 +5,8 @@ if_simulink: true         ##后面会自动根据是否处于仿真，分配话�
 odom_end_send_tf: true    #参数默认false，tf统一仅由优化端广播，调试odom_end时设置为true，则只由odom_end广播tf
 matching_end_send_tf: false #参数默认false，tf统一仅由优化端广播，调试matching_end时设置为true，则只由matching_end广播tf
 
+
+
 imu_topic: /livox/imu
 scan_pointcloud_topic: /livox/lidar  #未去畸变原始点云
 imu_link: laser_link
@@ -13,18 +15,20 @@ car_base_link: laser_link                     #仿真车体连结点
 
 
 sim_imu_topic: /imu
-sim_scan_pointcloud_topic: /velodyne_points  #未去畸变原始点云
+sim_scan_pointcloud_topic: /velodyne_points2  #未去畸变原始点云
 sim_imu_link: imu
-sim_lidar_link: velodyne_base_link
+sim_lidar_link: velodyne2_base_link
 sim_car_base_link: base_link                     #仿真车体连结点
 
 
 
 undistorted_pointcloud_topic: /undistorted_points #设定完成去畸变点云的发布话题
 
+#初始，相对于点云pcd或者是gazebo仿真世界的位置
+init_position: [5.00,2.00,0.00]
 base_frame_id:  map                   ##不要有斜杠
 ########input_topic_part########
 
 
 
-registration_method: ICP_SVD # 选择点云匹配方法 目前支持ICP_SVD,ICP,NDT,NDT_CPU(编译没通过),SICP(已有接口，缺少实现)
+registration_method: NDT_CPU # 选择点云匹配方法 目前支持ICP_SVD,ICP,NDT,NDT_CPU(编译没通过),SICP(已有接口，缺少实现)

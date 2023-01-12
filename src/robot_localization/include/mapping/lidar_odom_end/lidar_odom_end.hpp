@@ -1,6 +1,6 @@
 /*
  * @Description: 里程计端算法
- * @Author: ZY 、 Genshin_Yi
+ * @Author: ZY
  * @Date: 
  */
 #ifndef LIDAR_ODOM_END_HPP
@@ -21,7 +21,8 @@
 #include "../../models/registration/registration_interface.hpp"
 
 #include "../../models/kalman_filter/eskf.hpp"
-#include "../../global_defination/global_defination.h.in"
+#include "../../global_path_defination/global_path.h"
+
 namespace robot_localization
 {
     

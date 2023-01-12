@@ -16,14 +16,14 @@ def generate_launch_description():
     # urdf_model_path = os.path.join(pkg_share, f'urdf/{urdf_name}')
     pkg_path = os.path.join(pkg_share, '../../../../src/genshin_simulation')
     world_model_path = pkg_path + '/world/2023rmus.world'
-    urdf_model_path = pkg_path + '/differential_urdf/car.xacro'
+    urdf_model_path = pkg_path + '/urdf/fish_bot.xacro'
     
     robot_description = ParameterValue(Command(['xacro ', urdf_model_path]),value_type=str)
     
     start_gazebo_cmd = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
-                launch_arguments={'use_sim_time': 'true', 'world':world_model_path}.items()
+                launch_arguments={'use_sim_time': 'true', 'world':""}.items()
              )
     # 将机器人模型通过robot_description话题发布出去（gazebo好像不能直接加载xacro文件）
     robot_state_publisher_node = Node(
@@ -48,7 +48,7 @@ def generate_launch_description():
                       '-topic', 'robot_description' ,
                       '-x', '5.0',
                       '-y', '2.0',
-                      '-z', '0.5' 
+                      '-z', '0' 
                     ], output='screen')
         
         

@@ -33,6 +33,11 @@ namespace robot_localization
         PublishData(cloud_ptr_input, ros2_time);
     }
 
+    void CloudPublisher::Publish(CloudData::CLOUD_PTR &cloud_ptr_input,builtin_interfaces::msg::Time time)
+    {
+        
+        PublishData(cloud_ptr_input, time);
+    }
     void CloudPublisher::Publish(CloudData::CLOUD_PTR &cloud_ptr_input)
     {
         builtin_interfaces::msg::Time time = ros2_node_->now();
