@@ -9,7 +9,7 @@
         <commandTopic>cmd_vel</commandTopic>
         <odometryTopic>odom</odometryTopic>
         <odometryFrame>odom</odometryFrame>
-        <odometryRate>30.0</odometryRate>
+        <odometryRate>100</odometryRate>
         <robotBaseFrame>base_footprint</robotBaseFrame>
         <broadcastTF>true</broadcastTF>
         
@@ -18,7 +18,7 @@
         <ros>
           <remapping>~/out:=joint_states</remapping>
         </ros>
-        <update_rate>30</update_rate>
+        <update_rate>100</update_rate>
         <joint_name>lower_right_wheel_joint</joint_name>
         <joint_name>lower_left_wheel_joint</joint_name>
         <joint_name>upper_right_wheel_joint</joint_name>

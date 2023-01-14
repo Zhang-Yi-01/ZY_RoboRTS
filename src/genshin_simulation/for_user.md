@@ -6,7 +6,7 @@
     2.1、搭载HDL-32三维雷达的麦轮仿真
     2.2、搭载VLP-16三维雷达的麦轮仿真
     2.3、仿真控制机器人移动的键盘控制器
-#### 3、依赖
+#### 3、依赖！！需要安装的
 #### 4、接口
 
 ## 1、本包包含什么捏
@@ -25,8 +25,13 @@
 启动：``ros2 launch genshin_simulation HDL32_car_launch.py``
 ### 2.2、搭载VLP-16三维雷达的麦轮仿真
 启动：``ros2 launch genshin_simulation VLP16_car_launch.py``
+### 2.3、仿真控制机器人移动的键盘控制器
+``ros2 run  genshin_simulation teleop_twist_keyboard ``
+键入档位决定速度如: 1、2、3、4、5、6 
+键入q、w、e、a、s、d、z、x、c方向指行 
+键入j、k、l旋转车体
 
-## 3、依赖
+## 3、依赖！！需要安装的
 安装相关的velodyne仿真插件(其中对于三维雷达 velodyne 的仿真,其提供了与ros的接口转换)：
 ```
 
@@ -38,8 +43,6 @@ sudo apt-get install ros-humble-velodyne*
 sudo apt install ros-humble-gazebo-*
 
 sudo apt install ros-humble-joint-state-publisher
-sudo apt install ros-humble-nav2-msgs*
-sudo apt install ros-humble-tf-transformations
 
 ```
 ## 4、接口

@@ -2,10 +2,11 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>genshin_simulation</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <version>1.0.0</version>
+  <description>TODO: 提供gazebo仿真的地图模型与机器人模型</description>
   <maintainer email="tdt@todo.todo">tdt</maintainer>
   <license>TODO: License declaration</license>
+  <author>lsc</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
@@ -14,6 +15,9 @@
   <depend>geometry_msgs</depend>
   <depend>gazebo_plugins</depend>
   <depend>gazebo_ros</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>pluginlib</depend>
 
 
   <test_depend>ament_lint_auto</test_depend>

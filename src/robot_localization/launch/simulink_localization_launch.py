@@ -19,20 +19,23 @@ def generate_launch_description():
     lidar_odom_end_node = Node(
                                 package="robot_localization",
                                 executable='lidar_odom_end_node',
-
                                 output='screen'
 
 
                               )
-    rviz2_node = Node(
+    start_rviz2_node = Node(
                         package="rviz2",
-                        executable="rviz2"
+                        executable="rviz2",
+                        name='rviz2',
+                        output='screen'
+                        # arguments=['-d', default_rviz_config_path]
+
                      )
         
     
     ld.add_action(start_simulation_cmd)
     ld.add_action(lidar_odom_end_node)
-    ld.add_action(rviz2_node)
+    ld.add_action(start_rviz2_node)
 
 
     return ld

@@ -20,13 +20,13 @@ find_package(sensor_msgs REQUIRED)
 
 find_package(nav_msgs)
 
-find_package(map_msgs REQUIRED)
-find_package(tf2_geometry_msgs REQUIRED)
-find_package(tf2 REQUIRED)
-find_package(tf2_ros REQUIRED)
-find_package(tf2_sensor_msgs REQUIRED)
-find_package(visualization_msgs REQUIRED)
-find_package(angles REQUIRED)
+# find_package(map_msgs REQUIRED)
+# find_package(tf2_geometry_msgs REQUIRED)
+# find_package(tf2 REQUIRED)
+# find_package(tf2_ros REQUIRED)
+# find_package(tf2_sensor_msgs REQUIRED)
+# find_package(visualization_msgs REQUIRED)
+# find_package(angles REQUIRED)
 
 # find_package(message_filters REQUIRED)
 # find_package(rclcpp_lifecycle REQUIRED)
@@ -34,7 +34,7 @@ find_package(angles REQUIRED)
 
 ## 添加非ROS2功能包的依赖项时，需要将其对于的头文件路径在include_directories中写明（如下）。而对于依赖项为ROS2功能包时，则无需此操作（如上）。
 ## Find gazebo
-find_package(gazebo REQUIRED)
+# find_package(gazebo REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
@@ -45,7 +45,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 set(dependencies
   geometry_msgs
-  map_msgs
+  # map_msgs
   # message_filters
   nav_msgs
   pluginlib
@@ -53,12 +53,13 @@ set(dependencies
   # rclcpp_lifecycle
   sensor_msgs
   std_msgs
-  tf2
-  tf2_geometry_msgs
-  tf2_ros
-  tf2_sensor_msgs
-  visualization_msgs
-  angles
+  # gazebo
+  # tf2
+  # tf2_geometry_msgs
+  # tf2_ros
+  # tf2_sensor_msgs
+  # visualization_msgs
+  # angles
 )
 
 

@@ -4,11 +4,6 @@
 
 编译请用：
 `` colcon build --packages-select genshin_simulation robot_localization --symlink-install ``
+`` colcon build --packages-select genshin_simulation --symlink-install`` 
 
-
-dpkg -l | grep gazebo
-
-
-
-sudo apt-get remove gazebo gazebo-common gazebo-plugin-base libgazebo-dev libgazebo11:amd64 ros-humble-gazebo-dev ros-humble-gazebo-msgs ros-humble-gazebo-msgs-dbgsym ros-humble-gazebo-plugins ros-humble-gazebo-plugins-dbgsym  ros-humble-gazebo-ros  ros-humble-gazebo-ros-dbgsym ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros2-control  ros-humble-gazebo-ros2-control-dbgsym ros-humble-gazebo-ros2-control-demos  ros-humble-gazebo-ros2-control-demos-dbgsym ros-humble-velodyne-gazebo-plugins ros-humble-velodyne-gazebo-plugins-dbgsym
 
