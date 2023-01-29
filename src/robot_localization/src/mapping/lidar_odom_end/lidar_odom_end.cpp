@@ -169,7 +169,7 @@ namespace robot_localization
                            const CloudData &cloud_data,
                            Eigen::Matrix4d &cloud_pose)
     {
-        // 定义用于运动递推的参数
+        // 定义用于定位递推的参数
         static Eigen::Matrix4d step_pose = Eigen::Matrix4d::Identity();
         static Eigen::Matrix4d last_pose = init_pose_;
         static Eigen::Matrix4d predict_pose = init_pose_;
@@ -197,7 +197,9 @@ namespace robot_localization
 
         // 匹配
         CloudData::CLOUD_PTR result_cloud_ptr(new CloudData::CLOUD());
+        TicToc example;
         registration_ptr_->ScanMatch(filtered_cloud_ptr, predict_pose, result_cloud_ptr, current_frame_.pose_);
+        printf("TicToc 该次匹配耗时 %.6lf ms\n",example.toc());
         cloud_pose = current_frame_.pose_;
 
         // 更新预测位姿
@@ -280,4 +282,18 @@ namespace robot_localization
         }
         return true;
     }
+
+    /**
+     * @brief  坐标变换
+     * @note   输入original_pose，用change给出的三个坐标变换相加
+     * @todo
+     **/
+    void LidarOdomEnd::coordinate_transformation(Eigen::Matrix4d &original_pose, Eigen::Vector3d &change)
+    {   
+        original_pose(0, 3) += change[0];
+        original_pose(1, 3) += change[1];
+        original_pose(2, 3) += change[2];
+
+    }
+
 } // namespace robot_localization

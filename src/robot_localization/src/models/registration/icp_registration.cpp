@@ -10,7 +10,8 @@
 namespace robot_localization
 {
 
-    ICPRegistration::ICPRegistration(const YAML::Node &node) : icp_ptr_(new pcl::IterativeClosestPoint<CloudData::POINT, CloudData::POINT>())
+    ICPRegistration::ICPRegistration(const YAML::Node &node) 
+        : icp_ptr_(new pcl::IterativeClosestPoint<CloudData::POINT, CloudData::POINT>())
     {
 
         float max_corr_dist = node["max_corr_dist"].as<float>();

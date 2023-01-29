@@ -16,7 +16,7 @@ def generate_launch_description():
     pkg_share = FindPackageShare(package='genshin_simulation').find('genshin_simulation') 
     # urdf_model_path = os.path.join(pkg_share, f'urdf/{urdf_name}')
     pkg_path = os.path.join(pkg_share, '../../../../src/genshin_simulation')
-    world_model_path = pkg_path + '/world/2023rmus.world'
+    world_model_path = pkg_path + '/world/2023rmus_true.world'
     urdf_model_path = pkg_path + '/urdf/fish_bot.urdf'
     
     robot_description = ParameterValue(Command(['xacro ', urdf_model_path]),value_type=str)

@@ -67,8 +67,10 @@ void IMUPublisher::PublishData(const ImuData &imu_data, builtin_interfaces::msg:
 bool IMUPublisher::HasSubscribers(void) 
 {
     // return publisher_.getNumSubscribers() != 0;
-    // ros2 好像没有这个函数了,留待后面吧
-    return true;
+    
+    // ros2 好像是这个函数
+
+    return (publisher_->get_subscription_count()!=0);
 }
 
 } // namespace lidar_localization

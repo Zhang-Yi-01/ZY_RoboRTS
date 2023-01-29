@@ -1,12 +1,13 @@
 /*
  * @Description: NDT CPU lidar odometry
  * @Author: ZY
- * @Date: 2021-8-22
+ * @Date: 
  */
 
 #include <pcl/common/transforms.h>
 #include <Eigen/Dense>
 #include "glog/logging.h"
+#include "../../../../include/tools/tic_toc.hpp"
 
 #include "../../../../include/models/registration/ndt_cpu/ndt_cpu_registration.hpp"
 
@@ -52,10 +53,16 @@ namespace robot_localization
                                        const Eigen::Matrix4d &predict_pose,
                                        CloudData::CLOUD_PTR &result_cloud_ptr,
                                        Eigen::Matrix4d &result_pose)
-    {
+    {   
+        // TicToc example1;
         ndt_cpu_.setInputSource(input_source);
+        // printf("TicToc setInputSource耗时 %.6lf ms\n",example1.toc());
+        // TicToc example2;
         ndt_cpu_.align(*result_cloud_ptr, predict_pose.cast<float>());  // 配准用的float，阿这
+        // printf("TicToc align耗时 %.6lf ms\n",example2.toc());
+        // TicToc example3;
         result_pose = ndt_cpu_.getFinalTransformation().cast<double>(); // 匹配后的点云
+        // printf("TicToc getFinalTransformation耗时 %.6lf ms\n",example3.toc());
 
         return true;
     }

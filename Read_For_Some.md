@@ -3,7 +3,8 @@
 ``catkin_make -DCATKIN_WHITELIST_PACKAGES="robot_localization"`` 这已经是ros1的过去式了
 
 编译请用：
-`` colcon build --packages-select genshin_simulation robot_localization --symlink-install ``
-`` colcon build --packages-select genshin_simulation --symlink-install`` 
+colcon build --packages-select genshin_simulation robot_localization --symlink-install
+colcon build --packages-select genshin_simulation --symlink-install
+colcon build --packages-select robot_localization --symlink-install 
 
 

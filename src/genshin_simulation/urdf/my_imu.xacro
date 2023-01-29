@@ -4,11 +4,6 @@
     <xacro:property name="imu_offset_z" value="0.01" />
     <xacro:property name="imu_size" value="0.005" />
     <xacro:property name="imu_m" value="0.01" /> <!-- imu质量 -->
-    <plugin
-            filename="gz-sim-imu-system"
-            name="gz::sim::systems::Imu">
-        </plugin>
-        
 
     <xacro:macro name="Box_inertial_matrix" params="m l w h">
         <inertial>
@@ -74,7 +69,7 @@
             <initial_orientation_as_reference>false</initial_orientation_as_reference>
           </plugin>
           <always_on>true</always_on>
-          <update_rate>100</update_rate>
+          <update_rate>200</update_rate>
           <visualize>true</visualize>
           <imu>
             <angular_velocity>

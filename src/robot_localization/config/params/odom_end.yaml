@@ -53,7 +53,7 @@ fusion_strategy: pose_velocity
 eskf:
     earth:
         # gravity can be calculated from https://www.sensorsone.com/local-gravity-calculator/ using latitude and height:
-        gravity_magnitude: 9.80234
+        gravity_magnitude: 9.8000
         # rotation speed, rad/s:
         rotation_speed: 7.292115e-5
         # 纬度:

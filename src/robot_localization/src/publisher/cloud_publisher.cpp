@@ -57,9 +57,10 @@ namespace robot_localization
 
     bool CloudPublisher::HasSubscribers()
     {
-        // ros2 好像没有这个函数了,留待后面吧
         // return publisher_.getNumSubscribers() != 0;
-        return true;
+        // ros2 好像是这个函数
+
+        return (publisher_->get_subscription_count()!=0);
     }
 
 } // namespace robot_localization

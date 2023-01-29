@@ -117,7 +117,7 @@ namespace robot_localization
                              const Measurement &measurement) = 0;
 
         /**
-         * @brief  get filter time
+         * @brief  得到最近的滤波时间
          * @return filter time as double
          */
         double GetTime(void) const { return time_; }

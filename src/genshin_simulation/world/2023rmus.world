@@ -66,7 +66,7 @@
         <kinematic>0</kinematic>
       </link>
     </model>
-    <gravity>0 0 -250</gravity>
+    <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
     <atmosphere type='adiabatic'/>
     <physics type='ode'>
@@ -105,7 +105,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>../meshes/base_link.stl</uri>
+              <uri>/media/tdt/YI/ZY_RoboRTS/install/genshin_simulation/share/genshin_simulation/../../../../src/genshin_simulation/world/../meshes/base_link.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -126,7 +126,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>../meshes/base_link.stl</uri>
+              <uri>/media/tdt/YI/ZY_RoboRTS/install/genshin_simulation/share/genshin_simulation/../../../../src/genshin_simulation/world/../meshes/base_link.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -185,10 +185,10 @@
       <pose>0.030715 0.004529 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>385 217000000</sim_time>
-      <real_time>67 572068987</real_time>
-      <wall_time>1673022552 547605756</wall_time>
-      <iterations>67405</iterations>
+      <sim_time>448 12000000</sim_time>
+      <real_time>62 963402627</real_time>
+      <wall_time>1673786727 140224942</wall_time>
+      <iterations>62795</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -215,7 +215,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-1.53885 -4.78947 19.9929 0 1.2898 1.86822</pose>
+        <pose>-5.46803 -13.0728 13.3217 -0 0.469799 1.02422</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

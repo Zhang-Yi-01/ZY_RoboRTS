@@ -122,8 +122,9 @@ namespace robot_localization
     bool OdometryPublisher::HasSubscriber()
     {
         // return publisher_.getNumSubscribers() != 0;
-        // ros2 好像没有这个函数了,留待后面吧
-        return true;
+        // ros2 好像是这个函数
+
+        return (publisher_->get_subscription_count()!=0);
     }
 
 } // namespace robot_localization

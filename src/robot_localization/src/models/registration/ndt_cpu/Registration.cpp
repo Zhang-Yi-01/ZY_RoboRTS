@@ -89,7 +89,8 @@ void Registration<PointSourceType, PointTargetType>::align(const Eigen::Matrix<f
 
   trans_cloud_.points.resize(source_cloud_->points.size());
 
-  for (int i = 0; i < trans_cloud_.points.size(); i++) {
+  for (int i = 0; i < (int)(trans_cloud_.points.size()); i++) 
+  {
     trans_cloud_.points[i] = source_cloud_->points[i];
   }
 

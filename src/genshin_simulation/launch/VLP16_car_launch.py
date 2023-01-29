@@ -17,7 +17,7 @@ def generate_launch_description():
     pkg_share = FindPackageShare(package='genshin_simulation').find('genshin_simulation') 
     # urdf_model_path = os.path.join(pkg_share, f'urdf/{urdf_name}')
     pkg_path = os.path.join(pkg_share, '../../../../src/genshin_simulation')
-    world_model_path = pkg_path + '/world/2023rmus.world'
+    world_model_path = pkg_path + '/world/test_world01.world'
     urdf_model_path = pkg_path + '/urdf/my_car_VLP16.xacro'
     
     robot_description = ParameterValue(Command(['xacro ', urdf_model_path]),value_type=str)
@@ -58,8 +58,8 @@ def generate_launch_description():
         executable='spawn_entity.py',
         arguments = [ '-entity', robot_name_in_model,
                       '-topic', 'robot_description' ,
-                      '-x', '5.0',
-                      '-y', '2.0',
+                      '-x', '0.0',
+                      '-y', '0.0',
                       '-z', '0.5' 
                     ], output='screen')
         
@@ -67,7 +67,7 @@ def generate_launch_description():
     
     ld.add_action(start_gazebo_cmd)
     ld.add_action(robot_state_publisher_node)
-    ld.add_action(joint_state_publisher_node)
+    # ld.add_action(joint_state_publisher_node)
     ld.add_action(spawn_entity_cmd) 
 
     return ld

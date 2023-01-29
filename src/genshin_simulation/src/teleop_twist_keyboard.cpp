@@ -121,11 +121,11 @@ geometry_msgs::msg::Twist set_moving(char keyboard_input) // 返回计算出的T
     {
         //反方向抑制
         case '1':   kp=0.4;break;
-        case '2':   kp=0.7;break;
-        case '3':   kp=1.1;break;
-        case '4':   kp=1.5;break;
-        case '5':   kp=2.0;break;
-
+        case '2':   kp=0.8;break;
+        case '3':   kp=1.2;break;
+        case '4':   kp=1.6;break;
+        case '5':   kp=2.1;break;
+        case '6':   kp=2.7;break;
         case 'q':   x=1;y=1;break;
         case 'w':   x=1;y=0;break;
         case 'e':   x=1;y=-1;break;
@@ -135,9 +135,9 @@ geometry_msgs::msg::Twist set_moving(char keyboard_input) // 返回计算出的T
         case 'z':   x=-1;y=1;break;
         case 'c':   x=-1;y=-1;break;
         case 'x':   x=-1;y=0;break;
-        case 'j':   x=0;y=0;angular_v=0.6;break;
+        case 'j':   x=0;y=0;angular_v=0.72;break;
         case 'k':   angular_v=0;break;
-        case 'l':   x=0;y=0;angular_v=-0.6;break;
+        case 'l':   x=0;y=0;angular_v=-0.72;break;
         default:    std::cout << "输入无效" ;fail_key_flag=true;break;
     }
     geometry_msgs::msg::Twist my_twist;

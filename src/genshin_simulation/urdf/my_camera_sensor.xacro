@@ -3,7 +3,7 @@
     <gazebo reference="camera">
       <!-- 类型设置为 camara -->
       <sensor type="camera" name="camera_sim">
-        <update_rate>80.0</update_rate> <!-- 更新频率 -->
+        <update_rate>280.0</update_rate> <!-- 更新频率 -->
         <!-- 摄像头基本信息设置 -->
         <camera name="head">
           <horizontal_fov>1.3962634</horizontal_fov>

@@ -6,10 +6,6 @@
 #ifndef LIDAR_ODOM_END_FLOW
 #define LIDAR_ODOM_END_FLOW
 
-// ros
-// #include <ros/package.h>
-// glog
-// #include <glog/logging.h>
 // yaml
 // subscriber
 #include "../../subscriber/cloud_subscriber.hpp"
@@ -34,6 +30,7 @@ namespace robot_localization
         LidarOdomEndFlow(std::shared_ptr<rclcpp::Node>& node_);
 
         bool Run();
+        bool run_test_odom_match();
 
     private:
         bool ReadData();
@@ -92,7 +89,7 @@ namespace robot_localization
         std::deque<CloudData> cloud_data_buff_;
         // 4.tf
         std::shared_ptr<TFListener> lidar_to_imu_ptr_;
-        Eigen::Matrix4d lidar_to_imu_ = Eigen::Matrix4d::Identity();
+        Eigen::Matrix4d lidar_to_imu_ = Eigen::Matrix4d::Identity(); 
 
         // 发布
         // 1.global-local map and current scan:
@@ -120,6 +117,9 @@ namespace robot_localization
         Eigen::Vector3d fused_vel_ = Eigen::Vector3d::Zero();
 
         bool if_odom_end_tf_broadcast = false;
+        Eigen::Vector3d coordinate_transformation = Eigen::Vector3d::Zero();
+
+
     };
 
 } // namespace robot_localization

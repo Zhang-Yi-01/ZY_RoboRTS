@@ -64,6 +64,7 @@ namespace robot_localization
         Eigen::Matrix3d OrientationToMatrix() const;
         static bool SyncData(std::deque<ImuData> &unsynced_data_buff,
                              std::deque<ImuData> &synced_data_buff,
+                             builtin_interfaces::msg::Time cloud_ros2_time,
                              double sync_time);
     };
 

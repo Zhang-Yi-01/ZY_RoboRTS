@@ -5,6 +5,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -43,23 +44,24 @@ include(cmake/glog.cmake)
 include(cmake/pcl.cmake) 
 include(cmake/yamlcpp.cmake)
 include(cmake/sophus.cmake)
-
+include(cmake/g2o.cmake)
+include(cmake/ceres.cmake)
 
 #自定义库设置
 file(GLOB_RECURSE ALL_SRCS "*.cpp")
 file(GLOB_RECURSE NODE_SRCS "src/apps/*_node.cpp" )
 list(REMOVE_ITEM ALL_SRCS ${NODE_SRCS} )
 
-
-# add_executable(test_main src/test_main.cpp ${ALL_SRCS} )
-#ament_target_dependencies只能链接find_package()找到的包，如果是自定义的库文件，仍需要使用target_link_libraries的方式链接
-# ament_target_dependencies( 
-#   test_main
-#   ${ROS2_DEPENDENCIES}
-# )
-# target_link_libraries(test_main 
-#   ${THIRD_PART_LIBRARIES}
-# )
+# 数据预处理端节点
+add_executable(data_pretreat_end_node src/apps/data_pretreat_end_node.cpp ${ALL_SRCS} )
+# ament_target_dependencies只能链接find_package()找到的包，如果是自定义的库文件，仍需要使用target_link_libraries的方式链接
+ament_target_dependencies( 
+  data_pretreat_end_node
+  ${ROS2_DEPENDENCIES}
+)
+target_link_libraries(data_pretreat_end_node 
+  ${THIRD_PART_LIBRARIES}
+)
 
 
 # lidar耦合imu里程计节点
@@ -73,32 +75,34 @@ target_link_libraries(lidar_odom_end_node
 )
 
 
-# # 点云图匹配节点
-# add_executable(matching_end_node src/apps/matching_end_node.cpp ${ALL_SRCS} )
-# ament_target_dependencies(
-#   matching_end_node
-#   ${ROS2_DEPENDENCIES}
-#   ${THIRD_PART_LIBRARIES}
-# )
+# 点云图匹配节点
+add_executable(matching_end_node src/apps/matching_end_node.cpp ${ALL_SRCS} )
+ament_target_dependencies(
+  matching_end_node
+  ${ROS2_DEPENDENCIES}
+)
+target_link_libraries(matching_end_node 
+  ${THIRD_PART_LIBRARIES}
+)
 
 # # 基于图优化之滑动窗口模型的后端优化节点
 # add_executable(optimization_end_node src/apps/optimizing_end_node.cpp ${ALL_SRCS} )
 # ament_target_dependencies(
 #   optimization_end_node
 #   ${ROS2_DEPENDENCIES}
+# )
+# target_link_libraries(optimization_end_node 
 #   ${THIRD_PART_LIBRARIES}
 # )
 
 
 
-
-# install(TARGETS test_main
-#   DESTINATION lib/${PROJECT_NAME})
-
+install(TARGETS data_pretreat_end_node
+  DESTINATION lib/${PROJECT_NAME})
 install(TARGETS lidar_odom_end_node
   DESTINATION lib/${PROJECT_NAME})
-# install(TARGETS matching_end_node
-#   DESTINATION lib/${PROJECT_NAME})
+install(TARGETS matching_end_node
+  DESTINATION lib/${PROJECT_NAME})
 # install(TARGETS optimization_end_node
 #   DESTINATION lib/${PROJECT_NAME})
 

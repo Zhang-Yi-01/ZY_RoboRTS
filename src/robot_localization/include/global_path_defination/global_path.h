@@ -6,13 +6,13 @@
 
 #include <string>
 
-#define PROJECT_PATH "/media/tdt/YI/ZY_RoboRTS/src/robot_localization"
+#define PROJECT_PATH "/media/tdt/YI/SHINSHE_github/ZY_ROBORTS/src/robot_localization"
 // 这里看到的绝对路径不需要人为去改，编译即会生成对应于设备的路径
 namespace robot_localization
 {   
-    const std::string LOCALIZATION_PACKAGE_PATH = "/media/tdt/YI/ZY_RoboRTS/src/robot_localization";
-    const std::string WORK_PACKAGE_PATH = "/media/tdt/YI/ZY_RoboRTS/src/robot_localization";
-    const std::string WORK_SPACE_PATH = "/media/tdt/YI/ZY_RoboRTS/src/robot_localization";
+    const std::string LOCALIZATION_PACKAGE_PATH = "/media/tdt/YI/SHINSHE_github/ZY_ROBORTS/src/robot_localization";
+    const std::string WORK_PACKAGE_PATH = "/media/tdt/YI/SHINSHE_github/ZY_ROBORTS/src/robot_localization";
+    const std::string WORK_SPACE_PATH = "/media/tdt/YI/SHINSHE_github/ZY_ROBORTS/src/robot_localization";
 }
 
 #endif

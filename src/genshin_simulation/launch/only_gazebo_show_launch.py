@@ -10,7 +10,7 @@ def generate_launch_description():
     ld = LaunchDescription()
     pkg_share = FindPackageShare(package='genshin_simulation').find('genshin_simulation') 
     pkg_path = os.path.join(pkg_share, '../../../../src/genshin_simulation')
-    world_model_path = pkg_path + '/world/2023rmus.world'
+    world_model_path = pkg_path + '/world/2023rmus_full.world'
 
     
     start_gazebo_cmd = IncludeLaunchDescription(

@@ -5,18 +5,17 @@
     <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
 
     <xacro:include filename="4w_mecanum.xacro" />
-    <xacro:include filename="VLP-16.xacro"/>
-    <xacro:VLP-16 parent="base_link" name="velodyne" topic="velodyne_points" organize_cloud="${organize_cloud}" hz="15" samples="440" gpu="${gpu}">
+
+
+    <xacro:include filename="VLP-16.urdf.xacro"/>
+    <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="12" samples="440" gpu="${gpu}">
       <origin xyz="0 0 0.4" rpy="0 0 0" />
     </xacro:VLP-16>
 
     <xacro:include filename="my_imu.xacro" />
     <!-- 摄像头仿真，没必要可以注掉 -->
-    <xacro:include filename="my_camera.xacro" /> 
-    <xacro:include filename="my_camera_sensor.xacro" />
-    <!-- 二维雷达仿真，没必要注掉了 -->
-    <!-- <xacro:include filename="my_lidar.xacro" />
-    <xacro:include filename="my_lidar_sensor.xacro" /> -->
+    <!-- <xacro:include filename="my_camera.xacro" /> 
+    <xacro:include filename="my_camera_sensor.xacro" /> -->
 
 
 </robot>
