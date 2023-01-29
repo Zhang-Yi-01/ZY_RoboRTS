@@ -26,10 +26,10 @@ namespace robot_localization
 
     bool NDTCPURegistration::SetRegistrationParam(float res, float step_size, float trans_eps, int max_iter)
     {
-        ndt_cpu_.setResolution(res);
-        ndt_cpu_.setStepSize(step_size);
-        ndt_cpu_.setTransformationEpsilon(trans_eps);
-        ndt_cpu_.setMaximumIterations(max_iter);
+        ndt_cpu_.setResolution(res);    //网格大小设置
+        ndt_cpu_.setStepSize(step_size);    //牛顿法优化的最大步长
+        ndt_cpu_.setTransformationEpsilon(trans_eps);   //连续变换之间允许的最大差值
+        ndt_cpu_.setMaximumIterations(max_iter);    //迭代最大次数
 
         LOG(INFO) << "NDT params:" << std::endl
                   << "res: " << res << ", "

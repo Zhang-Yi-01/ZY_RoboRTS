@@ -8,7 +8,7 @@ map_path: ../../pcd_map/*scans.pcd
 # loop_closure_method: scan_context # 选择回环检测方法, 目前支持scan_context
 
 # 匹配
-registration_method: NDT   # 选择点云匹配方法，目前支持：NDT 
+registration_method: ICP_SVD   # 选择点云匹配方法，目前支持 ICP_SVD , ICP , NDT , NDT_CPU (编译没通过),SICP(已有接口，缺少实现)
 
 # 当前帧
 # no_filter指不对点云滤波，在匹配中，理论上点云越稠密，精度越高，但是速度也越慢

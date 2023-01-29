@@ -1,13 +1,11 @@
 /*
  * @Description: SICP registration
- * @Author: ZY
- * @Date: 2021-04-24 08:46:57
  */
 #ifndef MODELS_REGISTRATION_SICP_REGISTRATION_HPP_
 #define MODELS_REGISTRATION_SICP_REGISTRATION_HPP_
-
+#include <pcl/common/transforms.h>
 #include "../registration_interface.hpp"
-
+#include "../sicp/ICP.h"
 namespace robot_localization
 {
 
@@ -27,6 +25,7 @@ namespace robot_localization
     CloudData::CLOUD_PTR input_source_;
 
     Eigen::Matrix4d transformation_;
+    SICP::Parameters params_;
   };
 
 } // namespace robot_localization

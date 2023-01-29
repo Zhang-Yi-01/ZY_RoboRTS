@@ -153,10 +153,12 @@ namespace robot_localization
         while(!cloud_data_buff_.empty())
         {
             current_cloud_data_ = cloud_data_buff_.front();
+            cloud_data_buff_.pop_front();
             bool is_fusion_succeeded = lidar_odom_end_ptr_->Correct(current_imu_synced_data_,
                                                            current_cloud_data_,
                                                            laser_pose_);
         }
+        return true;
 
     }
     bool LidarOdomEndFlow::ReadData()

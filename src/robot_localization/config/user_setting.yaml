@@ -15,7 +15,7 @@ car_base_link: laser_link                     #仿真车体连结点
 
 
 sim_imu_topic: imu
-sim_scan_pointcloud_topic: /lslidar_point_cloud  #未去畸变原始点云
+sim_scan_pointcloud_topic: /velodyne_points2  #未去畸变原始点云
 sim_imu_link: imu
 sim_lidar_link: velodyne2_base_link
 sim_car_base_link: base_link                     #仿真车体连结点
@@ -31,4 +31,4 @@ base_frame_id:  map                   ##不要有斜杠
 
 
 
-registration_method: NDT_CPU # 选择点云匹配方法 目前支持 ICP_SVD , ICP , NDT , NDT_CPU (编译没通过),SICP(已有接口，缺少实现)
+registration_method: SICP # 里程计选择点云匹配方法 目前支持 ICP_SVD , ICP , NDT , NDT_CPU , SICP

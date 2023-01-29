@@ -12,6 +12,7 @@
 #include <pcl/common/transforms.h>
 #include <pcl/io/pcd_io.h>
 // 匹配
+#include "../../../include/models/registration/sicp/scip_registration.hpp"
 #include "../../../include/models/registration/ndt_registration.hpp"
 #include "../../../include/models/registration/icp_registration.hpp"
 #include "../../../include/models/registration/icp_svd_registration.hpp"
@@ -65,7 +66,7 @@ namespace robot_localization
         std::string config_file_path = WORK_PACKAGE_PATH + "/config/user_setting.yaml";
         YAML::Node user_setting_node = YAML::LoadFile(config_file_path);
         std::string registration_method = user_setting_node["registration_method"].as<std::string>();
-
+        
         if (registration_method == "NDT")
         {
             registration_ptr = std::make_shared<NdtRegistration>(config_node[registration_method]);
@@ -87,6 +88,13 @@ namespace robot_localization
         else if (registration_method == "NDT_CPU")
         {
             registration_ptr = std::make_shared<NDTCPURegistration>(config_node[registration_method]);
+            LOG(INFO) << "[registration_method]" << std::endl
+                      << registration_method << std::endl;
+        }
+        else if (registration_method == "SICP")
+        {
+            printf("42333333333333333333313222222222222222222233333");
+            registration_ptr = std::make_shared<SICPRegistration>(config_node[registration_method]);
             LOG(INFO) << "[registration_method]" << std::endl
                       << registration_method << std::endl;
         }

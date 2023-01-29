@@ -7,8 +7,10 @@
 #include <pcl/common/transforms.h>
 #include <pcl/io/pcd_io.h>
 #include "glog/logging.h"
-// #include "../../../include/global_defination/global_defination.h.in"
 #include "../../../include/models/registration/ndt_registration.hpp"
+#include "../../../include/models/registration/icp_registration.hpp"
+#include "../../../include/models/registration/icp_svd_registration.hpp"
+#include "../../../include/models/registration/ndt_cpu/ndt_cpu_registration.hpp"
 #include "../../../include/models/cloud_filter/voxel_filter.hpp"
 #include "../../../include/models/cloud_filter/no_filter.hpp"
 // #include "ros/package.h"
@@ -100,6 +102,24 @@ bool Matching::InitRegistration(std::shared_ptr<RegistrationInterface>& registra
     if (registration_method == "NDT") 
     {
         registration_ptr = std::make_shared<NdtRegistration>(config_node[registration_method]);
+    }
+    else if (registration_method == "ICP")
+    {
+        registration_ptr = std::make_shared<ICPRegistration>(config_node[registration_method]);
+        LOG(INFO) << "[registration_method]" << std::endl
+                    << registration_method << std::endl;
+    }
+    else if (registration_method == "ICP_SVD")
+    {
+        registration_ptr = std::make_shared<ICPSVDRegistration>(config_node[registration_method]);
+        LOG(INFO) << "[registration_method]" << std::endl
+                    << registration_method << std::endl;
+    }
+    else if (registration_method == "NDT_CPU")
+    {
+        registration_ptr = std::make_shared<NDTCPURegistration>(config_node[registration_method]);
+        LOG(INFO) << "[registration_method]" << std::endl
+                    << registration_method << std::endl;
     } else 
     {
         LOG(ERROR) << "Registration method " << registration_method << " NOT FOUND!";
