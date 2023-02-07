@@ -1,4 +1,4 @@
-find_package (glog 0.6.0 REQUIRED)
+find_package (glog REQUIRED)
 list(APPEND THIRD_PART_LIBRARIES glog::glog)
 # find_package(Glog)
 # include_directories( ${GLOG_INCLUDE_DIRS}) 
