@@ -105,7 +105,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/media/tdt/YI/ZY_RoboRTS/install/genshin_simulation/share/genshin_simulation/../../../../src/genshin_simulation/world/../meshes/base_link.stl</uri>
+              <uri>../meshes/base_link.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -126,7 +126,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/media/tdt/YI/ZY_RoboRTS/install/genshin_simulation/share/genshin_simulation/../../../../src/genshin_simulation/world/../meshes/base_link.stl</uri>
+              <uri>../meshes/base_link.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>

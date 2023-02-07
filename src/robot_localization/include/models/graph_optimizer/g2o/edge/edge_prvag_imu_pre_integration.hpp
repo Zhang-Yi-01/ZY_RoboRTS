@@ -1,7 +1,5 @@
 /*
  * @Description: g2o edge for LIO IMU pre-integration measurement
- * @Author: Genshin_Yi
- * @Date:  
  */
 #ifndef MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_PRVAG_IMU_PRE_INTEGRATION_HPP_
 #define MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_PRVAG_IMU_PRE_INTEGRATION_HPP_

@@ -1,7 +1,5 @@
 /*
  * @Description: GNSS 坐标做观测时使用的先验边
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORXYZ_HPP_
 #define MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORXYZ_HPP_

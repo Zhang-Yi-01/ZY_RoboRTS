@@ -1,7 +1,5 @@
 /*
  * @Description: 里程计端算法
- * @Author: ZY 、 Genshin_Yi
- * @Date: 2022.10.24
  */
 
 #include "../../../include/mapping/lidar_odom_end/lidar_odom_end.hpp"
@@ -19,6 +17,8 @@
 #include "../../../include/models/registration/ndt_cpu/ndt_cpu_registration.hpp"
 // 滤波
 #include "../../../include/models/cloud_filter/voxel_filter.hpp"
+#include "../../../include/models/cloud_filter/no_filter.hpp"
+#include "../../../include/models/cloud_filter/box_filter.hpp"
 // 融合
 // #include "../../../include/models/kalman_filter/eskf.hpp"
 // tools
@@ -93,7 +93,6 @@ namespace robot_localization
         }
         else if (registration_method == "SICP")
         {
-            printf("42333333333333333333313222222222222222222233333");
             registration_ptr = std::make_shared<SICPRegistration>(config_node[registration_method]);
             LOG(INFO) << "[registration_method]" << std::endl
                       << registration_method << std::endl;
@@ -114,6 +113,12 @@ namespace robot_localization
         if (filter_mothod == "voxel_filter")
         {
             filter_ptr = std::make_shared<VoxelFilter>(config_node[filter_mothod][filter_user]);
+            LOG(INFO) << "[filter_mothod]" << std::endl
+                      << filter_mothod << std::endl;
+        }
+        else if(filter_mothod == "no_filter")
+        {
+            filter_ptr = std::make_shared<NoFilter>();
             LOG(INFO) << "[filter_mothod]" << std::endl
                       << filter_mothod << std::endl;
         }

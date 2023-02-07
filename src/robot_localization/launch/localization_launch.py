@@ -16,20 +16,20 @@ def generate_launch_description():
     data_pretreat_end_node = Node(
                                 package="robot_localization",
                                 executable='data_pretreat_end_node',
-                                output='screen'
+                                output='screen',emulate_tty=True
 
     )   
 
     lidar_odom_end_node = Node(
                                 package="robot_localization",
                                 executable='lidar_odom_end_node',
-                                output='screen'
+                                output='screen',emulate_tty=True
                               )
     start_rviz2_node = Node(
                         package="rviz2",
                         executable="rviz2",
                         name='rviz2',
-                        output='screen',
+                        output='screen',emulate_tty=True,
                         arguments=['-d', pkg_path+'/config/rviz/3d_lidar.rviz']
 
                      )

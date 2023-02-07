@@ -1,7 +1,5 @@
 /*
  * @Description: 姿态的先验边
- * @Author: Genshin_Yi
- * @Date:  
  */
 #ifndef MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORQUAT_HPP_
 #define MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_SE3_PRIORQUAT_HPP_

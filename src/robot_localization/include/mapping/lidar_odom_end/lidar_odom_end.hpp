@@ -1,7 +1,5 @@
 /*
  * @Description: 里程计端算法
- * @Author: ZY
- * @Date: 
  */
 #ifndef LIDAR_ODOM_END_HPP
 #define LIDAR_ODOM_END_HPP

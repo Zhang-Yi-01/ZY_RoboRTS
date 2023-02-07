@@ -1,7 +1,5 @@
 /*
  * @Description: 图优化接口
- * @Author: ZY 、 Genshin_Yi
- * @Date: 
  */
 
 #ifndef MODELS_GRAPH_OPTIMIZER_INTERFACE_GRAPH_OPTIMIZER_HPP_

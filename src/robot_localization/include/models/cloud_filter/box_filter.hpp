@@ -1,7 +1,5 @@
 /*
  * @Description: 从点云中截取一个立方体部分
- * @Author: Genshin_Yi
- * @Date: 
  */
 
 #ifndef LOCALIZATION_MODELS_CLOUD_FILTER_BOX_FILTER_HPP_

@@ -1,7 +1,5 @@
 /*
  * @Description: Odometery pre-integrator for LIO mapping, interface
- * @Author: Genshin_Yi
- * @Date: 
  */
 
 #ifndef MODELS_PRE_INTEGRATOR_ODO_PRE_INTEGRATOR_HPP_

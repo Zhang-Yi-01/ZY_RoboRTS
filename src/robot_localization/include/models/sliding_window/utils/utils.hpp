@@ -1,7 +1,5 @@
 /*
  * @Description: utils for ceres residual block analytic Jacobians
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_SLIDING_WINDOW_UTILS_HPP_
 #define MODELS_SLIDING_WINDOW_UTILS_HPP_

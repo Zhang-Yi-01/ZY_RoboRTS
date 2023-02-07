@@ -1,7 +1,5 @@
 /*
  * @Description: 体素滤波器
- * @Author: ZY
- * @Date: 2022.10.24
  */
 
 #include "../../../include/models/cloud_filter/voxel_filter.hpp"

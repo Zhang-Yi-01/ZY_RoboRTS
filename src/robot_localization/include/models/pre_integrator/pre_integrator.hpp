@@ -1,7 +1,5 @@
 /*
  * @Description: pre-integrator interface
- * @Author: Genshin_Yi
- * @Date: 
  */
 
 #ifndef MODELS_PRE_INTEGRATOR_PRE_INTEGRATOR_HPP_

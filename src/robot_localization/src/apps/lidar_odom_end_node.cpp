@@ -34,12 +34,12 @@ int main(int argc, char *argv[])
     // 激光雷达里程计端任务管理器
     std::shared_ptr<LidarOdomEndFlow> lidar_odom_end_flow_ptr = std::make_shared<LidarOdomEndFlow>(ros2_node);
     
-    rclcpp::WallRate loop_rate(110); //别用这个，无论是rate还是wallrate，跟spinsome是有内涵的
+    rclcpp::WallRate loop_rate(110); 
     
     while (rclcpp::ok())
     {           
-        lidar_odom_end_flow_ptr->run_test_odom_match();
-        // lidar_odom_end_flow_ptr->Run();
+        // lidar_odom_end_flow_ptr->run_test_odom_match();
+        lidar_odom_end_flow_ptr->Run();
 
         rclcpp::spin_some(ros2_node);
     }

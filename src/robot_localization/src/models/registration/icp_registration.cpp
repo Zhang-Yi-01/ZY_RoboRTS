@@ -1,7 +1,5 @@
 /*
  * @Description: ICP 匹配模块
- * @Author: ZY
- * @Date: 
  */
 #include "../../../include/models/registration/icp_registration.hpp"
 // glog

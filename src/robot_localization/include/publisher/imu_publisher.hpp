@@ -1,7 +1,5 @@
 /*
  * @Description: 在ros中发布IMU数据
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef PUBLISHER_IMU_PUBLISHER_HPP_
 #define PUBLISHER_IMU_PUBLISHER_HPP_

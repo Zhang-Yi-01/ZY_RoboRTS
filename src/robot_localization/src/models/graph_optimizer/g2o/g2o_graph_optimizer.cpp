@@ -1,7 +1,5 @@
 /*
  * @Description: 
- * @Author: Genshin_Yi
- * @Date: 
  */
 
 #include "../../../../include/models/graph_optimizer/g2o/g2o_graph_optimizer.hpp"

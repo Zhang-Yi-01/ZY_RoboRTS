@@ -7,9 +7,9 @@ ICP:
     max_iter : 30
 ICP_SVD:
     max_corr_dist : 0.5
-    trans_eps : 0.01
+    trans_eps : 0.001
     euc_fitness_eps : 0.36
-    max_iter : 10
+    max_iter : 280
 NDT:
     res : 1.0                 # volex  resolution
     step_size : 0.1    # 梯度下降的步长，越大下降越快，但是容易over shoot陷入局部最优
@@ -53,7 +53,7 @@ fusion_strategy: pose_velocity
 eskf:
     earth:
         # gravity can be calculated from https://www.sensorsone.com/local-gravity-calculator/ using latitude and height:
-        gravity_magnitude: 9.8000
+        gravity_magnitude: 9.91000
         # rotation speed, rad/s:
         rotation_speed: 7.292115e-5
         # 纬度:

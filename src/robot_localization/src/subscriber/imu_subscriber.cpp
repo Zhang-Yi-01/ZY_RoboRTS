@@ -53,7 +53,17 @@ namespace robot_localization
         imu_data.orientation_.z = imu_msg.orientation.z;
         imu_data.orientation_.w = imu_msg.orientation.w;
 
+        // static bool in_or_not=false;
+        // if(in_or_not==false)
+        // {
+        //     in_or_not=true;
+        //     new_imu_data_buff_.push_back(imu_data);
+        // }
+        // else{
+        //     in_or_not=false;
+        // }
         new_imu_data_buff_.push_back(imu_data);
+
     }
 
     /**

@@ -1,7 +1,5 @@
 /*
  * @Description: 里程计端里程计算法
- * @Author: Genshin_Yi
- * @Date: 
  */
 #include "../../../include/mapping/matching_end/matching_end.hpp"
 #include <pcl/common/transforms.h>

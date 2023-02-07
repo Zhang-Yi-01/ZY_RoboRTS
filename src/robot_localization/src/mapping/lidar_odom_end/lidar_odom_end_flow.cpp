@@ -1,7 +1,5 @@
 /*
  * @Description: 里程计端任务管理器
- * @Author: ZY 、 Genshin_Yi
- * @Date: 2022.10.24
  */
 
 #include "../../../include/mapping/lidar_odom_end/lidar_odom_end_flow.hpp"
@@ -35,6 +33,12 @@ namespace robot_localization
         imu_link = config_node["sim_imu_link"].as<std::string>();
         lidar_link = config_node["sim_lidar_link"].as<std::string>();
         car_base_link = config_node["sim_car_base_link"].as<std::string>();
+        coordinate_transformation = Eigen::Vector3d(
+                                                    config_node["sim_init_position"][0].as<double>(),
+                                                    config_node["sim_init_position"][1].as<double>(),
+                                                    config_node["sim_init_position"][2].as<double>()
+                                                   );
+
         }else
         {
         imu_raw_data_topic = config_node["imu_topic"].as<std::string>();
@@ -42,15 +46,15 @@ namespace robot_localization
         imu_link = config_node["imu_link"].as<std::string>();
         lidar_link = config_node["lidar_link"].as<std::string>();
         car_base_link = config_node["car_base_link"].as<std::string>();
-        
-        
+        coordinate_transformation = Eigen::Vector3d(
+                                                    config_node["init_position"][0].as<double>(),
+                                                    config_node["init_position"][1].as<double>(),
+                                                    config_node["init_position"][2].as<double>()
+                                                   );
+
         }
         
-        coordinate_transformation = Eigen::Vector3d(
-                                                    config_node["sim_init_position"][0].as<double>(),
-                                                    config_node["sim_init_position"][1].as<double>(),
-                                                    config_node["sim_init_position"][2].as<double>()
-                                                   );
+        
         if_odom_end_tf_broadcast = config_node["odom_end_send_tf"].as<bool>();
 
         // 订阅
@@ -59,7 +63,9 @@ namespace robot_localization
         // 2.去畸变点云
         cloud_sub_ptr_ = std::make_shared<CloudSubscriber>(node_, undistrotion_pointcloud_topic, 100000);
         // 3.IMU 同步测量
-        imu_synced_sub_ptr_ = std::make_shared<ImuSubscriber>(node_, "/synced_imu", 100000);
+        imu_synced_sub_ptr_ = std::make_shared<ImuSubscriber>(node_, 
+                                                                "/synced_imu",
+                                                                100000);
         // 4.lidar to imu tf
         lidar_to_imu_ptr_ = std::make_shared<TFListener>(node_, imu_link, lidar_link);
 
@@ -128,6 +134,7 @@ namespace robot_localization
                         {
                             imu_raw_data_buff_.push_back(current_imu_raw_data_);
                         }
+                        yellow_info("current_imu_raw_data_ push back");
                     }
 
                     // 卡尔曼更新
@@ -139,7 +146,8 @@ namespace robot_localization
                 if (HasIMUData() && ValidIMUData())
                 {
                     // 卡尔曼预测
-                    Predict();green_info("predict 2 done");
+                    Predict();
+                    // green_info("predict 2 done");
                 }
             }
         }

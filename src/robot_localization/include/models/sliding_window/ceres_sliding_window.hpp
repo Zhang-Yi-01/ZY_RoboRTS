@@ -1,7 +1,5 @@
 /*
  * @Description: ceres sliding window optimizer, interface
- * @Author: Genshin_Yi
- * @Date: 
  */
 
 #ifndef MODELS_SLIDING_WINDOW_CERES_SLIDING_WINDOW_HPP_

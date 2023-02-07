@@ -60,6 +60,7 @@ ament_target_dependencies(
   ${ROS2_DEPENDENCIES}
 )
 target_link_libraries(data_pretreat_end_node 
+  Sophus::Sophus
   ${THIRD_PART_LIBRARIES}
 )
 
@@ -71,6 +72,7 @@ ament_target_dependencies(
   ${ROS2_DEPENDENCIES}
 )
 target_link_libraries(lidar_odom_end_node 
+  Sophus::Sophus
   ${THIRD_PART_LIBRARIES}
 )
 
@@ -82,6 +84,7 @@ ament_target_dependencies(
   ${ROS2_DEPENDENCIES}
 )
 target_link_libraries(matching_end_node 
+  Sophus::Sophus
   ${THIRD_PART_LIBRARIES}
 )
 

@@ -1,7 +1,5 @@
 /*
  * @Description: ceres residual block for LIO IMU pre-integration measurement
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_SLIDING_WINDOW_FACTOR_PRVAG_IMU_PRE_INTEGRATION_HPP_
 #define MODELS_SLIDING_WINDOW_FACTOR_PRVAG_IMU_PRE_INTEGRATION_HPP_

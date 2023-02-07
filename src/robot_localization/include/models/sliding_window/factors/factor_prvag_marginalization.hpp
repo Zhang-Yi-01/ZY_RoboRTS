@@ -1,7 +1,5 @@
 /*
  * @Description: ceres residual block for sliding window marginalization
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_SLIDING_WINDOW_FACTOR_PRVAG_MARGINALIZATION_HPP_
 #define MODELS_SLIDING_WINDOW_FACTOR_PRVAG_MARGINALIZATION_HPP_

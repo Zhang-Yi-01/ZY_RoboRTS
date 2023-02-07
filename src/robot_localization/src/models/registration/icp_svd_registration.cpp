@@ -1,7 +1,5 @@
 /*
  * @Description: ICP SVD lidar odometry
- * @Author: ZY
- * @Date:  
  */
 
 #include <pcl/common/transforms.h>

@@ -1,7 +1,5 @@
 /*
  * @Description: 误差状态卡尔曼滤波：算法实现
- * @Author: ZY 、Genshin才是最🐮的好吧
- * @Date: 2022.10.24
  */
 #ifndef ESKF_HPP_
 #define ESKF_HPP_

@@ -1,7 +1,5 @@
 /*
  * @Description: 点云发布
- * @Author: ZY
- * @Date: 
  */
 #ifndef PUBLISHER_CLOUD_PUBLISHER_HPP_
 #define PUBLISHER_CLOUD_PUBLISHER_HPP_

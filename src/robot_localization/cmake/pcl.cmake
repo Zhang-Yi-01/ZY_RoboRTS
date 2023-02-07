@@ -1,8 +1,8 @@
 # set(PCL_DIR "/usr/local/pcl-1.10/share/pcl-1.10")
 # find_package(PCL 1.10 REQUIRED )
 
-set(PCL_DIR "/usr/local/pcl-1.13.0/share/pcl-1.13.0")
-find_package(PCL 1.13 REQUIRED )
+# set(PCL_DIR "/usr/local/pcl-1.13.0/share/pcl-1.13.0")
+find_package(PCL  REQUIRED )
 
 
 

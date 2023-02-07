@@ -1,7 +1,5 @@
 /*
  * @Description: 卡尔曼滤波接口
- * @Author: ZY 、Genshin才是最🐮的好吧
- * @Date: 2022.10.24
  */
 #ifndef KALMAN_FILTER_INTERFACE_
 #define KALMAN_FILTER_INTERFACE_
@@ -117,8 +115,8 @@ namespace robot_localization
                              const Measurement &measurement) = 0;
 
         /**
-         * @brief  得到最近的滤波时间
-         * @return filter time as double
+         * @brief  得到最近一次滤波的时间
+         * @return double型的滤波时间
          */
         double GetTime(void) const { return time_; }
 
@@ -163,7 +161,7 @@ namespace robot_localization
                                const std::vector<std::vector<double>> &data,
                                const std::string filename);
 
-        double time_;
+        double time_;   // 储存imu_data的浮点时间戳
 
         // imu数据缓存
         std::deque<ImuData> imu_data_buff_;

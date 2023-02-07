@@ -1,7 +1,5 @@
 /*
  * @Description: IMU pre-integrator for LIO mapping, interface
- * @Author: Genshin_Yi
- * @Date: 
  */
 
 #ifndef MODELS_PRE_INTEGRATOR_IMU_PRE_INTEGRATOR_HPP_

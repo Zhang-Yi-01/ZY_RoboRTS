@@ -1,7 +1,5 @@
 /*
  * @Description: 不滤波
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef LOCALIZATION_MODELS_CLOUD_FILTER_NO_FILTER_HPP_
 #define LOCALIZATION_MODELS_CLOUD_FILTER_NO_FILTER_HPP_

@@ -38,7 +38,7 @@ def generate_launch_description():
                         executable="rviz2",
                         name='rviz2',
                         output='screen',emulate_tty=True,
-                        arguments=['-d', pkg_path+'/config/rviz/3d_lidar.rviz']
+                        arguments=['-d', pkg_path+'/config/rviz/sim_3d_lidar.rviz']
 
                      )
         

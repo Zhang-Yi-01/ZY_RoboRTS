@@ -1,7 +1,5 @@
 /*
  * @Description: 
- * @Author: Genshin_Yi
- * @Date:
  */
 
 #ifndef MODELS_GRAPH_OPTIMIZER_G2O_G2O_GRAPH_OPTIMIZER_HPP_

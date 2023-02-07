@@ -1,7 +1,5 @@
 /*
  * @Description: 从点云中截取一个立方体部分
- * @Author: Genshin_Yi
- * @Date: 
  */
 #include <vector>
 #include <iostream>

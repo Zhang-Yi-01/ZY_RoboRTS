@@ -1,7 +1,5 @@
 /*
  * @Description: 卡尔曼滤波接口MatrixXd
- * @Author: ZY
- * @Date: 2022.10.24
  */
 
 // c++

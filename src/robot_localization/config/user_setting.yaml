@@ -1,6 +1,6 @@
-if_show_working_info: false #那些运行中的info正常提示或者什么的,要不要显示
+if_show_working_info: true #那些运行中的info正常提示或者什么的,要不要显示
 
-if_simulink: true         ##后面会自动根据是否处于仿真，分配话题
+if_simulink: false         ##后面会自动根据是否处于仿真，分配话题
 ########input_topic_part########配置传感器话题输入部分
 odom_end_send_tf: false    #参数默认false，tf统一仅由优化端广播，调试odom_end时设置为true，则只由odom_end广播tf
 matching_end_send_tf: false #参数默认false，tf统一仅由优化端广播，调试matching_end时设置为true，则只由matching_end广播tf
@@ -12,7 +12,7 @@ scan_pointcloud_topic: /livox/lidar  #未去畸变原始点云
 imu_link: laser_link
 lidar_link: laser_link
 car_base_link: laser_link                     #仿真车体连结点
-
+init_position: [0.00,0.00,0.00]
 
 sim_imu_topic: imu
 sim_scan_pointcloud_topic: /velodyne_points2  #未去畸变原始点云
@@ -31,4 +31,4 @@ base_frame_id:  map                   ##不要有斜杠
 
 
 
-registration_method: SICP # 里程计选择点云匹配方法 目前支持 ICP_SVD , ICP , NDT , NDT_CPU , SICP
+registration_method: ICP_SVD # 里程计选择点云匹配方法 目前支持 ICP_SVD , ICP , NDT , NDT_CPU , SICP

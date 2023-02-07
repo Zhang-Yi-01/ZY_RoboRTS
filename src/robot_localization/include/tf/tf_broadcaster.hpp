@@ -1,7 +1,5 @@
 /*
  * @Description: tf广播,这🐶ros2还好tf模块改动不算太大
- * @Author: ZY 、 Genshin_Yi
- * @Date: 2022-12-03 15:23:26
  */
 #ifndef PUBLISHER_TF_BROADCASTER_HPP_
 #define PUBLISHER_TF_BROADCASTER_HPP_

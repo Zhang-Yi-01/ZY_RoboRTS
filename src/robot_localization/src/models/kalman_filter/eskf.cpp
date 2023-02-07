@@ -1,7 +1,5 @@
 /*
  * @Description: 误差状态卡尔曼滤波：算法实现
- * @Author: ZY 、 Genshin_Yi
- * @Date: 2022.10.24
  */
 
 // c++
@@ -196,8 +194,16 @@ namespace robot_localization
         // get time delta:
         double time_delta = measurement.time - time_;
 
+        
+        
+        // if (time_ < measurement.time)
+        // {
+        //         Update(imu_data);
+        //         time_delta = measurement.time - time_;
+        // }
+
         // 时间对齐
-        if (time_delta > -0.05)
+        if (time_delta > -0.15)// if (time_delta > -0.05)
         {
             // perform Kalman prediction:
             if (time_ < measurement.time)
@@ -222,7 +228,7 @@ namespace robot_localization
         }
 
         LOG(INFO) << "ESKF Correct: Observation is not synced with filter. Skip, "
-                  << (int)measurement.time << " <-- " << (int)time_ << " @ "
+                  << (int)measurement.time << " <- " << (int)time_ << " at "
                   << time_delta << std::endl;
 
         return false;

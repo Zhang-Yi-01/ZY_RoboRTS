@@ -1,7 +1,5 @@
 /*
  * @Description: 点云滤波接口
- * @Author: ZY
- * @Date: 2022.10.24
  */
 #ifndef CLOUD_FILTER_INTERFACE_HPP
 #define CLOUD_FILTER_INTERFACE_HPP

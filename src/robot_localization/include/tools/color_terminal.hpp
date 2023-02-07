@@ -1,7 +1,5 @@
 /*
  * @Description: 终端彩色输出
- * @Author: ZY、Genshin_Yi
- * @Date: 2022.10.24
  */
 #ifndef COLOR_TERMINAL_HPP
 #define COLOR_TERMINAL_HPP

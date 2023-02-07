@@ -1,7 +1,5 @@
 /*
  * @Description: ceres residual block for lidar frontend relative pose measurement
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_
 #define MODELS_SLIDING_WINDOW_FACTOR_PRVAG_RELATIVE_POSE_HPP_

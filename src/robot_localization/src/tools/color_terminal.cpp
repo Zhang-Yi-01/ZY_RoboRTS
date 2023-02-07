@@ -1,7 +1,5 @@
 /*
  * @Description: 终端彩色输出
- * @Author: ZY
- * @Date: 2022.10.24
  */
 
 #include "../../include/tools/color_terminal.hpp"

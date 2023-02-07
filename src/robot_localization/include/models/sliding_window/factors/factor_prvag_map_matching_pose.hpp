@@ -1,7 +1,5 @@
 /*
  * @Description: ceres residual block for map matching pose measurement
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_SLIDING_WINDOW_FACTOR_PRVAG_MAP_MATCHING_POSE_HPP_
 #define MODELS_SLIDING_WINDOW_FACTOR_PRVAG_MAP_MATCHING_POSE_HPP_

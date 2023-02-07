@@ -1,7 +1,5 @@
 /*
  * @Description: tf监听模块,应该只用于监听雷达到imu的转换部分，好像并不需要再转到ros2
- * @Author: ZY 、Genshin才是最🐮的好吧
- * @Date: 2022-12-03 16:01:21
  */
 #ifndef TF_LISTENER_HPP_
 #define TF_LISTENER_HPP_

@@ -1,7 +1,5 @@
 /*
  * @Description: g2o edge for LIO GNSS measurement
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_PRVAG_PRIOR_POS_HPP_
 #define MODELS_GRAPH_OPTIMIZER_G2O_EDGE_EDGE_PRVAG_PRIOR_POS_HPP_

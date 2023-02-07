@@ -1,7 +1,5 @@
 /*
  * @Description: 不滤波
- * @Author: Genshin_Yi
- * @Date: 
  */
 #include "../../../include/models/cloud_filter/no_filter.hpp"
 #include "glog/logging.h"

@@ -1,7 +1,5 @@
 /*
  * @Description: LIO key frame
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef SENSOR_DATA_KEY_FRAME_HPP_
 #define SENSOR_DATA_KEY_FRAME_HPP_

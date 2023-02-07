@@ -1,7 +1,5 @@
 /*
  * @Description: 体素滤波器
- * @Author: ZY
- * @Date: 2022.10.24
  */
 
 #ifndef VOXEL_FILTER_HPP

@@ -1,7 +1,5 @@
 /*
  * @Description: NDT匹配算法
- * @Author: ZY
- * @Date: 2022.10.24
  */
 
 #include "../../../include/models/registration/ndt_registration.hpp"

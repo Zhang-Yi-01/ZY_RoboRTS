@@ -1,7 +1,5 @@
 /*
  * @Description: 点云匹配接口
- * @Author: ZY
- * @Date: 2022.10.24
  */
 #ifndef REGISTRATION_INTERFACE_HPP
 #define REGISTRATION_INTERFACE_HPP

@@ -1,7 +1,5 @@
 /*
  * @Description: TicToc计时器
- * @Author: ZY
- * @Date: 2022.10.24
  */
 #pragma once
 

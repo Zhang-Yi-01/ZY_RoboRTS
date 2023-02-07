@@ -1,7 +1,5 @@
 /*
  * @Description: g2o vertex for LIO extended pose
- * @Author: Genshin_Yi
- * @Date: 
  */
 #ifndef MODELS_GRAPH_OPTIMIZER_G2O_VERTEX_VERTEX_PRVAG_HPP_
 #define MODELS_GRAPH_OPTIMIZER_G2O_VERTEX_VERTEX_PRVAG_HPP_
